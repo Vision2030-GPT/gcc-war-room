@@ -1313,7 +1313,7 @@ const AIAnalystTab = () => {
 
     // Try API first, fallback if it fails
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: apiHeaders(),
         body: JSON.stringify({
@@ -1481,7 +1481,7 @@ const LiveIntelTab = () => {
     try {
       // STEP 1: Web search to gather raw intelligence
       setLoadingStep("Searching latest sources...");
-      const searchRes = await fetch("https://api.anthropic.com/v1/messages", {
+      const searchRes = await fetch(API_URL, {
         method: "POST",
         headers: apiHeaders(),
         body: JSON.stringify({
@@ -1509,7 +1509,7 @@ const LiveIntelTab = () => {
 
       // STEP 2: Format raw intel into structured JSON (no web search needed)
       setLoadingStep("Analyzing intelligence...");
-      const formatRes = await fetch("https://api.anthropic.com/v1/messages", {
+      const formatRes = await fetch(API_URL, {
         method: "POST",
         headers: apiHeaders(),
         body: JSON.stringify({
