@@ -10,14 +10,8 @@ import {
 } from "lucide-react";
 
 // ─── API CONFIG ──────────────────────────────────────────────────────────────
-const API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
-const API_URL = "https://api.anthropic.com/v1/messages";
-const apiHeaders = () => {
-  const h = { "Content-Type": "application/json" };
-  if (API_KEY) h["x-api-key"] = API_KEY;
-  if (API_KEY) h["anthropic-version"] = "2023-06-01";
-  return h;
-};
+const API_URL = "/api/chat";
+const apiHeaders = () => ({ "Content-Type": "application/json" });
 
 const REPORT_DATE = "March 16, 2026";
 const CONFLICT_DAY = 17;
