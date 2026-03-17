@@ -53,9 +53,7 @@ const GCC_DATA = {
     name: "United Arab Emirates", flag: "🇦🇪", riskScore: 5, riskLabel: "EXTREME",
     advisory: "Level 5 — Immediate Civilian Danger. All Western governments say leave now.",
     cities: {
-      "Dubai - JBR": { risk: 5, nearestStrike: "Palm Jumeirah (~3 km)", nearestTarget: "Jebel Ali Port (~15–25 km)", shelter: "Interior corridors, stairwells, ground floor. No bomb shelters in JBR towers.", evacRoute: "DXB Airport (struck 3×) or drive to Muscat, Oman (~4.5h)", signal: "critical", notes: "Primary analysis location. 40 glass-curtain towers, high blast vulnerability. Shelter-in-place alerts multiple times daily." },
-      "Dubai - Downtown/DIFC": { risk: 5, nearestStrike: "DIFC itself (2 direct strikes)", nearestTarget: "DIFC is a confirmed strike zone", shelter: "Interior corridors away from glass. DIFC towers fully exposed.", evacRoute: "DXB Airport or drive to Muscat (~4.5h)", signal: "critical", notes: "Goldman Sachs, Citi, StanChart ordered WFH. Major firms considering relocation." },
-      "Dubai - Marina/JLT": { risk: 5, nearestStrike: "Palm Jumeirah (~5 km)", nearestTarget: "Jebel Ali Port (~20 km)", shelter: "Interior rooms, avoid floor-to-ceiling windows. High-rise glass risk.", evacRoute: "DXB Airport or Muscat via E44", signal: "critical", notes: "Similar exposure to JBR. Within Jebel Ali blast radius and interception debris zone." },
+      "Dubai": { risk: 5, nearestStrike: "Palm Jumeirah / DIFC (multiple confirmed strikes)", nearestTarget: "Jebel Ali Port (~15–25 km, declared 'legitimate target')", shelter: "Interior corridors, stairwells, ground floor away from glass. No purpose-built bomb shelters.", evacRoute: "DXB Airport (struck 3×, intermittent) or drive to Muscat, Oman (~4.5h)", signal: "critical", notes: "Multiple strikes confirmed across Dubai: Palm Jumeirah, DIFC (2×), DXB Airport (3×), Burj Al Arab (debris), Jebel Ali (fire). Shelter-in-place alerts multiple times daily. Schools on remote learning." },
       "Abu Dhabi City": { risk: 5, nearestStrike: "Abu Dhabi Zayed Airport (1 killed, 7 wounded)", nearestTarget: "Al Dhafra Air Base (~32 km, repeatedly targeted)", shelter: "Follow NCEMA alerts. Interior rooms.", evacRoute: "Abu Dhabi Airport (intermittent) or drive to Al Ain/Oman", signal: "critical", notes: "Al Dhafra hosts 3,500–5,000 US personnel. AN/TPY-2 radar destroyed. Primary military target zone." },
       "Sharjah": { risk: 5, nearestStrike: "Sharjah residential areas & mall (3 killed, 58 injured)", nearestTarget: "Within confirmed strike zone", shelter: "NCEMA guidance. Interior corridors.", evacRoute: "DXB Airport or Sharjah Airport (limited)", signal: "critical", notes: "Confirmed civilian casualties. Residential areas directly struck." },
       "Fujairah": { risk: 5, nearestStrike: "Fujairah Oil Terminal (struck 4 times)", nearestTarget: "Oil terminal is active target", shelter: "Limited infrastructure. Evacuate if possible.", evacRoute: "Drive to Muscat (~2h) or Salalah", signal: "critical", notes: "Oil loading repeatedly suspended. Strategic oil storage facility under active bombardment." },
@@ -174,31 +172,41 @@ const getTier = (adjustedRisk) => {
 const getAlertConfig = (adjustedRisk, resType) => {
   const rt = RESIDENT_TYPES[resType];
   if (adjustedRisk >= 5) return {
-    bg: "from-red-600 to-orange-600",
+    bg: "bg-red-50 border border-red-200",
+    textColor: "text-red-800",
+    subColor: "text-red-600",
     title: resType === "tourist" ? "DEPART ON SCHEDULE OR EARLIER" : resType === "diplomatic" ? "FOLLOW MISSION GUIDANCE" : "ELEVATED SITUATION — HAVE EXIT PLAN READY",
     msg: rt.tier2msg,
     icon: "⚠️",
   };
   if (adjustedRisk >= 4) return {
-    bg: "from-amber-500 to-orange-500",
+    bg: "bg-amber-50 border border-amber-200",
+    textColor: "text-amber-800",
+    subColor: "text-amber-600",
     title: "STAY PREPARED — MONITOR SITUATION",
     msg: rt.tier1msg,
     icon: "⚡",
   };
   if (adjustedRisk >= 3) return {
-    bg: "from-blue-500 to-blue-600",
+    bg: "bg-blue-50 border border-blue-200",
+    textColor: "text-blue-800",
+    subColor: "text-blue-600",
     title: "STAY AWARE — SITUATION ONGOING",
     msg: rt.tier1msg,
     icon: "ℹ️",
   };
   if (adjustedRisk >= 2) return {
-    bg: "from-blue-400 to-cyan-500",
+    bg: "bg-cyan-50 border border-cyan-200",
+    textColor: "text-cyan-800",
+    subColor: "text-cyan-600",
     title: "MODERATE AWARENESS",
     msg: rt.tier1msg,
     icon: "✓",
   };
   return {
-    bg: "from-emerald-500 to-teal-500",
+    bg: "bg-emerald-50 border border-emerald-200",
+    textColor: "text-emerald-800",
+    subColor: "text-emerald-600",
     title: "NORMAL PRECAUTIONS",
     msg: "Standard safety awareness. Stay informed through official channels.",
     icon: "✓",
@@ -719,7 +727,7 @@ const InterceptorGauge = () => {
           </div>
         </div>
       </div>
-      <p className="text-[10px] text-red-500/70 mt-3">⚠ Projection model. Actual depends on Iranian tempo & US resupply. UAE is rationing interceptors.</p>
+      <p className="text-[10px] text-gray-400 mt-3">⚠ Simplified projection model for illustration only. Not official data. Actual performance depends on Iranian attack tempo, US resupply, and UAE operational decisions. UAE Ministry of Defence reports 90%+ interception rate.</p>
     </Card>
   );
 };
@@ -835,7 +843,7 @@ const NewsTicker = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-gray-800 group-hover:text-blue-700 transition-colors leading-snug">{item.title}</p>
-                  {item.description && <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>}
+                  {item.description && <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-2">{item.description.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/gi, ' ').slice(0, 200)}</p>}
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-[9px] font-bold text-blue-600">{item.source}</span>
                     <span className="text-[9px] text-gray-400">{timeAgo(item.pubDate)}</span>
@@ -921,11 +929,11 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
       </div>
 
       {/* ─── CONTEXTUAL ALERT BANNER ─────────────────────────────── */}
-      <div className={`bg-gradient-to-r ${alertCfg.bg} text-white rounded-xl p-4 flex items-start gap-3 shadow-md`}>
+      <div className={`rounded-xl p-4 flex items-start gap-3 ${alertCfg.bg}`}>
         <span className="text-xl flex-shrink-0 mt-0.5">{alertCfg.icon}</span>
         <div>
-          <p className="font-extrabold text-base">{alertCfg.title}</p>
-          <p className="text-white/80 text-sm mt-1">{alertCfg.msg}</p>
+          <p className={`font-bold text-sm ${alertCfg.textColor}`}>{alertCfg.title}</p>
+          <p className={`text-sm mt-1 ${alertCfg.subColor}`}>{alertCfg.msg}</p>
         </div>
       </div>
 
@@ -1023,15 +1031,15 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
 
       {/* STATS */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatBox label="Conflict Day" value={CONFLICT_DAY} sub="Since Feb 28" level="critical" />
-        <StatBox label="Projectiles at UAE" value="1,867+" sub="285 BMs · 1,567 drones" level="critical" />
-        <StatBox label="Intercept Rate" value="90%+" sub="Depleting daily" level="warning" />
-        <StatBox label="Hormuz Traffic" value="–94%" sub="Near zero transits" level="critical" />
+        <StatBox label="Conflict Day" value={CONFLICT_DAY} sub="Since Feb 28" level="warning" />
+        <StatBox label="Projectiles at UAE" value="1,919+" sub="298 BMs · 1,606 drones" level="warning" />
+        <StatBox label="Intercept Rate" value="90%+" sub="Performing well" level="positive" />
+        <StatBox label="Hormuz Traffic" value="–94%" sub="Near zero transits" level="warning" />
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatBox label="UAE Casualties" value="7 / 145" sub="Killed / Injured" level="critical" />
-        <StatBox label="Oil Price" value="$104+" sub="From $67 (↑55%)" level="warning" />
-        <StatBox label="Ceasefire" value="None" sub="No talks · No channel" level="critical" />
+        <StatBox label="UAE Casualties" value="8 / 145" sub="Killed / Injured in 11M" level="warning" />
+        <StatBox label="Oil Price" value="$104+" sub="From $67 (↑55%)" level="neutral" />
+        <StatBox label="Ceasefire" value="None" sub="No talks · No channel" level="warning" />
         <StatBox label="Safe Return" value="Aug–Sep" sub="Earliest Q3 2026" level="neutral" />
       </div>
 
@@ -1080,7 +1088,10 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
 
       {/* SUPPLY CHAIN */}
       <Card className="p-5">
-        <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-3">Supply Chain & Infrastructure</p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Supply Chain & Infrastructure</p>
+          <span className="text-[9px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Estimates based on open-source reports</span>
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {SUPPLY_STATUS.map((s, i) => {
             const Icon = s.icon; const c = lc(s.status);
@@ -2257,7 +2268,7 @@ export default function App() {
   const [lang, setLang] = useState("en");
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [selCountry, setSelCountry] = useState("UAE");
-  const [selCity, setSelCity] = useState("Dubai - JBR");
+  const [selCity, setSelCity] = useState("Dubai");
   const [resStatus, setResStatus] = useState("expat_family");
 
   useEffect(() => { const i = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(i); }, []);
@@ -2290,8 +2301,8 @@ export default function App() {
           </button>
           <div className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-600" />
-            <span className="font-bold text-gray-800 hidden sm:inline">{t("dashboard", lang) === "Dashboard" ? "GCC War Risk Dashboard" : t("dashboard", lang)}</span>
-            <span className="font-bold text-gray-800 sm:hidden">GCC Risk</span>
+            <span className="font-bold text-gray-800 hidden sm:inline">{t("dashboard", lang) === "Dashboard" ? "GCC WAR ROOM" : t("dashboard", lang)}</span>
+            <span className="font-bold text-gray-800 sm:hidden">GCC WAR ROOM</span>
           </div>
 
           {/* Desktop Tabs */}
@@ -2367,7 +2378,7 @@ export default function App() {
             ))}
           </select>
           {cityData && (
-            <Badge level={cityData.signal} className="ml-1">L{cityData.risk} — {cityData.risk >= 5 ? t("critical", lang) : cityData.risk >= 4 ? t("warning", lang) : t("stable", lang)}</Badge>
+            <Badge level={cityRisk >= 5 ? "critical" : cityRisk >= 4 ? "warning" : cityRisk >= 3 ? "neutral" : "positive"} className="ml-1">L{cityRisk} — {riskLabel}</Badge>
           )}
         </div>
 
@@ -2424,7 +2435,7 @@ export default function App() {
             <div>
               <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-2">{t("signals", lang)}</p>
               {keySignals.map((s, i) => (
-                <div key={i} className="text-xs text-gray-700 bg-orange-50 border border-orange-100 rounded-lg p-2.5 mb-1.5 leading-relaxed">⚠️ {s}</div>
+                <div key={i} className="text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded-lg p-2.5 mb-1.5 leading-relaxed">📌 {s}</div>
               ))}
             </div>
 
@@ -2452,7 +2463,7 @@ export default function App() {
               <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-2">Return Criteria</p>
               {RETURN_CRITERIA.map((r, i) => (
                 <div key={i} className="flex items-start gap-2 text-xs mb-1.5">
-                  <XCircle className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 mt-0.5" />
+                  <XCircle className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 mt-0.5" />
                   <span className="text-gray-500">{r.text}</span>
                 </div>
               ))}
