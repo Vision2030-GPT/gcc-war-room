@@ -538,6 +538,141 @@ const InterceptorGauge = () => {
 
 // ─── DASHBOARD TAB ──────────────────────────────────────────────────────────
 
+// ─── LIVE NEWS TICKER ───────────────────────────────────────────────────────
+
+const NewsTicker = () => {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [filter, setFilter] = useState("all"); // "all", "conflict", "uae"
+  const [expanded, setExpanded] = useState(true);
+
+  const fetchNews = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/news");
+      const data = await res.json();
+      if (data.success && data.items) {
+        setNews(data.items);
+        setLastUpdated(data.lastUpdated);
+      }
+    } catch (e) {
+      console.error("News fetch error:", e);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchNews(); }, []);
+  // Auto-refresh every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(fetchNews, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const filtered = news.filter(item => {
+    if (filter === "conflict") return item.isConflictRelated;
+    if (filter === "uae") return item.category === "uae";
+    return true;
+  });
+
+  const timeAgo = (dateStr) => {
+    if (!dateStr) return "";
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  };
+
+  return (
+    <Card className="overflow-hidden">
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="flex items-center gap-2">
+          <button onClick={() => setExpanded(!expanded)} className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+            <Newspaper className="w-4 h-4 text-blue-600" />
+            <span className="text-sm font-semibold text-gray-800">Live News Feed</span>
+            {news.length > 0 && <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-bold">{filtered.length}</span>}
+            {expanded ? <ChevronUp className="w-3.5 h-3.5 text-gray-400" /> : <ChevronDown className="w-3.5 h-3.5 text-gray-400" />}
+          </button>
+        </div>
+        <div className="flex items-center gap-2">
+          {lastUpdated && <span className="text-[10px] text-gray-400">Updated {timeAgo(lastUpdated)}</span>}
+          <button onClick={fetchNews} disabled={loading}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-gray-100 text-gray-600 text-[10px] font-semibold hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            <RefreshCw className={`w-3 h-3 ${loading ? "animate-spin" : ""}`} />
+            {loading ? "Updating..." : "Refresh"}
+          </button>
+        </div>
+      </div>
+
+      {expanded && (
+        <>
+          {/* Filters */}
+          <div className="flex gap-1.5 px-4 py-2 bg-gray-50 border-b border-gray-100">
+            {[
+              { key: "all", label: "All News" },
+              { key: "conflict", label: "🔴 Conflict Related" },
+              { key: "uae", label: "🇦🇪 UAE" },
+            ].map(f => (
+              <button key={f.key} onClick={() => setFilter(f.key)}
+                className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-colors ${
+                  filter === f.key ? "bg-blue-600 text-white" : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                }`}>{f.label}</button>
+            ))}
+          </div>
+
+          {/* News items */}
+          <div className="max-h-[400px] overflow-y-auto">
+            {loading && news.length === 0 && (
+              <div className="p-6 text-center">
+                <Loader2 className="w-5 h-5 text-blue-500 animate-spin mx-auto mb-2" />
+                <p className="text-xs text-gray-400">Fetching latest news from Gulf sources...</p>
+              </div>
+            )}
+            {!loading && news.length === 0 && (
+              <div className="p-6 text-center">
+                <p className="text-xs text-gray-400">No news items loaded. Press Refresh.</p>
+              </div>
+            )}
+            {filtered.map((item, i) => (
+              <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
+                className="flex items-start gap-3 p-3 border-b border-gray-50 hover:bg-blue-50/30 transition-colors group">
+                <div className="flex-shrink-0 mt-1">
+                  {item.isConflictRelated
+                    ? <span className="w-2 h-2 rounded-full bg-red-500 block" />
+                    : <span className="w-2 h-2 rounded-full bg-gray-300 block" />
+                  }
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-gray-800 group-hover:text-blue-700 transition-colors leading-snug">{item.title}</p>
+                  {item.description && <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-2">{item.description}</p>}
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[9px] font-bold text-blue-600">{item.source}</span>
+                    <span className="text-[9px] text-gray-400">{timeAgo(item.pubDate)}</span>
+                    {item.isConflictRelated && <span className="text-[9px] bg-red-50 text-red-600 px-1 py-0.5 rounded font-bold">CONFLICT</span>}
+                  </div>
+                </div>
+                <ExternalLink className="w-3 h-3 text-gray-300 flex-shrink-0 mt-1 group-hover:text-blue-500" />
+              </a>
+            ))}
+          </div>
+
+          {/* Source attribution */}
+          <div className="px-4 py-2 bg-gray-50 border-t border-gray-100">
+            <p className="text-[9px] text-gray-400 text-center">
+              Sources: Khaleej Times · Gulf News · The National · Al Jazeera · Reuters — Auto-refreshes every 5 minutes
+            </p>
+          </div>
+        </>
+      )}
+    </Card>
+  );
+};
+
+// ─── DASHBOARD TAB ──────────────────────────────────────────────────────────
+
 const DashboardTab = ({ country, city, lang: dashLang }) => {
   const counts = countByLevel(RISK_SIGNALS);
   const cData = GCC_DATA[country] || GCC_DATA["UAE"];
@@ -613,6 +748,9 @@ const DashboardTab = ({ country, city, lang: dashLang }) => {
           <p className="text-white/80 text-sm">Level {cRisk} {rLbl} — Both reports: active war zone. Leave now while commercial flights remain.</p>
         </div>
       </div>
+
+      {/* ─── LIVE NEWS FEED ───────────────────────────────────────── */}
+      <NewsTicker />
 
       {/* ─── GCC REGIONAL RISK TABLE ──────────────────────────────── */}
       <Card className="overflow-hidden">
