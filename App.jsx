@@ -13,8 +13,8 @@ import {
 const API_URL = "/api/chat";
 const apiHeaders = () => ({ "Content-Type": "application/json" });
 
-const REPORT_DATE = "March 16, 2026";
-const CONFLICT_DAY = 17;
+const REPORT_DATE = "March 17, 2026";
+const CONFLICT_DAY = 18;
 
 // ─── LANGUAGE SYSTEM ────────────────────────────────────────────────────────
 
@@ -104,7 +104,194 @@ const GCC_DATA = {
   },
 };
 
-// ─── STRUCTURED DATA ────────────────────────────────────────────────────────
+// ─── RESIDENT STATUS TYPES ──────────────────────────────────────────────────
+
+const RESIDENT_TYPES = {
+  tourist: {
+    label: "Tourist / Short-Stay",
+    icon: "✈️",
+    riskAdjust: 0, // gets the full base risk
+    tier1msg: "Complete your trip and depart on your scheduled flight or earlier. Don't extend your stay. Flights are subject to sudden cancellation — book backup options. Travel insurance likely void under current advisories.",
+    tier2msg: "Depart immediately by any available means. Do not wait for your scheduled flight.",
+    tier3msg: "Follow government evacuation orders. Use any available transport.",
+    shortAdvice: "Depart as planned — don't extend",
+  },
+  business: {
+    label: "Business Visitor",
+    icon: "💼",
+    riskAdjust: -1,
+    tier1msg: "Conclude your business promptly. Keep flights flexible and book backups. Avoid scheduling new trips to the region until situation stabilises. Work remotely if possible.",
+    tier2msg: "Wrap up within 48 hours and depart. Situation has materially worsened.",
+    tier3msg: "Follow government evacuation orders immediately.",
+    shortAdvice: "Conclude business — keep flights flexible",
+  },
+  expat_single: {
+    label: "Expat Resident (Single)",
+    icon: "🏠",
+    riskAdjust: -2,
+    tier1msg: "Continue your routine with awareness. Follow NCEMA alerts and shelter drills — they work. Have a go-bag ready as common sense, not panic. The nation's defense is performing well (90%+ interception). This is your home.",
+    tier2msg: "Situation worsening — activate contingency plan. Consider temporary relocation if you have options abroad. Monitor closely.",
+    tier3msg: "Follow official evacuation guidance. Use prepared exit routes.",
+    shortAdvice: "Stay prepared — follow NCEMA alerts",
+  },
+  expat_family: {
+    label: "Expat Resident (Family)",
+    icon: "👨‍👩‍👧",
+    riskAdjust: -2,
+    tier1msg: "Your family is safe. Schools operating remotely as precaution — this is normal in the situation. Follow NCEMA shelter drills with your children. The country is defending itself well (90%+ interception rate, 7 casualties in 11M people). Have a family contingency plan as common sense. This is your home — the nation's defenses are world-class.",
+    tier2msg: "Situation has materially worsened. Families with young children should consider temporary relocation. Activate your contingency plan.",
+    tier3msg: "Evacuate with your family. Follow official guidance. Use prepared exit routes.",
+    shortAdvice: "Family safe — follow shelter drills, have a plan",
+  },
+  national: {
+    label: "UAE / GCC National",
+    icon: "🇦🇪",
+    riskAdjust: -3,
+    tier1msg: "Your country's defense systems are among the world's best — 90%+ interception rate. Follow civil defense guidance and support your community. The nation is strong and defending itself effectively. Stay informed through NCEMA and official channels.",
+    tier2msg: "Situation is serious. Follow all government guidance. Support community preparedness. Consider relocating vulnerable family members temporarily.",
+    tier3msg: "Follow government evacuation orders if issued. Your safety is the priority.",
+    shortAdvice: "Your nation is strong — follow civil defense",
+  },
+  diplomatic: {
+    label: "Diplomatic / Government",
+    icon: "🏛️",
+    riskAdjust: 0, // follows embassy guidance separately
+    tier1msg: "Follow your mission's official guidance. Most Western embassies have ordered departure of non-essential staff and dependents. Coordinate with your government's crisis management team.",
+    tier2msg: "Follow mission guidance. Most embassies have activated evacuation protocols.",
+    tier3msg: "Follow your government's emergency extraction plan.",
+    shortAdvice: "Follow your mission's official guidance",
+  },
+};
+
+// Get the tier based on adjusted risk score
+const getTier = (adjustedRisk) => {
+  if (adjustedRisk >= 5) return 3; // EVACUATE level
+  if (adjustedRisk >= 4) return 2; // CONSIDER RELOCATING
+  return 1; // PREPARED - stay with awareness
+};
+
+// Get contextual alert banner config
+const getAlertConfig = (adjustedRisk, resType) => {
+  const rt = RESIDENT_TYPES[resType];
+  if (adjustedRisk >= 5) return {
+    bg: "from-red-600 to-orange-600",
+    title: resType === "tourist" ? "DEPART ON SCHEDULE OR EARLIER" : resType === "diplomatic" ? "FOLLOW MISSION GUIDANCE" : "ELEVATED SITUATION — HAVE EXIT PLAN READY",
+    msg: rt.tier2msg,
+    icon: "⚠️",
+  };
+  if (adjustedRisk >= 4) return {
+    bg: "from-amber-500 to-orange-500",
+    title: "STAY PREPARED — MONITOR SITUATION",
+    msg: rt.tier1msg,
+    icon: "⚡",
+  };
+  if (adjustedRisk >= 3) return {
+    bg: "from-blue-500 to-blue-600",
+    title: "STAY AWARE — SITUATION ONGOING",
+    msg: rt.tier1msg,
+    icon: "ℹ️",
+  };
+  if (adjustedRisk >= 2) return {
+    bg: "from-blue-400 to-cyan-500",
+    title: "MODERATE AWARENESS",
+    msg: rt.tier1msg,
+    icon: "✓",
+  };
+  return {
+    bg: "from-emerald-500 to-teal-500",
+    title: "NORMAL PRECAUTIONS",
+    msg: "Standard safety awareness. Stay informed through official channels.",
+    icon: "✓",
+  };
+};
+
+// Circle shape SVG per risk level
+const RiskGaugeSVG = ({ risk, color, label, size = 140 }) => {
+  const c = size / 2;
+  const r = c * 0.75;
+  const circ = 2 * Math.PI * r;
+
+  // Different shapes based on risk level
+  if (risk >= 5) {
+    // Pulsing warning — sharp octagon outline
+    return (
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full heartbeat">
+        <circle cx={c} cy={c} r={r} fill="none" stroke="#F3F4F6" strokeWidth="6" />
+        <circle cx={c} cy={c} r={r + 4} fill="none" stroke={color} strokeWidth="1" opacity="0.15">
+          <animate attributeName="r" values={`${r + 2};${r + 10};${r + 2}`} dur="1.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.25;0;0.25" dur="1.5s" repeatCount="indefinite" />
+        </circle>
+        <circle cx={c} cy={c} r={r} fill="none" stroke={color} strokeWidth="6"
+          strokeDasharray={`${circ * 0.95} ${circ * 0.05}`}
+          strokeLinecap="round" transform={`rotate(-90 ${c} ${c})`} />
+        <text x={c} y={c - 4} textAnchor="middle" fill={color} fontSize="32" fontWeight="900">{risk}</text>
+        <text x={c} y={c + 14} textAnchor="middle" fill={color} fontSize="9" fontWeight="700">{label}</text>
+        <text x={c} y={c + 26} textAnchor="middle" fill="#9CA3AF" fontSize="7">of 5</text>
+      </svg>
+    );
+  }
+  if (risk >= 4) {
+    // Triangle warning shape inside circle
+    return (
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full" style={{ animation: "heartbeat 2.5s ease-in-out infinite" }}>
+        <circle cx={c} cy={c} r={r} fill="none" stroke="#F3F4F6" strokeWidth="6" />
+        <circle cx={c} cy={c} r={r} fill="none" stroke={color} strokeWidth="6"
+          strokeDasharray={`${circ * (risk / 5) * 0.95} ${circ * (1 - (risk / 5) * 0.95)}`}
+          strokeLinecap="round" transform={`rotate(-90 ${c} ${c})`} />
+        <polygon points={`${c},${c - 22} ${c + 20},${c + 14} ${c - 20},${c + 14}`}
+          fill="none" stroke={color} strokeWidth="1.5" opacity="0.3" />
+        <text x={c} y={c - 2} textAnchor="middle" fill={color} fontSize="30" fontWeight="900">{risk}</text>
+        <text x={c} y={c + 16} textAnchor="middle" fill={color} fontSize="9" fontWeight="700">{label}</text>
+        <text x={c} y={c + 28} textAnchor="middle" fill="#9CA3AF" fontSize="7">of 5</text>
+      </svg>
+    );
+  }
+  if (risk >= 3) {
+    // Diamond shape — elevated but manageable
+    return (
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
+        <circle cx={c} cy={c} r={r} fill="none" stroke="#F3F4F6" strokeWidth="6" />
+        <circle cx={c} cy={c} r={r} fill="none" stroke={color} strokeWidth="6"
+          strokeDasharray={`${circ * (risk / 5) * 0.95} ${circ * (1 - (risk / 5) * 0.95)}`}
+          strokeLinecap="round" transform={`rotate(-90 ${c} ${c})`} />
+        <rect x={c - 14} y={c - 14} width="28" height="28" rx="3"
+          fill="none" stroke={color} strokeWidth="1.5" opacity="0.2"
+          transform={`rotate(45 ${c} ${c})`} />
+        <text x={c} y={c - 2} textAnchor="middle" fill={color} fontSize="30" fontWeight="900">{risk}</text>
+        <text x={c} y={c + 16} textAnchor="middle" fill={color} fontSize="9" fontWeight="700">{label}</text>
+        <text x={c} y={c + 28} textAnchor="middle" fill="#9CA3AF" fontSize="7">of 5</text>
+      </svg>
+    );
+  }
+  if (risk >= 2) {
+    // Shield shape — moderate, protected
+    return (
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
+        <circle cx={c} cy={c} r={r} fill="none" stroke="#F3F4F6" strokeWidth="6" />
+        <circle cx={c} cy={c} r={r} fill="none" stroke={color} strokeWidth="6"
+          strokeDasharray={`${circ * (risk / 5) * 0.95} ${circ * (1 - (risk / 5) * 0.95)}`}
+          strokeLinecap="round" transform={`rotate(-90 ${c} ${c})`} />
+        <path d={`M${c},${c - 18} L${c + 16},${c - 8} L${c + 16},${c + 6} Q${c + 16},${c + 18} ${c},${c + 22} Q${c - 16},${c + 18} ${c - 16},${c + 6} L${c - 16},${c - 8} Z`}
+          fill="none" stroke={color} strokeWidth="1.5" opacity="0.2" />
+        <text x={c} y={c - 2} textAnchor="middle" fill={color} fontSize="30" fontWeight="900">{risk}</text>
+        <text x={c} y={c + 16} textAnchor="middle" fill={color} fontSize="9" fontWeight="700">{label}</text>
+        <text x={c} y={c + 28} textAnchor="middle" fill="#9CA3AF" fontSize="7">of 5</text>
+      </svg>
+    );
+  }
+  // Level 1 — calm circle with checkmark
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
+      <circle cx={c} cy={c} r={r} fill="none" stroke="#F3F4F6" strokeWidth="6" />
+      <circle cx={c} cy={c} r={r} fill="none" stroke={color} strokeWidth="6"
+        strokeDasharray={`${circ * 0.19} ${circ * 0.81}`}
+        strokeLinecap="round" transform={`rotate(-90 ${c} ${c})`} />
+      <text x={c} y={c - 2} textAnchor="middle" fill={color} fontSize="30" fontWeight="900">{risk}</text>
+      <text x={c} y={c + 16} textAnchor="middle" fill={color} fontSize="9" fontWeight="700">{label}</text>
+      <text x={c} y={c + 28} textAnchor="middle" fill="#9CA3AF" fontSize="7">of 5</text>
+    </svg>
+  );
+};
 
 const RISK_SIGNALS = [
   { id: 1, category: "Physical Security", level: "critical", text: "Active daily missile & drone attacks on UAE territory, strikes within 5–10 km of JBR", action: "Depart immediately — do not wait for conditions to worsen" },
@@ -167,7 +354,8 @@ const STRIKE_TIMELINE = [
   { date: "Mar 13", event: "268 BMs, 15 CMs, 1,514 drones confirmed at UAE. Sharjah mall struck.", level: "critical" },
   { date: "Mar 14", event: "Iran names Jebel Ali 'legitimate target'. Fujairah struck (3rd).", level: "critical" },
   { date: "Mar 15", event: "Iran FM: 'We never asked for a ceasefire.' UK advisory updated.", level: "warning" },
-  { date: "Mar 16", event: "TODAY: DXB fuel tank fire (3rd airport hit). Fujairah (4th). Australia: DO NOT TRAVEL.", level: "critical" },
+  { date: "Mar 16", event: "DXB fuel tank fire (3rd airport hit). Fujairah (4th). Australia: DO NOT TRAVEL.", level: "critical" },
+  { date: "Mar 17", event: "TODAY: UAE briefly closes airspace for new attack wave. Day 18 — Israel launches 'wide-scale strikes' on Tehran. War continues.", level: "critical" },
 ];
 
 const THREAT_MAP_TARGETS = [
@@ -673,14 +861,16 @@ const NewsTicker = () => {
 
 // ─── DASHBOARD TAB ──────────────────────────────────────────────────────────
 
-const DashboardTab = ({ country, city, lang: dashLang }) => {
+const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => {
   const counts = countByLevel(RISK_SIGNALS);
   const cData = GCC_DATA[country] || GCC_DATA["UAE"];
   const cyData = cData?.cities?.[city];
-  const cRisk = cyData?.risk || cData?.riskScore || 5;
-  const rCol = cRisk >= 5 ? "#DC2626" : cRisk >= 4 ? "#D97706" : cRisk >= 3 ? "#2563EB" : "#059669";
-  const rLbl = cRisk >= 5 ? "EXTREME" : cRisk >= 4 ? "HIGH" : cRisk >= 3 ? "ELEVATED" : "MODERATE";
-  const rBg = cRisk >= 5 ? "from-red-600 to-orange-600" : cRisk >= 4 ? "from-amber-600 to-yellow-600" : cRisk >= 3 ? "from-blue-600 to-cyan-600" : "from-emerald-600 to-teal-600";
+  const baseRisk = cyData?.risk || cData?.riskScore || 5;
+  const resType = RESIDENT_TYPES[dashRes] || RESIDENT_TYPES.expat_family;
+  const cRisk = Math.max(1, Math.min(5, baseRisk + (resType.riskAdjust || 0)));
+  const rCol = cRisk >= 5 ? "#DC2626" : cRisk >= 4 ? "#D97706" : cRisk >= 3 ? "#2563EB" : cRisk >= 2 ? "#0891B2" : "#059669";
+  const rLbl = cRisk >= 5 ? "CRITICAL" : cRisk >= 4 ? "HIGH" : cRisk >= 3 ? "ELEVATED" : cRisk >= 2 ? "MODERATE" : "LOW";
+  const alertCfg = getAlertConfig(cRisk, dashRes);
   const [showRegional, setShowRegional] = useState(false);
 
   return (
@@ -689,23 +879,13 @@ const DashboardTab = ({ country, city, lang: dashLang }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Risk Gauge */}
         <Card className="p-6 flex flex-col items-center justify-center lg:col-span-1">
-          <div className="relative w-36 h-36 heartbeat">
-            <svg viewBox="0 0 120 120" className="w-full h-full">
-              <circle cx="60" cy="60" r="52" fill="none" stroke="#F3F4F6" strokeWidth="7" />
-              <circle cx="60" cy="60" r="56" fill="none" stroke={rCol} strokeWidth="1" opacity="0.15">
-                <animate attributeName="r" values="54;62;54" dur="1.5s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.25;0;0.25" dur="1.5s" repeatCount="indefinite" />
-              </circle>
-              <circle cx="60" cy="60" r="52" fill="none" stroke={rCol} strokeWidth="7"
-                strokeDasharray={`${52 * 2 * Math.PI * (cRisk / 5) * 0.95} ${52 * 2 * Math.PI * (1 - (cRisk / 5) * 0.95)}`}
-                strokeLinecap="round" transform="rotate(-90 60 60)" />
-              <text x="60" y="52" textAnchor="middle" fill={rCol} fontSize="32" fontWeight="900">{cRisk}</text>
-              <text x="60" y="70" textAnchor="middle" fill={rCol} fontSize="9" fontWeight="700">{rLbl}</text>
-              <text x="60" y="82" textAnchor="middle" fill="#9CA3AF" fontSize="7">of 5</text>
-            </svg>
+          <div className="relative w-36 h-36">
+            <RiskGaugeSVG risk={cRisk} color={rCol} label={rLbl} size={140} />
           </div>
           <p className="text-sm font-bold text-gray-800 mt-2">{cData.flag} {city || country}</p>
+          <p className="text-[10px] text-gray-500">{resType.icon} {resType.label}</p>
           <p className="text-[10px] text-gray-400">Day {CONFLICT_DAY} · {REPORT_DATE}</p>
+          {baseRisk !== cRisk && <p className="text-[9px] text-gray-400 mt-1">Base threat: {baseRisk} → Your risk: {cRisk}</p>}
         </Card>
 
         {/* Local Assessment */}
@@ -740,12 +920,12 @@ const DashboardTab = ({ country, city, lang: dashLang }) => {
         </Card>
       </div>
 
-      {/* ─── ALERT BANNER ─────────────────────────────────────────── */}
-      <div className={`bg-gradient-to-r ${rBg} text-white rounded-xl p-4 flex items-center gap-3 shadow-md`}>
-        <AlertOctagon className="w-7 h-7 flex-shrink-0 heartbeat" />
+      {/* ─── CONTEXTUAL ALERT BANNER ─────────────────────────────── */}
+      <div className={`bg-gradient-to-r ${alertCfg.bg} text-white rounded-xl p-4 flex items-start gap-3 shadow-md`}>
+        <span className="text-xl flex-shrink-0 mt-0.5">{alertCfg.icon}</span>
         <div>
-          <p className="font-extrabold text-base">IMMEDIATE DEPARTURE RECOMMENDED</p>
-          <p className="text-white/80 text-sm">Level {cRisk} {rLbl} — Both reports: active war zone. Leave now while commercial flights remain.</p>
+          <p className="font-extrabold text-base">{alertCfg.title}</p>
+          <p className="text-white/80 text-sm mt-1">{alertCfg.msg}</p>
         </div>
       </div>
 
@@ -844,12 +1024,12 @@ const DashboardTab = ({ country, city, lang: dashLang }) => {
       {/* STATS */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatBox label="Conflict Day" value={CONFLICT_DAY} sub="Since Feb 28" level="critical" />
-        <StatBox label="Projectiles at UAE" value="1,800+" sub="268 BMs · 1,514 drones" level="critical" />
-        <StatBox label="Intercept Rate" value="90–95%" sub="Depleting daily" level="warning" />
+        <StatBox label="Projectiles at UAE" value="1,867+" sub="285 BMs · 1,567 drones" level="critical" />
+        <StatBox label="Intercept Rate" value="90%+" sub="Depleting daily" level="warning" />
         <StatBox label="Hormuz Traffic" value="–94%" sub="Near zero transits" level="critical" />
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatBox label="UAE Casualties" value="6 / 141" sub="Killed / Injured" level="critical" />
+        <StatBox label="UAE Casualties" value="7 / 145" sub="Killed / Injured" level="critical" />
         <StatBox label="Oil Price" value="$104+" sub="From $67 (↑55%)" level="warning" />
         <StatBox label="Ceasefire" value="None" sub="No talks · No channel" level="critical" />
         <StatBox label="Safe Return" value="Aug–Sep" sub="Earliest Q3 2026" level="neutral" />
@@ -2078,14 +2258,18 @@ export default function App() {
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [selCountry, setSelCountry] = useState("UAE");
   const [selCity, setSelCity] = useState("Dubai - JBR");
+  const [resStatus, setResStatus] = useState("expat_family");
 
   useEffect(() => { const i = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(i); }, []);
 
   const countryData = GCC_DATA[selCountry];
   const cityData = countryData?.cities?.[selCity];
-  const cityRisk = cityData?.risk || countryData?.riskScore || 5;
-  const riskColor = cityRisk >= 5 ? "#DC2626" : cityRisk >= 4 ? "#D97706" : cityRisk >= 3 ? "#2563EB" : "#059669";
-  const riskLabel = cityRisk >= 5 ? "EXTREME" : cityRisk >= 4 ? "HIGH" : cityRisk >= 3 ? "ELEVATED" : "MODERATE";
+  const baseRisk = cityData?.risk || countryData?.riskScore || 5;
+  const resTypeData = RESIDENT_TYPES[resStatus];
+  const cityRisk = Math.max(1, Math.min(5, baseRisk + (resTypeData?.riskAdjust || 0)));
+  const riskColor = cityRisk >= 5 ? "#DC2626" : cityRisk >= 4 ? "#D97706" : cityRisk >= 3 ? "#2563EB" : cityRisk >= 2 ? "#0891B2" : "#059669";
+  const riskLabel = cityRisk >= 5 ? "CRITICAL" : cityRisk >= 4 ? "HIGH" : cityRisk >= 3 ? "ELEVATED" : cityRisk >= 2 ? "MODERATE" : "LOW";
+  const alertConfig = getAlertConfig(cityRisk, resStatus);
   const isRTL = ["ar", "ur", "fa"].includes(lang);
 
   const keySignals = [
@@ -2175,6 +2359,13 @@ export default function App() {
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
+          <ChevronRight className="w-3 h-3 text-gray-300 flex-shrink-0" />
+          <select value={resStatus} onChange={e => setResStatus(e.target.value)}
+            className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
+            {Object.entries(RESIDENT_TYPES).map(([k, v]) => (
+              <option key={k} value={k}>{v.icon} {v.label}</option>
+            ))}
+          </select>
           {cityData && (
             <Badge level={cityData.signal} className="ml-1">L{cityData.risk} — {cityData.risk >= 5 ? t("critical", lang) : cityData.risk >= 4 ? t("warning", lang) : t("stable", lang)}</Badge>
           )}
@@ -2204,26 +2395,16 @@ export default function App() {
           <div className="p-5 space-y-5">
             {/* Heartbeat Gauge */}
             <div className="flex justify-center">
-              <div className="relative w-28 h-28 heartbeat">
-                <svg viewBox="0 0 120 120" className="w-full h-full">
-                  <circle cx="60" cy="60" r="52" fill="none" stroke="#F3F4F6" strokeWidth="8" />
-                  <circle cx="60" cy="60" r="56" fill="none" stroke={riskColor} strokeWidth="1" opacity="0.2">
-                    <animate attributeName="r" values="54;60;54" dur="1.5s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.3;0;0.3" dur="1.5s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="60" cy="60" r="52" fill="none" stroke={riskColor} strokeWidth="8"
-                    strokeDasharray={`${52 * 2 * Math.PI * (cityRisk / 5) * 0.95} ${52 * 2 * Math.PI * (1 - (cityRisk / 5) * 0.95)}`}
-                    strokeLinecap="round" transform="rotate(-90 60 60)" />
-                  <text x="60" y="55" textAnchor="middle" fill={riskColor} fontSize="28" fontWeight="800">{cityRisk}</text>
-                  <text x="60" y="72" textAnchor="middle" fill={riskColor} fontSize="9" fontWeight="700">{riskLabel}</text>
-                </svg>
+              <div className="relative w-36 h-36">
+                <RiskGaugeSVG risk={cityRisk} color={riskColor} label={riskLabel} size={140} />
               </div>
             </div>
 
-            {/* Location Info */}
+            {/* Location + Resident Info */}
             <div className="text-center">
               <p className="text-xs font-semibold text-gray-700">{countryData?.flag} {selCity || selCountry}</p>
-              <p className="text-[10px] text-gray-400">{REPORT_DATE} · {t("day", lang)} {CONFLICT_DAY}</p>
+              <p className="text-[10px] text-gray-500">{resTypeData?.icon} {resTypeData?.label}</p>
+              <p className="text-[10px] text-gray-400">{REPORT_DATE} · Day {CONFLICT_DAY}</p>
             </div>
 
             {/* Location-Specific Risk Card */}
@@ -2260,10 +2441,10 @@ export default function App() {
               </div>
             </div>
 
-            {/* Verdict — softened from pure red */}
-            <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-              <p className="text-xs font-bold text-orange-800 mb-1">⚠️ {t("leaveNow", lang)}</p>
-              <p className="text-[10px] text-orange-700">{t("departureDesc", lang)}</p>
+            {/* Verdict — contextual per resident type */}
+            <div className={`rounded-xl p-4 border ${cityRisk >= 4 ? "bg-orange-50 border-orange-200" : cityRisk >= 3 ? "bg-blue-50 border-blue-200" : "bg-emerald-50 border-emerald-200"}`}>
+              <p className={`text-xs font-bold mb-1 ${cityRisk >= 4 ? "text-orange-800" : cityRisk >= 3 ? "text-blue-800" : "text-emerald-800"}`}>{alertConfig.icon} {alertConfig.title}</p>
+              <p className={`text-[10px] ${cityRisk >= 4 ? "text-orange-700" : cityRisk >= 3 ? "text-blue-700" : "text-emerald-700"}`}>{resTypeData?.shortAdvice}</p>
             </div>
 
             {/* Return Criteria */}
@@ -2283,7 +2464,7 @@ export default function App() {
         {sidebarOpen && <div className="fixed inset-0 bg-black/20 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
         <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl">
-          {tab === "dashboard" && <DashboardTab country={selCountry} city={selCity} lang={lang} />}
+          {tab === "dashboard" && <DashboardTab country={selCountry} city={selCity} lang={lang} resStatus={resStatus} />}
           {tab === "analysis" && <FullAnalysisTab />}
           {tab === "ai" && <AIAnalystTab />}
           {tab === "intel" && <LiveIntelTab />}
