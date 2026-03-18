@@ -32,11 +32,11 @@ const LANGUAGES = [
 ];
 
 const T = {
-  en: { dashboard: "Dashboard", analysis: "Full Analysis", ai: "AI Analyst", intel: "Live Intel", emergency: "Emergency", riskLevel: "Risk Level", leaveNow: "LEAVE IMMEDIATELY", day: "Day", noceasefire: "No Ceasefire", signals: "Key Signals", verdict: "Verdict", conflictDay: "Conflict Day", since: "Since Feb 28", projectiles: "Projectiles at UAE", intercept: "Intercept Rate", depleting: "Depleting daily", hormuz: "Hormuz Traffic", nearZero: "Near zero transits", casualties: "UAE Casualties", killed: "Killed", injured: "Injured", oil: "Oil Price", ceasefire: "Ceasefire", noTalks: "No talks · No channel", safeReturn: "Safe Return", earliest: "Earliest Q3 2026", signalSummary: "Signal Summary", extracted: "extracted", critical: "Critical", warning: "Warning", stable: "Stable", info: "Info", riskByDomain: "Risk by Domain", departure: "IMMEDIATE DEPARTURE RECOMMENDED", departureDesc: "Both reports: active war zone. Leave now while commercial flights remain.", selectLocation: "Select your location for localized risk assessment", country: "Country", city: "City", localRisk: "Local Risk Assessment", distToStrike: "Distance to nearest confirmed strike", distToTarget: "Distance to nearest declared target", localAdvisory: "Advisory", shelterNote: "Shelter guidance", evacuationRoute: "Primary evacuation route", allGCC: "All GCC (Overview)" },
-  ar: { dashboard: "لوحة القيادة", analysis: "التحليل الكامل", ai: "محلل الذكاء", intel: "معلومات مباشرة", emergency: "طوارئ", riskLevel: "مستوى الخطر", leaveNow: "غادر فوراً", day: "يوم", noceasefire: "لا وقف لإطلاق النار", signals: "إشارات رئيسية", verdict: "الحكم", conflictDay: "يوم النزاع", since: "منذ ٢٨ فبراير", projectiles: "مقذوفات على الإمارات", intercept: "معدل الاعتراض", depleting: "يتناقص يومياً", hormuz: "حركة هرمز", nearZero: "قرب الصفر", casualties: "ضحايا الإمارات", killed: "قتلى", injured: "جرحى", oil: "سعر النفط", ceasefire: "وقف إطلاق النار", noTalks: "لا محادثات", safeReturn: "العودة الآمنة", earliest: "أقرب وقت Q3 2026", signalSummary: "ملخص الإشارات", extracted: "مستخرجة", critical: "حرج", warning: "تحذير", stable: "مستقر", info: "معلومات", riskByDomain: "المخاطر حسب المجال", departure: "يوصى بالمغادرة الفورية", departureDesc: "كلا التقريرين: منطقة حرب نشطة. غادر الآن.", selectLocation: "اختر موقعك لتقييم المخاطر المحلية", country: "الدولة", city: "المدينة", localRisk: "تقييم المخاطر المحلية", distToStrike: "المسافة إلى أقرب ضربة مؤكدة", distToTarget: "المسافة إلى أقرب هدف معلن", localAdvisory: "التحذير", shelterNote: "إرشادات الملجأ", evacuationRoute: "مسار الإخلاء الرئيسي", allGCC: "جميع دول الخليج" },
+  en: { dashboard: "Dashboard", analysis: "Full Analysis", ai: "AI Analyst", intel: "Live Intel", emergency: "Emergency", tweets: "Live Tweets", riskLevel: "Risk Level", leaveNow: "LEAVE IMMEDIATELY", day: "Day", noceasefire: "No Ceasefire", signals: "Key Signals", verdict: "Verdict", conflictDay: "Conflict Day", since: "Since Feb 28", projectiles: "Projectiles at UAE", intercept: "Intercept Rate", depleting: "Depleting daily", hormuz: "Hormuz Traffic", nearZero: "Near zero transits", casualties: "UAE Casualties", killed: "Killed", injured: "Injured", oil: "Oil Price", ceasefire: "Ceasefire", noTalks: "No talks · No channel", safeReturn: "Safe Return", earliest: "Earliest Q3 2026", signalSummary: "Signal Summary", extracted: "extracted", critical: "Critical", warning: "Warning", stable: "Stable", info: "Info", riskByDomain: "Risk by Domain", departure: "IMMEDIATE DEPARTURE RECOMMENDED", departureDesc: "Both reports: active war zone. Leave now while commercial flights remain.", selectLocation: "Select your location for localized risk assessment", country: "Country", city: "City", localRisk: "Local Risk Assessment", distToStrike: "Distance to nearest confirmed strike", distToTarget: "Distance to nearest declared target", localAdvisory: "Advisory", shelterNote: "Shelter guidance", evacuationRoute: "Primary evacuation route", allGCC: "All GCC (Overview)" },
+  ar: { dashboard: "لوحة القيادة", analysis: "التحليل الكامل", ai: "محلل الذكاء", intel: "معلومات مباشرة", emergency: "طوارئ", tweets: "تغريدات مباشرة", riskLevel: "مستوى الخطر", leaveNow: "غادر فوراً", day: "يوم", noceasefire: "لا وقف لإطلاق النار", signals: "إشارات رئيسية", verdict: "الحكم", conflictDay: "يوم النزاع", since: "منذ ٢٨ فبراير", projectiles: "مقذوفات على الإمارات", intercept: "معدل الاعتراض", depleting: "يتناقص يومياً", hormuz: "حركة هرمز", nearZero: "قرب الصفر", casualties: "ضحايا الإمارات", killed: "قتلى", injured: "جرحى", oil: "سعر النفط", ceasefire: "وقف إطلاق النار", noTalks: "لا محادثات", safeReturn: "العودة الآمنة", earliest: "أقرب وقت Q3 2026", signalSummary: "ملخص الإشارات", extracted: "مستخرجة", critical: "حرج", warning: "تحذير", stable: "مستقر", info: "معلومات", riskByDomain: "المخاطر حسب المجال", departure: "يوصى بالمغادرة الفورية", departureDesc: "كلا التقريرين: منطقة حرب نشطة. غادر الآن.", selectLocation: "اختر موقعك لتقييم المخاطر المحلية", country: "الدولة", city: "المدينة", localRisk: "تقييم المخاطر المحلية", distToStrike: "المسافة إلى أقرب ضربة مؤكدة", distToTarget: "المسافة إلى أقرب هدف معلن", localAdvisory: "التحذير", shelterNote: "إرشادات الملجأ", evacuationRoute: "مسار الإخلاء الرئيسي", allGCC: "جميع دول الخليج" },
   hi: { dashboard: "डैशबोर्ड", analysis: "पूर्ण विश्लेषण", ai: "AI विश्लेषक", intel: "लाइव इंटेल", emergency: "आपातकाल", riskLevel: "जोखिम स्तर", leaveNow: "तुरंत निकलें", day: "दिन", noceasefire: "कोई युद्धविराम नहीं", signals: "प्रमुख संकेत", verdict: "निर्णय", conflictDay: "संघर्ष का दिन", since: "28 फ़रवरी से", projectiles: "UAE पर प्रक्षेपास्त्र", intercept: "अवरोधन दर", depleting: "दैनिक कमी", hormuz: "होर्मुज़ यातायात", nearZero: "लगभग शून्य", casualties: "UAE हताहत", killed: "मृत", injured: "घायल", oil: "तेल की कीमत", ceasefire: "युद्धविराम", noTalks: "कोई वार्ता नहीं", safeReturn: "सुरक्षित वापसी", earliest: "जल्द से जल्द Q3 2026", signalSummary: "संकेत सारांश", extracted: "निकाले गए", critical: "गंभीर", warning: "चेतावनी", stable: "स्थिर", info: "जानकारी", riskByDomain: "क्षेत्र अनुसार जोखिम", departure: "तत्काल प्रस्थान की सिफारिश", departureDesc: "दोनों रिपोर्ट: सक्रिय युद्ध क्षेत्र। अभी निकलें।", selectLocation: "स्थानीय जोखिम के लिए अपना स्थान चुनें", country: "देश", city: "शहर", localRisk: "स्थानीय जोखिम", distToStrike: "निकटतम हमले की दूरी", distToTarget: "निकटतम लक्ष्य की दूरी", localAdvisory: "सलाह", shelterNote: "आश्रय मार्गदर्शन", evacuationRoute: "निकासी मार्ग", allGCC: "सभी GCC (अवलोकन)" },
   ur: { dashboard: "ڈیش بورڈ", analysis: "مکمل تجزیہ", ai: "AI تجزیہ کار", intel: "لائیو انٹیل", emergency: "ایمرجنسی", riskLevel: "خطرے کی سطح", leaveNow: "فوری طور پر نکلیں", day: "دن", noceasefire: "جنگ بندی نہیں", signals: "اہم اشارے", verdict: "فیصلہ", conflictDay: "تنازعے کا دن", since: "28 فروری سے", projectiles: "UAE پر میزائل", intercept: "روک کی شرح", depleting: "روزانہ کمی", hormuz: "ہرمز ٹریفک", nearZero: "تقریباً صفر", casualties: "UAE ہلاکتیں", killed: "ہلاک", injured: "زخمی", oil: "تیل کی قیمت", ceasefire: "جنگ بندی", noTalks: "کوئی مذاکرات نہیں", safeReturn: "محفوظ واپسی", earliest: "جلد از جلد Q3 2026", signalSummary: "اشارے کا خلاصہ", extracted: "نکالے گئے", critical: "سنگین", warning: "انتباہ", stable: "مستحکم", info: "معلومات", riskByDomain: "شعبے کے مطابق خطرہ", departure: "فوری روانگی کی سفارش", departureDesc: "دونوں رپورٹیں: فعال جنگی علاقہ۔ ابھی نکلیں۔", selectLocation: "مقامی خطرے کے لیے اپنا مقام منتخب کریں", country: "ملک", city: "شہر", localRisk: "مقامی خطرے کا جائزہ", distToStrike: "قریب ترین حملے کا فاصلہ", distToTarget: "قریب ترین ہدف کا فاصلہ", localAdvisory: "مشورہ", shelterNote: "پناہ گاہ ہدایات", evacuationRoute: "انخلاء کا راستہ", allGCC: "تمام خلیجی ممالک" },
-  tl: { dashboard: "Dashboard", analysis: "Buong Pagsusuri", ai: "AI Analyst", intel: "Live Intel", emergency: "Emergency", riskLevel: "Antas ng Panganib", leaveNow: "UMALIS AGAD", day: "Araw", noceasefire: "Walang ceasefire", signals: "Mga Senyales", verdict: "Hatol", conflictDay: "Araw ng labanan", since: "Mula Feb 28", projectiles: "Mga Projectile sa UAE", intercept: "Intercept Rate", depleting: "Bumababa araw-araw", hormuz: "Hormuz Traffic", nearZero: "Halos zero", casualties: "UAE Casualties", killed: "Namatay", injured: "Nasugatan", oil: "Presyo ng Langis", ceasefire: "Ceasefire", noTalks: "Walang usapan", safeReturn: "Ligtas na Balik", earliest: "Pinakamaagang Q3 2026", signalSummary: "Buod ng Senyales", extracted: "nakuha", critical: "Kritikal", warning: "Babala", stable: "Stable", info: "Info", riskByDomain: "Panganib ayon sa Larangan", departure: "INIREREKOMENDANG UMALIS AGAD", departureDesc: "Parehong ulat: aktibong war zone. Umalis na.", selectLocation: "Pumili ng lokasyon", country: "Bansa", city: "Lungsod", localRisk: "Lokal na Panganib", allGCC: "Lahat ng GCC" },
+  tl: { dashboard: "Dashboard", analysis: "Buong Pagsusuri", ai: "AI Analyst", intel: "Live Intel", emergency: "Emergency", tweets: "Live Tweets", riskLevel: "Antas ng Panganib", leaveNow: "UMALIS AGAD", day: "Araw", noceasefire: "Walang ceasefire", signals: "Mga Senyales", verdict: "Hatol", conflictDay: "Araw ng labanan", since: "Mula Feb 28", projectiles: "Mga Projectile sa UAE", intercept: "Intercept Rate", depleting: "Bumababa araw-araw", hormuz: "Hormuz Traffic", nearZero: "Halos zero", casualties: "UAE Casualties", killed: "Namatay", injured: "Nasugatan", oil: "Presyo ng Langis", ceasefire: "Ceasefire", noTalks: "Walang usapan", safeReturn: "Ligtas na Balik", earliest: "Pinakamaagang Q3 2026", signalSummary: "Buod ng Senyales", extracted: "nakuha", critical: "Kritikal", warning: "Babala", stable: "Stable", info: "Info", riskByDomain: "Panganib ayon sa Larangan", departure: "INIREREKOMENDANG UMALIS AGAD", departureDesc: "Parehong ulat: aktibong war zone. Umalis na.", selectLocation: "Pumili ng lokasyon", country: "Bansa", city: "Lungsod", localRisk: "Lokal na Panganib", allGCC: "Lahat ng GCC" },
   bn: { dashboard: "ড্যাশবোর্ড", analysis: "সম্পূর্ণ বিশ্লেষণ", ai: "AI বিশ্লেষক", intel: "লাইভ ইন্টেল", emergency: "জরুরি", riskLevel: "ঝুঁকির মাত্রা", leaveNow: "এখনই চলে যান", day: "দিন", noceasefire: "যুদ্ধবিরতি নেই", signals: "মূল সংকেত", verdict: "রায়", departure: "অবিলম্বে প্রস্থানের সুপারিশ", departureDesc: "উভয় রিপোর্ট: সক্রিয় যুদ্ধক্ষেত্র। এখনই চলে যান।", selectLocation: "স্থানীয় ঝুঁকির জন্য আপনার অবস্থান নির্বাচন করুন", country: "দেশ", city: "শহর", allGCC: "সমস্ত GCC", conflictDay: "সংঘাতের দিন", since: "ফেব্রুয়ারি ২৮ থেকে", critical: "গুরুতর", warning: "সতর্কতা", stable: "স্থিতিশীল", info: "তথ্য" },
   ml: { dashboard: "ഡാഷ്ബോർഡ്", analysis: "പൂർണ വിശകലനം", ai: "AI അനലിസ്റ്റ്", intel: "ലൈവ് ഇന്റൽ", emergency: "അടിയന്തരം", riskLevel: "അപകട നില", leaveNow: "ഉടൻ പുറപ്പെടുക", day: "ദിവസം", noceasefire: "വെടിനിർത്തൽ ഇല്ല", signals: "പ്രധാന സിഗ്നലുകൾ", verdict: "വിധി", departure: "ഉടനടി പുറപ്പെടൽ ശുപാർശ", departureDesc: "രണ്ട് റിപ്പോർട്ടുകളും: സജീവ യുദ്ധമേഖല. ഇപ്പോൾ പുറപ്പെടുക.", country: "രാജ്യം", city: "നഗരം", allGCC: "മുഴുവൻ GCC", conflictDay: "സംഘർഷ ദിനം", critical: "ഗുരുതരം", warning: "മുന്നറിയിപ്പ്" },
   fa: { dashboard: "داشبورد", analysis: "تحلیل کامل", ai: "تحلیلگر هوش مصنوعی", intel: "اطلاعات زنده", emergency: "اضطراری", riskLevel: "سطح خطر", leaveNow: "فوراً خارج شوید", day: "روز", noceasefire: "بدون آتش‌بس", signals: "سیگنال‌های کلیدی", verdict: "حکم", departure: "توصیه به خروج فوری", departureDesc: "هر دو گزارش: منطقه جنگی فعال. همین الان خارج شوید.", country: "کشور", city: "شهر", allGCC: "همه شورای همکاری خلیج", conflictDay: "روز درگیری", critical: "بحرانی", warning: "هشدار" },
@@ -100,9 +100,62 @@ const GCC_DATA = {
       "Salalah": { risk: 2, nearestStrike: "Far from confirmed strikes", nearestTarget: "Minimal military infrastructure", shelter: "Standard precautions.", evacRoute: "Salalah Airport (operational)", signal: "positive", notes: "Southern Oman, ~10h from Dubai. Greatest distance from Gulf conflict zone. Viable evacuation destination." },
     }
   },
+  // ─── WIDER MIDDLE EAST ─────────────────────────────────────────
+  Jordan: {
+    name: "Jordan", flag: "🇯🇴", riskScore: 3, riskLabel: "ELEVATED",
+    advisory: "Level 3 — Airspace violations, missile interceptions over Amman. 28 injuries reported. US embassy staff evacuated.",
+    cities: {
+      "Amman": { risk: 3, nearestStrike: "Missile interceptions over Amman airspace", nearestTarget: "US military facilities in Jordan", shelter: "Follow civil defense alerts.", evacRoute: "Queen Alia International Airport (operational)", signal: "warning", notes: "Jordanian defenses intercepted missiles over Amman. 28 injuries, no deaths. US-Jordanian embassy evacuated. Jordan has geographic buffer but within Iranian missile range." },
+      "Aqaba": { risk: 2, nearestStrike: "No confirmed strikes", nearestTarget: "Limited military presence", shelter: "Standard precautions.", evacRoute: "Aqaba Airport, land border to Israel/Egypt", signal: "positive", notes: "Southern Jordan, Red Sea coast. Distance from primary conflict zone. Tourism hub but Houthi Red Sea threat exists." },
+    }
+  },
+  Iraq: {
+    name: "Iraq", flag: "🇮🇶", riskScore: 4, riskLabel: "HIGH",
+    advisory: "Level 4 — 29 killed. Erbil Airport struck. PMF HQ targeted. Baghdad Green Zone explosions.",
+    cities: {
+      "Baghdad": { risk: 4, nearestStrike: "Green Zone explosions, PMF HQ struck", nearestTarget: "US Embassy compound, military sites", shelter: "Reinforced structures. Follow security advisories.", evacRoute: "Baghdad Airport (limited operations)", signal: "critical", notes: "Multiple explosions near Green Zone. Pro-Iran PMF forces targeted by US strikes. Complex multi-faction security environment." },
+      "Erbil": { risk: 4, nearestStrike: "Erbil Airport directly struck", nearestTarget: "US/coalition military base at Erbil airport", shelter: "Civil defense guidance.", evacRoute: "Erbil Airport (intermittent) or land to Turkey", signal: "critical", notes: "Airport guard killed. French warrant officer killed. Kurdish region caught between US-Iran crossfire." },
+      "Basra": { risk: 3, nearestStrike: "Oil infrastructure at risk", nearestTarget: "Basra oil terminals, Shatt al-Arab waterway", shelter: "Follow local guidance.", evacRoute: "Basra Airport or drive to Kuwait", signal: "warning", notes: "Southern Iraq, close to Iran border. Major oil export hub at risk from Hormuz-adjacent disruption." },
+    }
+  },
+  Lebanon: {
+    name: "Lebanon", flag: "🇱🇧", riskScore: 5, riskLabel: "CRITICAL",
+    advisory: "Level 5 — Active Israeli ground invasion. 850+ killed, 1M+ displaced. Hezbollah front open since March 2.",
+    cities: {
+      "Beirut": { risk: 5, nearestStrike: "Dahiyeh suburbs under sustained Israeli bombardment", nearestTarget: "Hezbollah HQ, southern suburbs, port area", shelter: "Seek reinforced structures. Avoid southern suburbs entirely.", evacRoute: "Rafic Hariri Airport (intermittent) or land to Syria/Turkey", signal: "critical", notes: "Israel conducting largest ground invasion since 2006. Beirut southern suburbs devastated. 20% of population displaced. Active urban warfare zone." },
+      "Tripoli": { risk: 3, nearestStrike: "Northern Lebanon less targeted", nearestTarget: "Limited military infrastructure", shelter: "Standard precautions.", evacRoute: "Land route to Syria or sea evacuation", signal: "warning", notes: "Northern Lebanon provides relative buffer from southern front. Humanitarian aid corridor." },
+    }
+  },
+  Syria: {
+    name: "Syria", flag: "🇸🇾", riskScore: 4, riskLabel: "HIGH",
+    advisory: "Level 4 — Caught between multiple fronts. Israeli strikes on Iranian assets. US bases targeted.",
+    cities: {
+      "Damascus": { risk: 4, nearestStrike: "Israeli strikes on Iranian military assets near Damascus", nearestTarget: "Iranian/Hezbollah facilities, military airports", shelter: "Reinforced structures.", evacRoute: "Damascus Airport (very limited) or land to Lebanon/Jordan", signal: "critical", notes: "Israeli strikes targeting Iranian assets in Syria intensified. Complex multi-faction environment — Russian, Iranian, Turkish, US, Israeli forces all present." },
+    }
+  },
+  Israel: {
+    name: "Israel", flag: "🇮🇱", riskScore: 5, riskLabel: "CRITICAL",
+    advisory: "Level 5 — Direct Iranian missile exchange. 15 killed, 3,530+ injured. Simultaneous Lebanon ground invasion.",
+    cities: {
+      "Tel Aviv": { risk: 5, nearestStrike: "Multiple Iranian ballistic missile impacts in central Israel", nearestTarget: "Primary Iranian target zone — 38.5% of all attack waves", shelter: "Bomb shelters mandatory. Iron Dome active.", evacRoute: "Ben Gurion Airport (intermittent operations)", signal: "critical", notes: "Main target of Iranian missile barrages. Beit Shemesh strike killed 9. Iron Dome and Arrow systems active but interceptor depletion concern." },
+      "Haifa": { risk: 5, nearestStrike: "Hezbollah rockets from Lebanon + Iranian missiles", nearestTarget: "Northern Israel under dual threat", shelter: "Bomb shelters. Follow Home Front Command.", evacRoute: "Limited — northern routes to Tel Aviv", signal: "critical", notes: "Dual threat from Iran (east) and Hezbollah (north). Rocket barrages on upper Galilee and Nahariya ongoing." },
+    }
+  },
+  Egypt: {
+    name: "Egypt", flag: "🇪🇬", riskScore: 2, riskLabel: "MODERATE",
+    advisory: "Level 2 — Not directly targeted. Suez Canal disruption risk from Houthi escalation. Regional economic spillover.",
+    cities: {
+      "Cairo": { risk: 2, nearestStrike: "No confirmed strikes on Egypt", nearestTarget: "Suez Canal (Houthi disruption risk)", shelter: "Standard precautions.", evacRoute: "Cairo International Airport (fully operational)", signal: "positive", notes: "Egypt not a party to conflict. Main risk is economic spillover and Suez Canal disruption if Houthis escalate. Functioning as refugee/evacuation hub." },
+    }
+  },
+  Yemen: {
+    name: "Yemen", flag: "🇾🇪", riskScore: 4, riskLabel: "HIGH",
+    advisory: "Level 4 — Houthi forces on standby. Full entry into war assessed 65-75% within 4-8 weeks. Israeli strikes killed senior leaders in 2025.",
+    cities: {
+      "Sanaa": { risk: 4, nearestStrike: "Israeli strikes in Aug-Sep 2025 killed Houthi PM", nearestTarget: "Houthi military infrastructure", shelter: "Limited infrastructure.", evacRoute: "Sanaa Airport (very limited) or land routes", signal: "critical", notes: "Houthi-controlled. Not yet fully entered 2026 war but assessed as almost certain within weeks. Israeli strikes killed senior leaders in 2025. Dual chokepoint crisis risk." },
+    }
+  },
 };
-
-// ─── RESIDENT STATUS TYPES ──────────────────────────────────────────────────
 
 const RESIDENT_TYPES = {
   tourist: {
@@ -161,7 +214,7 @@ const RESIDENT_TYPES = {
   },
 };
 
-// Get the tier based on adjusted risk score
+// ─── RISK HELPERS ───────────────────────────────────────────────────────────
 const getTier = (adjustedRisk) => {
   if (adjustedRisk >= 5) return 3; // EVACUATE level
   if (adjustedRisk >= 4) return 2; // CONSIDER RELOCATING
@@ -941,8 +994,8 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
           className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-semibold text-gray-800">GCC Regional Risk Overview</span>
-            <span className="text-[10px] text-gray-400">6 countries · {Object.values(GCC_DATA).reduce((a, c) => a + Object.keys(c.cities).length, 0)} cities</span>
+            <span className="text-sm font-semibold text-gray-800">GCC & Middle East Risk Overview</span>
+            <span className="text-[10px] text-gray-400">{Object.keys(GCC_DATA).length} countries · {Object.values(GCC_DATA).reduce((a, c) => a + Object.keys(c.cities).length, 0)} cities</span>
           </div>
           {showRegional ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
         </button>
@@ -2172,6 +2225,161 @@ const OsintSourcesPanel = () => {
 
 // ─── EMERGENCY TAB ──────────────────────────────────────────────────────────
 
+// ─── LIVE TWEETS TAB ──────────────────────────────────────────────────────
+
+const TWEET_FEEDS = [
+  { category: "🚨 Emergency & Government", accounts: [
+    { handle: "NCEmergencyUAE", name: "NCEMA UAE", desc: "Shelter alerts, all-clear signals" },
+    { handle: "HHShkMohd", name: "HH Sheikh Mohammed", desc: "UAE Vice President & PM" },
+    { handle: "MBZNews", name: "MBZ News", desc: "UAE President's office" },
+    { handle: "DXBMediaOffice", name: "Dubai Media Office", desc: "Official Dubai updates" },
+    { handle: "ADMediaOffice", name: "Abu Dhabi Media Office", desc: "Official Abu Dhabi updates" },
+    { handle: "UAEGov", name: "UAE Government", desc: "Federal government updates" },
+    { handle: "MoFAICUAE", name: "UAE Foreign Ministry", desc: "Diplomatic updates" },
+    { handle: "DubaiPoliceHQ", name: "Dubai Police", desc: "Security & safety" },
+  ]},
+  { category: "🎖️ Military & Defense", accounts: [
+    { handle: "ABORNECOMMAND", name: "UAE Armed Forces", desc: "Military operations" },
+    { handle: "CENTCOM", name: "U.S. CENTCOM", desc: "US military operations — Epic Fury updates" },
+    { handle: "DeptofDefense", name: "U.S. Pentagon", desc: "Defense Department updates" },
+    { handle: "SecDef", name: "Secretary of Defense", desc: "Pete Hegseth updates" },
+    { handle: "IDF", name: "Israel Defense Forces", desc: "Israeli military operations" },
+    { handle: "USNavy", name: "U.S. Navy", desc: "Naval operations, carrier groups" },
+    { handle: "NATO", name: "NATO", desc: "Alliance response" },
+  ]},
+  { category: "🔍 OSINT & Analysts", accounts: [
+    { handle: "sentdefender", name: "OSINTdefender", desc: "Real-time missile alerts, verified strikes" },
+    { handle: "Osint613", name: "OSINT 613", desc: "Middle East conflict OSINT" },
+    { handle: "AuroraIntel", name: "Aurora Intel", desc: "Flight tracking, military aviation" },
+    { handle: "IntelCrab", name: "IntelCrab", desc: "Conflict mapping" },
+    { handle: "Osinttechnical", name: "OSINT Technical", desc: "Weapons analysis, intercept verification" },
+    { handle: "Liveuamap", name: "Liveuamap", desc: "Interactive conflict map" },
+    { handle: "GeoConfirmed", name: "GeoConfirmed", desc: "Geolocated strike verification" },
+    { handle: "CriticalThreats", name: "Critical Threats", desc: "Daily Iran situation updates" },
+    { handle: "TheWarZone_", name: "The War Zone", desc: "Military analysis" },
+  ]},
+  { category: "📰 Journalists & Media", accounts: [
+    { handle: "khaleejtimes", name: "Khaleej Times", desc: "UAE's leading English daily" },
+    { handle: "AJEnglish", name: "Al Jazeera English", desc: "Middle East news" },
+    { handle: "Reuters", name: "Reuters", desc: "Global wire service" },
+    { handle: "BarakRavid", name: "Barak Ravid", desc: "Axios — Israeli diplomatic source" },
+    { handle: "FarnazFassihi", name: "Farnaz Fassihi", desc: "NYT Iran correspondent" },
+    { handle: "joyce_karam", name: "Joyce Karam", desc: "The National — Washington" },
+    { handle: "Charles_Lister", name: "Charles Lister", desc: "MEI Syria/Levant analyst" },
+    { handle: "AliVaez", name: "Ali Vaez", desc: "ICG Iran Project Director" },
+    { handle: "WashInstitute", name: "Washington Institute", desc: "Gulf air defense analysis" },
+    { handle: "flightradar24", name: "Flightradar24", desc: "Real-time flight tracking" },
+    { handle: "MarineTraffic", name: "MarineTraffic", desc: "Vessel tracking — Hormuz" },
+  ]},
+];
+
+const LiveTweetsTab = () => {
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const iframeRef = useRef(null);
+
+  const allPriority = ["NCEmergencyUAE", "CENTCOM", "sentdefender", "khaleejtimes", "DXBMediaOffice", "IDF", "AJEnglish", "flightradar24"];
+
+  return (
+    <div className="space-y-4">
+      {/* Priority Quick Access */}
+      <Card className="p-4">
+        <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-3">⚡ Priority Feeds — Tap to view live</p>
+        <div className="flex flex-wrap gap-2">
+          {allPriority.map(handle => {
+            const acc = TWEET_FEEDS.flatMap(c => c.accounts).find(a => a.handle === handle);
+            return (
+              <button key={handle} onClick={() => setSelectedAccount(handle)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  selectedAccount === handle
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "bg-white text-gray-600 border border-gray-200 hover:bg-blue-50"
+                }`}>
+                <span>@{handle}</span>
+              </button>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* Embedded Timeline */}
+      {selectedAccount && (
+        <Card className="overflow-hidden">
+          <div className="flex items-center justify-between p-3 border-b border-gray-100 bg-gray-50">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <span className="text-blue-600 text-xs font-bold">𝕏</span>
+              </div>
+              <div>
+                <p className="text-sm font-bold text-gray-800">@{selectedAccount}</p>
+                <p className="text-[10px] text-gray-500">{TWEET_FEEDS.flatMap(c => c.accounts).find(a => a.handle === selectedAccount)?.desc}</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <a href={`https://x.com/${selectedAccount}`} target="_blank" rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-black text-white text-xs font-semibold hover:bg-gray-800 transition-colors flex items-center gap-1">
+                Open on 𝕏 <ExternalLink className="w-3 h-3" />
+              </a>
+              <button onClick={() => setSelectedAccount(null)}
+                className="p-1.5 rounded-lg hover:bg-gray-200 transition-colors">
+                <X className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
+          </div>
+          <div className="h-[500px] bg-white">
+            <iframe
+              ref={iframeRef}
+              src={`https://syndication.twitter.com/srv/timeline-profile/screen-name/${selectedAccount}?dnt=true&embedId=twitter-widget-0&frame=false&hideBorder=true&hideFooter=true&hideHeader=true&hideScrollBar=false&lang=en&origin=https://gcc-war-room.vercel.app&showHeader=false&showReplies=false&transparent=true&theme=light`}
+              className="w-full h-full border-0"
+              sandbox="allow-scripts allow-same-origin allow-popups"
+              title={`@${selectedAccount} timeline`}
+            />
+          </div>
+        </Card>
+      )}
+
+      {!selectedAccount && (
+        <Card className="p-6 text-center">
+          <Radar className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+          <p className="text-sm text-gray-600 font-semibold">Tap any account above to view their live feed</p>
+          <p className="text-xs text-gray-400 mt-1">Or browse by category below</p>
+        </Card>
+      )}
+
+      {/* Category Browser */}
+      <div className="flex gap-1.5 overflow-x-auto pb-1">
+        {TWEET_FEEDS.map((cat, i) => (
+          <button key={i} onClick={() => setSelectedCategory(i)}
+            className={`px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              selectedCategory === i ? "bg-blue-600 text-white" : "bg-white text-gray-600 border border-gray-200 hover:bg-blue-50"
+            }`}>{cat.category}</button>
+        ))}
+      </div>
+
+      <Card className="divide-y divide-gray-50">
+        {TWEET_FEEDS[selectedCategory]?.accounts.map((acc, i) => (
+          <button key={i} onClick={() => setSelectedAccount(acc.handle)}
+            className={`w-full flex items-center gap-3 p-3 text-left hover:bg-blue-50/40 transition-colors ${
+              selectedAccount === acc.handle ? "bg-blue-50" : ""
+            }`}>
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <span className="text-gray-500 text-sm font-bold">𝕏</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-800">{acc.name}</p>
+              <p className="text-[10px] text-blue-600 font-medium">@{acc.handle}</p>
+              <p className="text-[10px] text-gray-500 mt-0.5">{acc.desc}</p>
+            </div>
+            <ExternalLink className="w-4 h-4 text-gray-300 flex-shrink-0" />
+          </button>
+        ))}
+      </Card>
+    </div>
+  );
+};
+
+// ─── EMERGENCY TAB ──────────────────────────────────────────────────────────
+
 const EmergencyTab = () => {
   const [checked, setChecked] = useState({});
   const toggleCheck = (id) => setChecked(p => ({ ...p, [id]: !p[id] }));
@@ -2253,6 +2461,7 @@ const TAB_KEYS = [
   { key: "analysis", tKey: "analysis", icon: BookOpen },
   { key: "ai", tKey: "ai", icon: Bot },
   { key: "intel", tKey: "intel", icon: Radar },
+  { key: "tweets", tKey: "tweets", icon: MessageSquare },
   { key: "emergency", tKey: "emergency", icon: AlertTriangle },
 ];
 
@@ -2489,6 +2698,7 @@ export default function App() {
           {tab === "analysis" && <FullAnalysisTab />}
           {tab === "ai" && <AIAnalystTab />}
           {tab === "intel" && <LiveIntelTab />}
+          {tab === "tweets" && <LiveTweetsTab />}
           {tab === "emergency" && <EmergencyTab />}
         </main>
       </div>
