@@ -707,18 +707,18 @@ const countByLevel = (s) => ({ critical: s.filter(x => x.level === "critical").l
 // ─── SHARED COMPONENTS ──────────────────────────────────────────────────────
 
 const Badge = ({ level, children, className = "" }) => (
-  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${lc(level).badge} ${className}`}>{children}</span>
+  <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium ${lc(level).badge} ${className}`} style={{ fontFamily: "'Google Sans Text', sans-serif" }}>{children}</span>
 );
 
 const Card = ({ children, className = "", ...p }) => (
-  <div className={`bg-white rounded-xl border border-gray-200 shadow-sm ${className}`} {...p}>{children}</div>
+  <div className={`bg-white rounded-xl ${className}`} style={{ border: '1px solid var(--gw-border)', transition: 'box-shadow 0.2s' }} {...p}>{children}</div>
 );
 
 const StatBox = ({ label, value, sub, level = "neutral" }) => (
-  <Card className={`p-4 ${lc(level).bg} ${lc(level).border}`}>
-    <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">{label}</p>
-    <p className={`text-2xl font-extrabold ${lc(level).text} mt-1`}>{value}</p>
-    {sub && <p className="text-[11px] text-gray-500 mt-0.5">{sub}</p>}
+  <Card className="p-4">
+    <p className="gw-overline" style={{ marginBottom: '4px' }}>{label}</p>
+    <p className={`text-2xl font-bold ${lc(level).text} mt-1 gw-display`}>{value}</p>
+    {sub && <p className="text-[11px] mt-1" style={{ color: 'var(--gw-text-tertiary)' }}>{sub}</p>}
   </Card>
 );
 
@@ -824,11 +824,11 @@ const WhatChangedToday = () => {
   const [expanded, setExpanded] = useState(true);
   if (!CONFLICT_DATA.whatChangedToday?.length) return null;
   return (
-    <Card className="overflow-hidden mb-4 border-blue-200 bg-blue-50/30">
+    <Card className="overflow-hidden mb-4" style={{ borderColor: "var(--gw-blue)", background: "var(--gw-blue-surface)" }}>
       <button onClick={() => setExpanded(!expanded)} className="w-full flex items-center justify-between p-4 hover:bg-blue-50/50 transition-colors">
         <div className="flex items-center gap-2">
           <span className="text-base">📋</span>
-          <span className="text-sm font-bold text-blue-800">What Changed Today — Day {CONFLICT_DATA.day}</span>
+          <span className="text-sm font-medium" style={{ color: "var(--gw-blue-text)", fontFamily: "'Google Sans', sans-serif" }}>What Changed Today — Day {CONFLICT_DATA.day}</span>
           <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">{CONFLICT_DATA.whatChangedToday.length} updates</span>
         </div>
         {expanded ? <ChevronUp className="w-4 h-4 text-blue-400" /> : <ChevronDown className="w-4 h-4 text-blue-400" />}
@@ -2551,26 +2551,26 @@ const SIG_STYLES = `
 .sig-fade { animation: sigFadeIn 0.4s ease-out both; }
 .sig-fade-1 { animation-delay: 0.05s; } .sig-fade-2 { animation-delay: 0.1s; } .sig-fade-3 { animation-delay: 0.15s; } .sig-fade-4 { animation-delay: 0.2s; }
 .sig-pulse { animation: sigPulse 2s ease-in-out infinite; }
-.sig-card { background: #fff; border-radius: 12px; border: 1px solid #E8EAED; padding: 20px; margin-bottom: 16px; transition: box-shadow 0.2s; }
+.sig-card { background: var(--gw-bg); border-radius: var(--gw-radius-md); border: 1px solid var(--gw-border); padding: 20px; margin-bottom: 16px; transition: box-shadow 0.2s; }
 .sig-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
-.sig-stat { text-align: center; padding: 20px 16px; background: #fff; border-radius: 12px; border: 1px solid #E8EAED; transition: transform 0.2s; }
-.sig-stat:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-.sig-pill { padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
+.sig-stat { text-align: center; padding: 20px 16px; background: var(--gw-bg); border-radius: var(--gw-radius-md); border: 1px solid var(--gw-border); transition: transform 0.2s; }
+.sig-stat:hover { transform: translateY(-2px); box-shadow: var(--gw-shadow-1); }
+.sig-pill { padding: 8px 20px; border-radius: var(--gw-radius-full); font-family: 'Google Sans Text', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
 .sig-intent { border-radius: 16px; border: 2px solid #E8EAED; padding: 28px 16px; cursor: pointer; text-align: center; transition: all 0.25s; min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 .sig-intent:hover { border-color: #1A73E8; background: #F0F6FF; transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,115,232,0.15); }
 .sig-intent.active { border-color: #1A73E8; background: #EBF2FF; }
-.sig-input { padding: 10px 14px; border-radius: 10px; border: 1px solid #DDD; font-size: 14px; background: #fff; outline: none; transition: border-color 0.2s; }
-.sig-input:focus { border-color: #1A73E8; box-shadow: 0 0 0 3px rgba(26,115,232,0.12); }
-.sig-btn { background: #1A73E8; color: #fff; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.sig-btn:hover { background: #1557B0; }
+.sig-input { padding: 10px 14px; border-radius: var(--gw-radius-sm); border: 1px solid var(--gw-border-strong); font-family: 'Google Sans Text', sans-serif; font-size: 14px; background: #fff; outline: none; transition: border-color 0.2s; }
+.sig-input:focus { border-color: var(--gw-blue); box-shadow: 0 0 0 2px var(--gw-blue-surface); }
+.sig-btn { background: var(--gw-blue); color: #fff; border: none; border-radius: var(--gw-radius-full); font-family: 'Google Sans', sans-serif; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.sig-btn:hover { background: var(--gw-blue-hover); }
 .sig-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.sig-chat-user { background: linear-gradient(135deg, #1A73E8, #1557B0); color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 18px; max-width: 80%; margin-left: auto; font-size: 14px; line-height: 1.5; }
-.sig-chat-ai { background: #F8F9FA; color: #1a1a1a; border-radius: 18px 18px 18px 4px; padding: 14px 18px; max-width: 85%; font-size: 14px; line-height: 1.65; white-space: pre-wrap; border: 1px solid #E8EAED; }
+.sig-chat-user { background: var(--gw-blue); font-family: 'Google Sans Text', sans-serif; color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 18px; max-width: 80%; margin-left: auto; font-size: 14px; line-height: 1.5; }
+.sig-chat-ai { background: var(--gw-surface); color: var(--gw-text-primary); border-radius: 18px 18px 18px 4px; font-family: 'Google Sans Text', sans-serif; padding: 14px 18px; max-width: 85%; font-size: 14px; line-height: 1.65; white-space: pre-wrap; border: 1px solid #E8EAED; }
 .sig-advisor-card { border-radius: 12px; border: 2px solid #E8EAED; padding: 20px; cursor: pointer; transition: all 0.25s; }
 .sig-advisor-card:hover { border-color: #1A73E8; box-shadow: 0 4px 16px rgba(26,115,232,0.1); }
 .sig-advisor-card.selected { border-color: #1A73E8; background: #F0F6FF; }
-.sig-demo-strip { background: linear-gradient(135deg, #1B365D, #2C4F8A); border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; }
-.sig-section-title { font-size: 18px; font-weight: 800; color: #1B365D; margin: 28px 0 16px; display: flex; align-items: center; gap: 10px; }
+.sig-demo-strip { background: var(--gw-surface); border: 1px solid var(--gw-border); border-radius: var(--gw-radius-md); padding: 16px 20px; margin-bottom: 20px; }
+.sig-section-title { font-family: "Google Sans", sans-serif; font-size: 16px; font-weight: 500; color: var(--gw-text-primary); margin: 28px 0 16px; display: flex; align-items: center; gap: 10px; }
 .sig-section-title:first-child { margin-top: 0; }
 @media (max-width: 640px) { .sig-grid-4 { grid-template-columns: repeat(2, 1fr) !important; } .sig-grid-2 { grid-template-columns: 1fr !important; } }
 `;
@@ -2708,16 +2708,16 @@ const ShouldIGoTab = ({
     ];
     const items = subset ? allStats.filter((_,i) => subset.includes(i)) : allStats;
     return (<div className="sig-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px", marginBottom: "20px" }}>
-      {items.map((s,i) => (<div key={i} className={`sig-stat sig-fade sig-fade-${(i%4)+1}`}><div style={{ fontSize: "28px", fontWeight: 800, color: s.c }}>{s.v}</div><div style={{ fontSize: "11px", color: "#555", marginTop: "4px", fontWeight: 700 }}>{s.l}</div><div style={{ fontSize: "10px", color: "#999", marginTop: "2px" }}>{s.s}</div></div>))}
+      {items.map((s,i) => (<div key={i} className={`sig-stat sig-fade sig-fade-${(i%4)+1}`}><div style={{ fontSize: "28px", fontWeight: 700, color: s.c, fontFamily: "'Google Sans Display', sans-serif" }}>{s.v}</div><div className="gw-overline" style={{ marginTop: "4px" }}>{s.l}</div><div style={{ fontSize: "10px", color: "var(--gw-text-tertiary)", marginTop: "2px" }}>{s.s}</div></div>))}
     </div>);
   };
 
   const renderDefense = () => (
-    <div className="sig-card sig-fade"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🛡️ Air Defense Performance</div><div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}><span style={{ fontSize: "13px", fontWeight: 600 }}>Interception Rate</span><span style={{ fontSize: "14px", fontWeight: 800, color: "#34A853" }}>{interceptionRate}</span></div><div style={{ height: "14px", background: "#F1F3F4", borderRadius: "7px", overflow: "hidden", marginBottom: "12px" }}><div style={{ width: "92%", height: "100%", background: "linear-gradient(90deg, #34A853, #2E7D32)", borderRadius: "7px" }} /></div><div style={{ fontSize: "12px", color: L >= 4 ? "#BF360C" : "#555", fontWeight: 600 }}>{L >= 4 ? "⚠️ Track record, not guarantee. Interceptor depletion growing." : "✅ Defense systems performed exceptionally."}</div></div>
+    <div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>🛡️ Air Defense Performance</div><div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}><span style={{ fontSize: "13px", fontWeight: 600 }}>Interception Rate</span><span style={{ fontSize: "14px", fontWeight: 800, color: "#34A853" }}>{interceptionRate}</span></div><div style={{ height: "14px", background: "#F1F3F4", borderRadius: "7px", overflow: "hidden", marginBottom: "12px" }}><div style={{ width: "92%", height: "100%", background: "linear-gradient(90deg, #34A853, #2E7D32)", borderRadius: "7px" }} /></div><div style={{ fontSize: "12px", color: L >= 4 ? "#BF360C" : "#555", fontWeight: 600 }}>{L >= 4 ? "⚠️ Track record, not guarantee. Interceptor depletion growing." : "✅ Defense systems performed exceptionally."}</div></div>
   );
 
   const renderAdvisories = () => (
-    <div className="sig-card sig-fade"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🚨 Government Advisories</div>{L >= 4 && <div style={{ fontSize: "12px", color: "#BF360C", marginBottom: "10px", fontWeight: 700 }}>These should factor heavily into your decision.</div>}{Object.entries(govAdvisories).slice(0, L >= 4 ? 5 : 3).map(([country, a], i) => (<div key={i} style={{ padding: "10px 14px", borderRadius: "10px", borderLeft: `4px solid ${a.color}`, marginBottom: "8px", background: "#FAFBFC" }}><div style={{ display: "flex", alignItems: "center", gap: "6px" }}><span>{a.icon}</span><span style={{ fontWeight: 700, fontSize: "13px" }}>{country}</span></div><div style={{ fontSize: "13px", color: a.color, fontWeight: 700, margin: "3px 0" }}>{a.level}</div></div>))}</div>
+    <div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>🚨 Government Advisories</div>{L >= 4 && <div style={{ fontSize: "12px", color: "#BF360C", marginBottom: "10px", fontWeight: 700 }}>These should factor heavily into your decision.</div>}{Object.entries(govAdvisories).slice(0, L >= 4 ? 5 : 3).map(([country, a], i) => (<div key={i} style={{ padding: "10px 14px", borderRadius: "10px", borderLeft: `4px solid ${a.color}`, marginBottom: "8px", background: "#FAFBFC" }}><div style={{ display: "flex", alignItems: "center", gap: "6px" }}><span>{a.icon}</span><span style={{ fontWeight: 700, fontSize: "13px" }}>{country}</span></div><div style={{ fontSize: "13px", color: a.color, fontWeight: 700, margin: "3px 0" }}>{a.level}</div></div>))}</div>
   );
 
   const renderAdvisor = () => (
@@ -2730,7 +2730,7 @@ const ShouldIGoTab = ({
         </div>
         {advisorStep > 0 && <button onClick={() => setAdvisorStep(s => s - 1)} style={{ marginTop: "12px", background: "none", border: "none", color: "#1A73E8", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>← Back</button>}
       </div>) : (<div>
-        {(() => { const r = getAdvisorResult(); return (<div className="sig-card" style={{ borderColor: r.color, borderWidth: "2px" }}><div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}><span style={{ fontSize: "28px" }}>{r.icon}</span><div><div style={{ fontSize: "10px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>LEVEL {L} ASSESSMENT</div><div style={{ fontSize: "16px", fontWeight: 800, color: r.color }}>{r.verdict}</div></div></div><div style={{ fontSize: "14px", lineHeight: "1.7", color: "#444", padding: "14px", background: "#F8F9FA", borderRadius: "10px", marginBottom: "16px" }}>{r.detail}</div>{r.actions.map((a,i) => (<div key={i} style={{ display: "flex", gap: "10px", padding: "8px 0", borderBottom: i < r.actions.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span style={{ fontWeight: 800, color: "#1A73E8" }}>{i+1}.</span><span>{a}</span></div>))}</div>); })()}
+        {(() => { const r = getAdvisorResult(); return (<div className="sig-card" style={{ borderColor: r.color, borderWidth: "2px" }}><div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}><span style={{ fontSize: "28px" }}>{r.icon}</span><div><div style={{ fontSize: "10px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>LEVEL {L} ASSESSMENT</div><div style={{ fontSize: "16px", fontWeight: 700, color: r.color, fontFamily: "'Google Sans Display', sans-serif" }}>{r.verdict}</div></div></div><div style={{ fontSize: "14px", lineHeight: "1.7", color: "#444", padding: "14px", background: "#F8F9FA", borderRadius: "10px", marginBottom: "16px" }}>{r.detail}</div>{r.actions.map((a,i) => (<div key={i} style={{ display: "flex", gap: "10px", padding: "8px 0", borderBottom: i < r.actions.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span style={{ fontWeight: 800, color: "#1A73E8" }}>{i+1}.</span><span>{a}</span></div>))}</div>); })()}
         <button onClick={() => { setAdvisorStep(0); setAdvisorAnswers({}); }} style={{ marginTop: "12px", background: "none", border: "2px solid #1A73E8", color: "#1A73E8", borderRadius: "10px", padding: "8px 18px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>↺ Start Over</button>
       </div>)}
     </div>
@@ -2746,16 +2746,16 @@ const ShouldIGoTab = ({
   const renderInvestment = () => (<div className="sig-fade">
     <div className="sig-card" style={{ background: isOpportunity ? "#E6F4EA" : "#FFF8E1", borderColor: isOpportunity ? "#A8DAB5" : "#FFD54F" }}>{isOpportunity ? <><strong>📈 Recovery Phase</strong> — Historical crisis-bottom entries produce 40–300%+ returns.</> : <><strong>⚠️</strong> Educational analysis. Past performance ≠ future results.</>}</div>
     <div className="sig-card" style={{ overflowX: "auto" }}><table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}><thead><tr style={{ borderBottom: "2px solid #1B365D" }}>{["Year","Event","Decline","Recovery"].map(h => <th key={h} style={{ padding: "8px", textAlign: "left", fontWeight: 800, fontSize: "11px", color: "#1B365D" }}>{h}</th>)}</tr></thead><tbody>{[["2008–09","Financial Crisis","50–60%","300%+ by 2014"],["2014–15","Oil Crash","15–20%","2 years"],["2020","COVID","15–25%","ATH by 2024"],["2022","Houthi","5–10%","Months"],["2026","Current","~30%","TBD"]].map((r,i) => (<tr key={i} style={{ borderBottom: "1px solid #F1F3F4", background: i === 4 ? "#FFF3E0" : "transparent" }}>{r.map((c,j) => <td key={j} style={{ padding: "8px", fontWeight: j===0 ? 700 : 400, color: j===2 ? "#EA4335" : j===3 ? "#34A853" : "#333" }}>{c}</td>)}</tr>))}</tbody></table></div>
-    <div className="sig-card"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>🎯 Scenario Modeler</div><div style={{ display: "flex", gap: "8px", marginBottom: "14px", flexWrap: "wrap" }}>{Object.entries(investScenarios).map(([k,s]) => (<button key={k} className="sig-pill" onClick={() => setInvestmentScenario(k)} style={{ background: investmentScenario===k ? s.color : "#F1F3F4", color: investmentScenario===k ? "#fff" : "#444" }}>{k.charAt(0).toUpperCase()+k.slice(1)} ({s.probability})</button>))}</div><div style={{ padding: "16px", background: "#FAFBFC", borderRadius: "10px", border: `2px solid ${scenario.color}` }}><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>TIMELINE</div><div style={{ fontSize: "13px", fontWeight: 600, marginTop: "4px" }}>{scenario.timeline}</div></div><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>PROPERTY</div><div style={{ fontSize: "13px", fontWeight: 600, marginTop: "4px" }}>{scenario.property}</div></div><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>3-YEAR RETURN</div><div style={{ fontSize: "24px", fontWeight: 800, color: scenario.color }}>{scenario.return3yr}</div></div><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>PROBABILITY</div><div style={{ fontSize: "24px", fontWeight: 800, color: "#1B365D" }}>{scenario.probability}</div></div></div></div></div>
+    <div className="sig-card"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "12px" }}>🎯 Scenario Modeler</div><div style={{ display: "flex", gap: "8px", marginBottom: "14px", flexWrap: "wrap" }}>{Object.entries(investScenarios).map(([k,s]) => (<button key={k} className="sig-pill" onClick={() => setInvestmentScenario(k)} style={{ background: investmentScenario===k ? s.color : "#F1F3F4", color: investmentScenario===k ? "#fff" : "#444" }}>{k.charAt(0).toUpperCase()+k.slice(1)} ({s.probability})</button>))}</div><div style={{ padding: "16px", background: "#FAFBFC", borderRadius: "10px", border: `2px solid ${scenario.color}` }}><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>TIMELINE</div><div style={{ fontSize: "13px", fontWeight: 600, marginTop: "4px" }}>{scenario.timeline}</div></div><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>PROPERTY</div><div style={{ fontSize: "13px", fontWeight: 600, marginTop: "4px" }}>{scenario.property}</div></div><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>3-YEAR RETURN</div><div style={{ fontSize: "24px", fontWeight: 800, color: scenario.color }}>{scenario.return3yr}</div></div><div><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>PROBABILITY</div><div style={{ fontSize: "24px", fontWeight: 800, color: "#1B365D" }}>{scenario.probability}</div></div></div></div></div>
   </div>);
 
-  const renderTimeline = () => (<div className="sig-card sig-fade"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>📅 Conflict Timeline</div><div style={{ paddingLeft: "24px", position: "relative" }}>{STRIKE_TIMELINE.map((e,i,a) => (<div key={i} style={{ marginBottom: "12px", position: "relative" }}><div style={{ position: "absolute", left: "-24px", top: "3px", width: "10px", height: "10px", borderRadius: "50%", background: i === a.length-1 ? "#EA4335" : "#1A73E8" }} />{i < a.length-1 && <div style={{ position: "absolute", left: "-20px", top: "15px", width: "2px", height: "100%", background: "#E8EAED" }} />}<span style={{ fontSize: "11px", fontWeight: 800, color: "#1B365D" }}>{e.date}</span><span style={{ fontSize: "12px", color: i === a.length-1 ? "#EA4335" : "#444", fontWeight: i === a.length-1 ? 700 : 400, marginLeft: "8px" }}>{e.event}</span></div>))}</div></div>);
+  const renderTimeline = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>📅 Conflict Timeline</div><div style={{ paddingLeft: "24px", position: "relative" }}>{STRIKE_TIMELINE.map((e,i,a) => (<div key={i} style={{ marginBottom: "12px", position: "relative" }}><div style={{ position: "absolute", left: "-24px", top: "3px", width: "10px", height: "10px", borderRadius: "50%", background: i === a.length-1 ? "#EA4335" : "#1A73E8" }} />{i < a.length-1 && <div style={{ position: "absolute", left: "-20px", top: "15px", width: "2px", height: "100%", background: "#E8EAED" }} />}<span style={{ fontSize: "11px", fontWeight: 800, color: "#1B365D" }}>{e.date}</span><span style={{ fontSize: "12px", color: i === a.length-1 ? "#EA4335" : "#444", fontWeight: i === a.length-1 ? 700 : 400, marginLeft: "8px" }}>{e.event}</span></div>))}</div></div>);
 
-  const renderEscapeRoutes = () => (<div className="sig-card sig-fade"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🛣️ Escape Routes</div>{ESCAPE_ROUTES.map((r,i) => { const sc = r.status === "active" || r.status === "open" ? "color:#059669;background:#ECFDF5" : r.status === "limited" ? "color:#D97706;background:#FFFBEB" : "color:#DC2626;background:#FEF2F2"; return (<div key={i} style={{ display: "flex", gap: "10px", padding: "10px 0", borderBottom: i < ESCAPE_ROUTES.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span>{r.type === "air" ? "✈️" : "🚗"}</span><div style={{ flex: 1 }}><strong>{r.name}</strong> <span style={{ fontSize: "11px", padding: "2px 6px", borderRadius: "6px", fontWeight: 700, ...Object.fromEntries(sc.split(";").map(s => s.split(":").map(x => x.trim()))) }}>{r.status}</span><div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>{r.detail}</div></div></div>); })}</div>);
+  const renderEscapeRoutes = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>🛣️ Escape Routes</div>{ESCAPE_ROUTES.map((r,i) => { const sc = r.status === "active" || r.status === "open" ? "color:#059669;background:#ECFDF5" : r.status === "limited" ? "color:#D97706;background:#FFFBEB" : "color:#DC2626;background:#FEF2F2"; return (<div key={i} style={{ display: "flex", gap: "10px", padding: "10px 0", borderBottom: i < ESCAPE_ROUTES.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span>{r.type === "air" ? "✈️" : "🚗"}</span><div style={{ flex: 1 }}><strong>{r.name}</strong> <span style={{ fontSize: "11px", padding: "2px 6px", borderRadius: "6px", fontWeight: 700, ...Object.fromEntries(sc.split(";").map(s => s.split(":").map(x => x.trim()))) }}>{r.status}</span><div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>{r.detail}</div></div></div>); })}</div>);
 
-  const renderSupply = () => (<div className="sig-card sig-fade"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>📦 Supply Chain</div><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "10px" }}>{SUPPLY_STATUS.map((s,i) => (<div key={i} style={{ padding: "10px", borderRadius: "10px", border: "1px solid #E8EAED", background: "#FAFBFC" }}><div style={{ fontSize: "12px", fontWeight: 700, color: "#333", marginBottom: "6px" }}>{s.name}</div><div style={{ height: "6px", background: "#F1F3F4", borderRadius: "3px", marginBottom: "4px" }}><div style={{ width: `${s.value}%`, height: "100%", borderRadius: "3px", background: s.status === "critical" ? "#EA4335" : s.status === "warning" ? "#F59E0B" : "#34A853" }} /></div><div style={{ fontSize: "11px", color: "#888" }}>{s.value}{s.unit}</div></div>))}</div></div>);
+  const renderSupply = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>📦 Supply Chain</div><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "10px" }}>{SUPPLY_STATUS.map((s,i) => (<div key={i} style={{ padding: "10px", borderRadius: "10px", border: "1px solid #E8EAED", background: "#FAFBFC" }}><div style={{ fontSize: "12px", fontWeight: 700, color: "#333", marginBottom: "6px" }}>{s.name}</div><div style={{ height: "6px", background: "#F1F3F4", borderRadius: "3px", marginBottom: "4px" }}><div style={{ width: `${s.value}%`, height: "100%", borderRadius: "3px", background: s.status === "critical" ? "#EA4335" : s.status === "warning" ? "#F59E0B" : "#34A853" }} /></div><div style={{ fontSize: "11px", color: "#888" }}>{s.value}{s.unit}</div></div>))}</div></div>);
 
-  const renderForecast = () => (<div className="sig-card sig-fade"><div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>📈 3-6 Month Forecast</div>{FORECAST.map((f,i) => (<div key={i} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "6px 0", fontSize: "13px" }}><span style={{ padding: "2px 8px", borderRadius: "8px", fontSize: "11px", fontWeight: 700, background: f.level === "critical" ? "#FDECEA" : f.level === "warning" ? "#FEF7E0" : f.level === "positive" ? "#E6F4EA" : "#F1F3F4", color: f.level === "critical" ? "#EA4335" : f.level === "warning" ? "#D97706" : f.level === "positive" ? "#34A853" : "#888", minWidth: "70px", textAlign: "center" }}>{f.prob}</span><span style={{ flex: 1, color: "#444" }}>{f.scenario}</span></div>))}</div>);
+  const renderForecast = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>📈 3-6 Month Forecast</div>{FORECAST.map((f,i) => (<div key={i} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "6px 0", fontSize: "13px" }}><span style={{ padding: "2px 8px", borderRadius: "8px", fontSize: "11px", fontWeight: 700, background: f.level === "critical" ? "#FDECEA" : f.level === "warning" ? "#FEF7E0" : f.level === "positive" ? "#E6F4EA" : "#F1F3F4", color: f.level === "critical" ? "#EA4335" : f.level === "warning" ? "#D97706" : f.level === "positive" ? "#34A853" : "#888", minWidth: "70px", textAlign: "center" }}>{f.prob}</span><span style={{ flex: 1, color: "#444" }}>{f.scenario}</span></div>))}</div>);
 
   const renderAI = () => (<div className="sig-fade">
     {chatMessages.length === 0 && (<div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "14px" }}>{["Is it safe right now?","What's the real risk?","When will this end?","Should I leave?"].map((q,i) => (<button key={i} className="sig-pill" onClick={() => sendChat(q)} style={{ background: "#F1F3F4", color: "#444", fontSize: "12px", padding: "8px 14px" }}>{q}</button>))}</div>)}
@@ -2773,7 +2773,7 @@ const ShouldIGoTab = ({
     </div>
   </div>);
 
-  const renderFooter = () => (<div style={{ background: "#F8F9FA", borderRadius: "14px", padding: "20px", marginTop: "24px", fontSize: "12px", color: "#666", lineHeight: "1.6" }}><div style={{ fontWeight: 800, fontSize: "14px", color: "#1B365D", marginBottom: "10px" }}>🔒 Trust & Transparency · Level {L}</div><div style={{ fontSize: "11px", color: "#AAA", marginTop: "10px", padding: "10px", background: "#fff", borderRadius: "8px" }}><strong>Disclaimer:</strong> Informational analysis. Not safety guarantees or financial advice. Always consult official advisories. gcc-war-room.vercel.app</div></div>);
+  const renderFooter = () => (<div style={{ background: "#F8F9FA", borderRadius: "14px", padding: "20px", marginTop: "24px", fontSize: "12px", color: "#666", lineHeight: "1.6" }}><div style={{ fontWeight: 500, fontSize: "14px", color: "var(--gw-text-primary)", marginBottom: "10px", fontFamily: "'Google Sans', sans-serif" }}>🔒 Trust & Transparency · Level {L}</div><div style={{ fontSize: "11px", color: "#AAA", marginTop: "10px", padding: "10px", background: "#fff", borderRadius: "8px" }}><strong>Disclaimer:</strong> Informational analysis. Not safety guarantees or financial advice. Always consult official advisories. gcc-war-room.vercel.app</div></div>);
 
   // ═══════ MAIN RENDER ═══════
   return (
@@ -2783,15 +2783,15 @@ const ShouldIGoTab = ({
       {/* DEMO STRIP */}
       <div className="sig-demo-strip">
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
-          <div><div style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: "1px" }}>OVERRIDE PROTOCOL</div><div style={{ fontSize: "13px", fontWeight: 700, color: "#fff" }}>{showDemo ? "Demo Mode" : `Level ${L} — ${CL.name}`}</div></div>
-          <button onClick={() => { setShowDemo(!showDemo); if (showDemo) setDemoLevel(null); }} style={{ background: showDemo ? "#EA4335" : "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "8px", padding: "6px 14px", fontSize: "11px", fontWeight: 700, cursor: "pointer" }}>{showDemo ? "✕ Exit" : "🎛️ Demo"}</button>
+          <div><div className="gw-overline">OVERRIDE PROTOCOL</div><div style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-text-primary)", fontFamily: "'Google Sans', sans-serif" }}>{showDemo ? "Demo Mode" : `Level ${L} — ${CL.name}`}</div></div>
+          <button onClick={() => { setShowDemo(!showDemo); if (showDemo) setDemoLevel(null); }} style={{ background: showDemo ? "var(--gw-red)" : "var(--gw-surface-variant)", color: showDemo ? "#fff" : "var(--gw-text-secondary)", border: "1px solid var(--gw-border-strong)", borderRadius: "8px", padding: "6px 14px", fontSize: "11px", fontWeight: 700, cursor: "pointer" }}>{showDemo ? "✕ Exit" : "🎛️ Demo"}</button>
         </div>
         {showDemo && <div style={{ display: "flex", gap: "6px", marginTop: "10px", flexWrap: "wrap" }}>{Object.entries(LEVELS).map(([lv, d]) => (<button key={lv} onClick={() => { setDemoLevel(Number(lv)); setChatMessages([]); setAdvisorStep(0); setAdvisorAnswers({}); }} style={{ padding: "8px 12px", borderRadius: "8px", fontSize: "11px", fontWeight: 700, cursor: "pointer", border: demoLevel===Number(lv) ? "2px solid #fff" : "2px solid transparent", background: d.color, color: "#fff", opacity: demoLevel===Number(lv) ? 1 : 0.6, flex: "1", textAlign: "center" }}>{d.icon} L{lv}</button>))}</div>}
       </div>
 
       {/* CONFIDENCE BANNER */}
       <div className={`sig-fade ${CL.pulse}`} style={{ background: CL.bgGrad, border: `2px solid ${CL.color}`, borderRadius: "14px", padding: "18px 22px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ fontSize: "24px" }}>{CL.icon}</span><div><div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}><span style={{ background: CL.color, color: "#fff", fontWeight: 700, fontSize: "10px", padding: "3px 12px", borderRadius: "16px", letterSpacing: "1px" }}>LEVEL {L}</span><span style={{ fontWeight: 800, fontSize: "14px", color: CL.color }}>{CL.name}</span></div><div style={{ fontSize: "13px", color: "#555", maxWidth: "500px" }}>{CL.bannerMsg}</div></div></div>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ fontSize: "24px" }}>{CL.icon}</span><div><div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}><span style={{ background: CL.color, color: "#fff", fontWeight: 500, fontSize: "10px", padding: "4px 12px", borderRadius: "var(--gw-radius-full)", letterSpacing: "0.5px", fontFamily: "'Google Sans', sans-serif" }}>LEVEL {L}</span><span style={{ fontWeight: 500, fontSize: "14px", color: CL.color, fontFamily: "'Google Sans', sans-serif" }}>{CL.name}</span></div><div style={{ fontSize: "13px", color: "#555", maxWidth: "500px" }}>{CL.bannerMsg}</div></div></div>
         <div style={{ textAlign: "right" }}><div style={{ fontSize: "12px", fontWeight: 600, color: "#555" }}>Day {conflictDay}</div><div style={{ fontSize: "11px", color: "#888" }}>{myRes.i} {myRes.l}</div></div>
       </div>
 
@@ -2800,10 +2800,19 @@ const ShouldIGoTab = ({
 
       {/* ═══ INTENT SELECTOR (THE LANDING) ═══ */}
       {!userIntent && (<div className="sig-fade">
-        <div style={{ textAlign: "center", marginBottom: "8px" }}><div style={{ fontSize: "28px", fontWeight: 800, color: "#1B365D" }}>What brings you here?</div><div style={{ fontSize: "14px", color: "#888", marginTop: "4px" }}>Select to get a personalized analysis for {myRes.l.toLowerCase()}s</div></div>
-        <div className="sig-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "14px", margin: "24px 0" }}>
-          {[{ id: "visit", icon: "✈️", title: "I Want to Visit", desc: "Travel & tourism" },{ id: "invest", icon: "📈", title: "I Want to Invest", desc: "Property, stocks & business" },{ id: "move", icon: "🏠", title: "Move / Stay", desc: "Relocation & expat life" },{ id: "understand", icon: "🔍", title: "Understand Risk", desc: "The full picture" }].map(i => (
-            <div key={i.id} className="sig-intent" onClick={() => setUserIntent(i.id)}><span style={{ fontSize: "42px" }}>{i.icon}</span><div style={{ fontWeight: 800, fontSize: "16px", color: "#1B365D" }}>{i.title}</div><div style={{ fontSize: "12px", color: "#888" }}>{i.desc}</div></div>
+        <div style={{ textAlign: "center", marginBottom: "8px" }}><div style={{ fontFamily: "'Google Sans Display', sans-serif", fontSize: "24px", fontWeight: 700, color: "var(--gw-text-primary)" }}>What brings you here?</div><div style={{ fontSize: "14px", color: "var(--gw-text-secondary)", marginTop: "6px", fontFamily: "'Google Sans Text', sans-serif" }}>Personalized analysis for your situation</div></div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "14px", margin: "24px 0" }}>
+          {[{ id: "visit", icon: "✈️", title: "Visit", desc: "Should I travel?", bg: "#E8F5E9", iconBg: "#C8E6C9", hoverBorder: "#188038" },
+            { id: "invest", icon: "📈", title: "Invest", desc: "Is the dip opportunity?", bg: "#E3F2FD", iconBg: "#BBDEFB", hoverBorder: "#1A73E8" },
+            { id: "move", icon: "🏠", title: "Stay / Move", desc: "Stay, leave, relocate?", bg: "#FEF7E0", iconBg: "#FFE0B2", hoverBorder: "#E37400" },
+            { id: "understand", icon: "🔍", title: "Understand", desc: "The full picture", bg: "#F1F3F4", iconBg: "#E8EAED", hoverBorder: "#5F6368" }].map(i => (
+            <div key={i.id} onClick={() => setUserIntent(i.id)} style={{ background: i.bg, borderRadius: "16px", border: "2px solid transparent", padding: "28px 16px", cursor: "pointer", textAlign: "center", transition: "all 0.25s", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = i.hoverBorder; e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "transparent"; e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}>
+              <div style={{ width: "56px", height: "56px", borderRadius: "var(--gw-radius-md)", background: i.iconBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px", marginBottom: "4px" }}>{i.icon}</div>
+              <div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)" }}>{i.title}</div>
+              <div style={{ fontSize: "12px", color: "var(--gw-text-tertiary)" }}>{i.desc}</div>
+            </div>
           ))}
         </div>
         <div style={{ display: "flex", gap: "12px", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
@@ -2816,10 +2825,10 @@ const ShouldIGoTab = ({
       {userIntent && (<div>
         {/* Back + intent label */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-          <button onClick={() => { setUserIntent(null); setAdvisorStep(0); setAdvisorAnswers({}); setChatMessages([]); }} style={{ background: "#F1F3F4", border: "none", borderRadius: "10px", padding: "8px 14px", fontSize: "13px", fontWeight: 600, cursor: "pointer", color: "#555" }}>← Change</button>
+          <button onClick={() => { setUserIntent(null); setAdvisorStep(0); setAdvisorAnswers({}); setChatMessages([]); }} style={{ background: "var(--gw-surface-variant)", border: "none", borderRadius: "var(--gw-radius-full)", padding: "8px 16px", fontSize: "13px", fontWeight: 500, cursor: "pointer", color: "var(--gw-text-secondary)", fontFamily: "'Google Sans', sans-serif", transition: "background 0.15s" }}>← Back</button>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>PERSONALIZED FOR: {myRes.i} {myRes.l.toUpperCase()}{originCountry ? ` FROM ${originCountry.toUpperCase()}` : ""}</div>
-            <div style={{ fontSize: "18px", fontWeight: 800, color: "#1B365D" }}>{userIntent === "visit" ? "✈️ Should I Visit?" : userIntent === "invest" ? "📈 Investment Analysis" : userIntent === "move" ? "🏠 Should I Stay / Move?" : "🔍 Full Risk Picture"}</div>
+            <div className="gw-overline">PERSONALIZED FOR: {myRes.i} {myRes.l.toUpperCase()}{originCountry ? ` · ${originCountry.toUpperCase()}` : ""}</div>
+            <div style={{ fontSize: "18px", fontWeight: 500, color: "var(--gw-text-primary)", fontFamily: "'Google Sans Display', sans-serif" }}>{userIntent === "visit" ? "✈️ Should I Visit?" : userIntent === "invest" ? "📈 Investment Analysis" : userIntent === "move" ? "🏠 Should I Stay / Move?" : "🔍 Full Risk Picture"}</div>
           </div>
           {!originCountry && <select className="sig-input" style={{ maxWidth: "200px" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}><option value="">Select nationality...</option>{originCountries.map(c => <option key={c} value={c}>{c}</option>)}</select>}
         </div>
@@ -2979,123 +2988,177 @@ export default function App() {
   ];
 
   return (
-    <div className={`min-h-screen ${darkMode ? "bg-gray-900 text-gray-100" : "bg-[#F8F9FA]"}`} style={{ fontFamily: "'Google Sans', 'Segoe UI', system-ui, -apple-system, sans-serif" }} dir={isRTL ? "rtl" : "ltr"}>
+    <div className={`min-h-screen ${darkMode ? "bg-gray-900 text-gray-100" : "bg-[#F8F9FA]"}`} style={{ fontFamily: "'Google Sans Text', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif" }} dir={isRTL ? "rtl" : "ltr"}>
       {/* All styles inline — index.css only has @tailwind directives */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        body { margin:0; font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; background:#F8F9FA; }
-        *{scrollbar-width:thin;scrollbar-color:#D1D5DB transparent}
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap');
+
+        :root {
+          --gw-bg: #FFFFFF;
+          --gw-surface: #F8F9FA;
+          --gw-surface-variant: #F1F3F4;
+          --gw-border: #E8EAED;
+          --gw-border-strong: #DADCE0;
+          --gw-text-primary: #202124;
+          --gw-text-secondary: #5F6368;
+          --gw-text-tertiary: #80868B;
+          --gw-text-disabled: #BDC1C6;
+          --gw-blue: #1A73E8;
+          --gw-blue-hover: #1557B0;
+          --gw-blue-surface: #E8F0FE;
+          --gw-blue-text: #174EA6;
+          --gw-red: #D93025;
+          --gw-red-surface: #FCE8E6;
+          --gw-red-text: #A50E0E;
+          --gw-orange: #E37400;
+          --gw-orange-surface: #FEF7E0;
+          --gw-orange-text: #A06207;
+          --gw-green: #188038;
+          --gw-green-surface: #E6F4EA;
+          --gw-green-text: #0D652D;
+          --gw-shadow-1: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+          --gw-shadow-2: 0 1px 3px rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+          --gw-shadow-3: 0 4px 8px rgba(60,64,67,0.3), 0 8px 16px 6px rgba(60,64,67,0.15);
+          --gw-radius-sm: 8px;
+          --gw-radius-md: 12px;
+          --gw-radius-lg: 16px;
+          --gw-radius-xl: 24px;
+          --gw-radius-full: 100px;
+        }
+
+        body { margin:0; font-family:'Google Sans Text','Google Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; background:var(--gw-surface); color:var(--gw-text-primary); }
+        *{scrollbar-width:thin;scrollbar-color:var(--gw-border-strong) transparent; box-sizing:border-box;}
         ::-webkit-scrollbar{width:6px}
         ::-webkit-scrollbar-track{background:transparent}
-        ::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:3px}
-        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#1A73E8;cursor:pointer;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+        ::-webkit-scrollbar-thumb{background:var(--gw-border-strong);border-radius:3px}
+        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gw-blue);cursor:pointer;border:2px solid white;box-shadow:var(--gw-shadow-1)}
         @keyframes heartbeat{0%{transform:scale(1)}14%{transform:scale(1.12)}28%{transform:scale(1)}42%{transform:scale(1.08)}56%{transform:scale(1)}100%{transform:scale(1)}}
         .heartbeat{animation:heartbeat 1.5s ease-in-out infinite;transform-origin:center}
-        @keyframes soft-pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.4)}50%{box-shadow:0 0 0 6px rgba(59,130,246,0)}}
+        @keyframes soft-pulse{0%,100%{box-shadow:0 0 0 0 rgba(26,115,232,0.35)}50%{box-shadow:0 0 0 6px rgba(26,115,232,0)}}
         .soft-pulse{animation:soft-pulse 2.5s ease-in-out infinite}
+        @keyframes gw-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .gw-fade{animation:gw-fade-in 0.35s ease-out both}
+        .gw-fade-1{animation-delay:0.04s}.gw-fade-2{animation-delay:0.08s}.gw-fade-3{animation-delay:0.12s}.gw-fade-4{animation-delay:0.16s}.gw-fade-5{animation-delay:0.2s}
+        .gw-card{background:var(--gw-bg);border-radius:var(--gw-radius-md);border:1px solid var(--gw-border);transition:box-shadow 0.2s}
+        .gw-card:hover{box-shadow:var(--gw-shadow-1)}
+        .gw-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--gw-radius-sm);border:1px solid var(--gw-border-strong);background:var(--gw-bg);font-size:13px;font-weight:500;color:var(--gw-text-primary);cursor:pointer;transition:all 0.15s;font-family:'Google Sans Text',sans-serif}
+        .gw-chip:hover{border-color:var(--gw-blue);background:var(--gw-blue-surface)}
+        .gw-chip.active{border-color:var(--gw-blue);background:var(--gw-blue-surface);color:var(--gw-blue-text)}
+        .gw-section-title{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:500;color:var(--gw-text-primary);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+        .gw-overline{font-size:10px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:var(--gw-text-tertiary)}
+        .gw-display{font-family:'Google Sans Display',sans-serif}
+        select.gw-select{font-family:'Google Sans Text',sans-serif;padding:10px 36px 10px 14px;border-radius:var(--gw-radius-sm);border:1px solid var(--gw-border-strong);background:var(--gw-bg);font-size:13px;font-weight:500;color:var(--gw-text-primary);cursor:pointer;transition:all 0.15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2380868B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+        select.gw-select:hover{border-color:var(--gw-blue)}
+        select.gw-select:focus{outline:none;border-color:var(--gw-blue);box-shadow:0 0 0 2px var(--gw-blue-surface)}
       `}</style>
 
-      {/* HEADER */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
-        <div className="flex items-center gap-2 px-4 py-2">
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-1.5 rounded-lg hover:bg-gray-100">
-            <Menu className="w-5 h-5 text-gray-600" />
+      {/* HEADER — Google Workspace Style */}
+      <header className="bg-white border-b sticky top-0 z-40" style={{ borderColor: 'var(--gw-border)' }}>
+        <div className="flex items-center gap-3 px-4 py-2.5">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 rounded-full hover:bg-[#F1F3F4] transition-colors">
+            <Menu className="w-5 h-5" style={{ color: 'var(--gw-text-secondary)' }} />
           </button>
-          <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-blue-600" />
-            <span className="font-bold text-gray-800 hidden sm:inline">{t("dashboard", lang) === "Dashboard" ? "GCC WAR ROOM" : t("dashboard", lang)}</span>
-            <span className="font-bold text-gray-800 sm:hidden">GCC WAR ROOM</span>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--gw-blue)', fontFamily: "'Google Sans Display', sans-serif" }}>W</div>
+            <div>
+              <span className="hidden sm:inline text-[15px] font-medium" style={{ color: 'var(--gw-text-primary)', fontFamily: "'Google Sans', sans-serif" }}>GCC War Room</span>
+              <span className="sm:hidden text-[15px] font-medium" style={{ color: 'var(--gw-text-primary)', fontFamily: "'Google Sans', sans-serif" }}>GCC War Room</span>
+              <span className="hidden sm:inline text-[11px] ml-2" style={{ color: 'var(--gw-text-tertiary)' }}>Day {CONFLICT_DAY} · {CONFLICT_DATA.date}</span>
+            </div>
           </div>
 
-          {/* Desktop Tabs */}
-          <div className="hidden md:flex items-center gap-0.5 ml-3">
+          {/* Desktop Tabs — Google Workspace style */}
+          <div className="hidden md:flex items-center gap-1 ml-4">
             {TAB_KEYS.map(tk => (
                 <button key={tk.key} onClick={() => setTab(tk.key)}
-                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                    tab === tk.key ? "bg-blue-50 text-blue-700" : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                  }`}>
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[13px] font-medium transition-all relative"
+                  style={{
+                    fontFamily: "'Google Sans', sans-serif",
+                    background: tab === tk.key ? 'var(--gw-blue-surface)' : 'transparent',
+                    color: tab === tk.key ? 'var(--gw-blue-text)' : 'var(--gw-text-secondary)',
+                  }}>
                   <span className="text-sm">{tk.emoji}</span>{tk.shortLabel}
                 </button>
             ))}
           </div>
 
-          <div className="ml-auto flex items-center gap-2">
-            {/* Language Selector */}
+          <div className="ml-auto flex items-center gap-1.5">
+            {/* Language */}
             <div className="relative">
               <button onClick={() => setShowLangMenu(!showLangMenu)}
-                className="flex items-center gap-1 px-2 py-1 rounded-lg bg-gray-50 border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors">
-                <Globe className="w-3 h-3" />
+                className="flex items-center gap-1.5 px-2.5 py-2 rounded-full text-[13px] font-medium transition-colors hover:bg-[#F1F3F4]"
+                style={{ color: 'var(--gw-text-secondary)' }}>
                 <span>{LANGUAGES.find(l => l.code === lang)?.flag}</span>
-                <ChevronDown className="w-2.5 h-2.5" />
+                <ChevronDown className="w-3 h-3" style={{ color: 'var(--gw-text-disabled)' }} />
               </button>
               {showLangMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowLangMenu(false)} />
-                  <div className="absolute right-0 top-full mt-1 w-44 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1 max-h-80 overflow-y-auto">
+                  <div className="absolute right-0 top-full mt-1 w-48 bg-white z-50 py-1 max-h-80 overflow-y-auto" style={{ borderRadius: 'var(--gw-radius-md)', border: '1px solid var(--gw-border)', boxShadow: 'var(--gw-shadow-2)' }}>
                     {LANGUAGES.map(l => (
                       <button key={l.code} onClick={() => { setLang(l.code); setShowLangMenu(false); }}
-                        className={`w-full flex items-center gap-2.5 px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors ${lang === l.code ? "bg-blue-50 text-blue-700 font-semibold" : "text-gray-700"}`}>
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left text-[13px] transition-colors"
+                        style={{ fontFamily: "'Google Sans Text', sans-serif", background: lang === l.code ? 'var(--gw-blue-surface)' : 'transparent', color: lang === l.code ? 'var(--gw-blue-text)' : 'var(--gw-text-primary)', fontWeight: lang === l.code ? 500 : 400 }}>
                         <span className="text-base">{l.flag}</span>
                         <span>{l.label}</span>
-                        {lang === l.code && <Check className="w-3.5 h-3.5 ml-auto text-blue-600" />}
+                        {lang === l.code && <Check className="w-3.5 h-3.5 ml-auto" style={{ color: 'var(--gw-blue)' }} />}
                       </button>
                     ))}
                   </div>
                 </>
               )}
             </div>
-
-            <button onClick={shareUrl} className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors" title="Share this view">
-              <ExternalLink className="w-3.5 h-3.5 text-gray-400" />
+            <button onClick={shareUrl} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors" title="Share">
+              <ExternalLink className="w-4 h-4" style={{ color: 'var(--gw-text-secondary)' }} />
             </button>
-            <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors" title="Toggle dark mode">
-              <span className="text-sm">{darkMode ? "☀️" : "🌙"}</span>
+            <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors" title="Toggle theme">
+              <span className="text-base">{darkMode ? "☀️" : "🌙"}</span>
             </button>
-            <div className="hidden sm:flex items-center gap-1.5">
+            <div className="hidden sm:flex items-center gap-1.5 ml-1 px-3 py-1.5 rounded-full" style={{ background: 'var(--gw-surface-variant)' }}>
               <span className="w-2 h-2 rounded-full heartbeat" style={{ background: riskColor }} />
-              <span className="text-[10px] font-semibold" style={{ color: riskColor }}>L{cityRisk} — {riskLabel}</span>
+              <span className="text-[11px] font-medium" style={{ color: riskColor }}>L{cityRisk}</span>
             </div>
-            <span className="text-[10px] text-gray-400 hidden sm:inline">Data: {CONFLICT_DATA.date} · {new Date(now).toLocaleTimeString()}</span>
           </div>
         </div>
 
-        {/* Country / City / Resident Selector Strip */}
-        <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-          <div className="flex items-center gap-2 mb-2.5">
-            <select value={selCountry} onChange={e => { setSelCountry(e.target.value); const cities = Object.keys(GCC_DATA[e.target.value]?.cities || {}); setSelCity(cities[0] || ""); }}
-              className="flex-1 text-sm font-semibold text-gray-700 bg-white border-2 border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer hover:border-blue-300 transition-colors"
-              style={{ appearance: "none", backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}>
-              {Object.entries(GCC_DATA).map(([k, v]) => (
-                <option key={k} value={k}>{v.flag} {v.name}</option>
-              ))}
-            </select>
-            <select value={selCity} onChange={e => setSelCity(e.target.value)}
-              className="flex-1 text-sm font-semibold text-gray-700 bg-white border-2 border-gray-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer hover:border-blue-300 transition-colors"
-              style={{ appearance: "none", backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}>
-              {Object.keys(countryData?.cities || {}).map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
+        {/* Level Strip — thin informational bar */}
+        <div className="flex items-center gap-3 px-4 py-2" style={{ background: cityRisk >= 4 ? 'var(--gw-orange-surface)' : cityRisk >= 3 ? 'var(--gw-blue-surface)' : 'var(--gw-green-surface)', borderTop: '1px solid var(--gw-border)' }}>
+          <span className="text-[10px] font-bold px-3 py-1 rounded-full text-white" style={{ background: riskColor, letterSpacing: '0.5px' }}>LEVEL {cityRisk}</span>
+          <span className="text-[12px] font-medium flex-1" style={{ color: 'var(--gw-text-secondary)' }}>{riskLabel} — {alertConfig.title}</span>
+          <span className="text-[11px] hidden sm:inline" style={{ color: 'var(--gw-text-tertiary)' }}>{new Date(now).toLocaleTimeString()}</span>
+        </div>
+
+        {/* Selector Strip — Google Chips */}
+        <div className="flex items-center gap-2 px-4 py-2.5 flex-wrap" style={{ background: 'var(--gw-surface)', borderTop: '1px solid var(--gw-border)' }}>
+          <select value={selCountry} onChange={e => { setSelCountry(e.target.value); const cities = Object.keys(GCC_DATA[e.target.value]?.cities || {}); setSelCity(cities[0] || ""); }}
+            className="gw-select">
+            {Object.entries(GCC_DATA).map(([k, v]) => (
+              <option key={k} value={k}>{v.flag} {v.name}</option>
+            ))}
+          </select>
+          <select value={selCity} onChange={e => setSelCity(e.target.value)}
+            className="gw-select">
+            {Object.keys(countryData?.cities || {}).map(c => (
+              <option key={c} value={c}>📍 {c}</option>
+            ))}
+          </select>
           <select value={resStatus} onChange={e => setResStatus(e.target.value)}
-            className="w-full text-sm font-bold text-gray-800 bg-white border-2 border-blue-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer soft-pulse hover:border-blue-400 transition-colors"
-            style={{ appearance: "none", backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}>
+            className="gw-select" style={{ borderColor: 'var(--gw-blue)', background: 'var(--gw-blue-surface)' }}>
             {Object.entries(RESIDENT_TYPES).map(([k, v]) => (
               <option key={k} value={k}>{v.icon} {v.label}</option>
             ))}
           </select>
         </div>
 
-        {/* Mobile Tabs */}
-        <div className="md:hidden flex border-t border-gray-100 overflow-x-auto" style={{ position: "relative" }}>
+        {/* Mobile Tabs — Google Workspace bottom-nav style */}
+        <div className="md:hidden flex overflow-x-auto" style={{ borderTop: '1px solid var(--gw-border)' }}>
           {TAB_KEYS.map(tk => (
               <button key={tk.key} onClick={() => setTab(tk.key)}
-                className={`flex-1 flex flex-col items-center gap-0.5 py-2 min-w-0 transition-colors relative ${
-                  tab === tk.key ? "text-blue-600" : "text-gray-400"
-                }`}>
+                className="flex-1 flex flex-col items-center gap-1 py-2.5 min-w-0 transition-colors relative"
+                style={{ color: tab === tk.key ? 'var(--gw-blue)' : 'var(--gw-text-tertiary)' }}>
                 <span className="text-lg leading-none">{tk.emoji}</span>
-                <span style={{ fontSize: "8px", fontWeight: 700 }}>{tk.shortLabel}</span>
-                {tab === tk.key && <span className="absolute bottom-0 left-[15%] right-[15%] h-[3px] bg-blue-600 rounded-t" />}
+                <span style={{ fontSize: "9px", fontWeight: 500, fontFamily: "'Google Sans Text', sans-serif" }}>{tk.shortLabel}</span>
+                {tab === tk.key && <span className="absolute bottom-0 left-[20%] right-[20%] h-[3px] rounded-t" style={{ background: 'var(--gw-blue)' }} />}
               </button>
           ))}
         </div>
@@ -3103,7 +3166,7 @@ export default function App() {
 
       <div className="flex">
         {/* SIDEBAR */}
-        <aside className={`fixed lg:sticky top-[140px] left-0 z-30 h-[calc(100vh-140px)] w-72 bg-white border-r border-gray-200 overflow-y-auto transition-transform duration-300 shadow-lg lg:shadow-none ${
+        <aside className={`fixed lg:sticky top-[160px] left-0 z-30 h-[calc(100vh-160px)] w-72 bg-white border-r overflow-y-auto transition-transform duration-300 shadow-lg lg:shadow-none ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}>
           <div className="p-5 space-y-5">
