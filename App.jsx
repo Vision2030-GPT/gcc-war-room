@@ -2286,7 +2286,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F8F9FA]" style={{ fontFamily: "'Google Sans', 'Segoe UI', system-ui, -apple-system, sans-serif" }} dir={isRTL ? "rtl" : "ltr"}>
-      {/* Styles in src/index.css */}
+      {/* Inline styles for new animations (keeping index.css untouched) */}
+      <style>{`
+        @keyframes soft-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+          50% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+        }
+        .soft-pulse { animation: soft-pulse 2.5s ease-in-out infinite; }
+      `}</style>
 
       {/* HEADER */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
