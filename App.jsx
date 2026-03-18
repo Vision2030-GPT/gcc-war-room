@@ -1295,16 +1295,6 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
         )}
       </Card>
 
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -1359,16 +1349,6 @@ const FullAnalysisTab = () => {
           );
         })}
       </div>
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -1926,16 +1906,6 @@ const AIAnalystTab = ({ country, city, resStatus: aiRes }) => {
           <Send className="w-4 h-4" />
         </button>
       </div>
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -2097,16 +2067,6 @@ Respond with ONLY this JSON (no markdown, no backticks, no explanation):
 
       {/* ─── OSINT SOURCES PANEL ─────────────────────────────────── */}
       <OsintSourcesPanel />
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -2341,16 +2301,6 @@ const OsintSourcesPanel = () => {
           <p className="text-[10px] text-amber-600 leading-relaxed">Cross-reference minimum 3 independent sources before acting on any report. Video game footage (Arma 3) and old footage regularly shared as real. Use InVID/WeVerify plugins. In the UAE, sharing "rumours or unknown sources" on social media is prosecutable.</p>
         </div>
       </div>
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -2506,16 +2456,6 @@ const LiveTweetsTab = () => {
           </button>
         ))}
       </Card>
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -2592,16 +2532,6 @@ const EmergencyTab = () => {
         </div>
         <p className="text-xs text-gray-400 mt-3 pt-3 border-t border-gray-100">Earliest plausible return: Late Q3 2026 (August–September)</p>
       </Card>
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 };
@@ -2668,6 +2598,9 @@ const ShouldIGoTab = ({
   const [advisorAnswers, setAdvisorAnswers] = useState({});
   const chatEndRef = useRef(null);
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
+  const [aiInsight, setAiInsight] = useState("");
+  const [aiInsightDone, setAiInsightDone] = useState(false);
+  const [aiShowChat, setAiShowChat] = useState(false);
 
   const L = confidenceLevel;
   const LEVELS = {
@@ -2782,6 +2715,17 @@ CRITICAL TONE RULES:
   };
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chatMessages]);
 
+  // AI Insight typing effect
+  const insightText = `Defense systems performing at ${interceptionRate} interception — world-class by any standard. Zero tourist casualties in ${conflictDay} days. Hotels offering 60%+ discounts, airlines have flexible rebooking.${userIntent === "invest" ? ` DFM down 30% — historic entry point. AED/USD peg rock-solid at ${CONFLICT_DATA.aedPeg}, backed by ${CONFLICT_DATA.sovereignWealth} sovereign wealth.` : userIntent === "visit" ? " For singles and couples, incredible value right now. Families with young children should consider flexible dates." : " Life continues normally for most residents. Stay connected to NCEMA for updates."}`;
+  useEffect(() => {
+    if (!userIntent) return;
+    setAiInsight(""); setAiInsightDone(false); setAiShowChat(false);
+    let i = 0;
+    const t = setInterval(() => { if (i < insightText.length) { setAiInsight(insightText.slice(0, i + 1)); i++; } else { clearInterval(t); setAiInsightDone(true); } }, 8);
+    return () => clearInterval(t);
+  }, [userIntent]);
+
+
   const selComp = comparisonData[originCountry] || comparisonData["United States"];
   const compEntries = Object.entries(selComp);
   const maxComp = Math.max(...compEntries.map(([,v]) => v.home));
@@ -2865,27 +2809,22 @@ CRITICAL TONE RULES:
     </div>
   </div>);
 
-  const renderAIInsight = () => {
-    const [insight, setInsight] = useState("");
-    const [insightDone, setInsightDone] = useState(false);
-    const [showChat, setShowChat] = useState(false);
-    const insightText = `Defense systems performing at ${interceptionRate} interception — world-class by any standard. Zero tourist casualties in ${conflictDay} days. Hotels offering 60%+ discounts, airlines have flexible rebooking.${userIntent === "invest" ? ` DFM down 30% — historic entry point. AED/USD peg rock-solid at ${CONFLICT_DATA.aedPeg}, backed by ${CONFLICT_DATA.sovereignWealth} sovereign wealth.` : userIntent === "visit" ? " For singles and couples, incredible value right now. Families with young children should consider flexible dates." : " Life continues normally for most residents. Stay connected to NCEMA for updates."}`;
-    useEffect(() => { setInsight(""); setInsightDone(false); let i = 0; const t = setInterval(() => { if (i < insightText.length) { setInsight(insightText.slice(0, i+1)); i++; } else { clearInterval(t); setInsightDone(true); } }, 8); return () => clearInterval(t); }, [userIntent]);
-    return (<div style={{ marginBottom: "16px" }}>
+  const renderAIInsight = () => (
+    <div style={{ marginBottom: "16px" }}>
       <div style={{ background: "#fff", borderRadius: "16px", padding: "20px", border: "1px solid #E8E8E8" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ fontSize: "18px" }}>✨</span><span style={{ fontFamily: "'Google Sans'", fontSize: "15px", fontWeight: 500, color: "#1C1C1E" }}>AI Insight</span></div>
           <span style={{ fontSize: "11px", color: "#8E8E93" }}>Just now</span>
         </div>
-        <div style={{ fontSize: "14px", lineHeight: 1.7, color: "#3C3C43" }}><span className={insightDone ? "" : "t-typing"}>{insight}</span></div>
-        {insightDone && !showChat && (
+        <div style={{ fontSize: "14px", lineHeight: 1.7, color: "#3C3C43" }}><span className={aiInsightDone ? "" : "t-typing"}>{aiInsight}</span></div>
+        {aiInsightDone && !aiShowChat && (
           <div style={{ display: "flex", gap: "8px", marginTop: "14px", flexWrap: "wrap" }}>
             {["Tell me more", "Hotel deals?", "Flight status?", "Investment outlook?"].map(q => (
-              <button key={q} onClick={() => { setShowChat(true); sendChat(q); }} style={{ padding: "7px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text'", transition: "all 0.15s" }}>{q}</button>
+              <button key={q} onClick={() => { setAiShowChat(true); sendChat(q); }} style={{ padding: "7px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text'", transition: "all 0.15s" }}>{q}</button>
             ))}
           </div>
         )}
-        {showChat && (<div style={{ marginTop: "14px", borderTop: "1px solid #E8E8E8", paddingTop: "14px" }}>
+        {aiShowChat && (<div style={{ marginTop: "14px", borderTop: "1px solid #E8E8E8", paddingTop: "14px" }}>
           <div style={{ maxHeight: "250px", overflowY: "auto", marginBottom: "12px" }}>
             {chatMessages.map((m, idx) => (<div key={idx} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "10px" }}><div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.content}</div></div>))}
             {chatLoading && <div><div className="sig-chat-ai" style={{ color: "#8E8E93" }}>● ● ● Analyzing...</div></div>}
@@ -2897,8 +2836,8 @@ CRITICAL TONE RULES:
           </div>
         </div>)}
       </div>
-    </div>);
-  };
+    </div>
+  );
 
   const renderFooter = () => (<div style={{ background: "#F8F9FA", borderRadius: "14px", padding: "20px", marginTop: "24px", fontSize: "12px", color: "#666", lineHeight: "1.6" }}><div style={{ fontWeight: 500, fontSize: "14px", color: "var(--gw-text-primary)", marginBottom: "10px", fontFamily: "'Google Sans', sans-serif" }}>🔒 Trust & Transparency · Level {L}</div><div style={{ fontSize: "11px", color: "#AAA", marginTop: "10px", padding: "10px", background: "#fff", borderRadius: "8px" }}><strong>Disclaimer:</strong> Informational analysis. Not safety guarantees or financial advice. Always consult official advisories. gcc-war-room.vercel.app</div></div>);
 
@@ -3107,16 +3046,6 @@ CRITICAL TONE RULES:
         </div>)}
       </div>)}
 
-
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
 
     </div>
   );
@@ -3440,6 +3369,7 @@ export default function App() {
         </main>
 
 
+
       {/* ═══ T212 BOTTOM NAV ═══ */}
       <div className="t-bottom-nav">
         {TAB_KEYS.map(tk => (
@@ -3449,7 +3379,6 @@ export default function App() {
           </div>
         ))}
       </div>
-
     </div>
   );
 }
