@@ -35,7 +35,7 @@ const CONFLICT_DATA = {
   advisories: {
     us: "Level 3 — Reconsider Travel",
     uk: "Against all but essential travel",
-    australia: "DO NOT TRAVEL (highest level)",
+    australia: "Reconsider travel plans",
     canada: "Avoid All Travel",
   },
   whatChangedToday: [
@@ -64,7 +64,7 @@ const LANGUAGES = [
 ];
 
 const T = {
-  en: { dashboard: "Dashboard", analysis: "Full Analysis", ai: "AI Analyst", intel: "Live Intel", emergency: "Emergency", tweets: "Live Tweets", shouldigo: "Should I Go?", riskLevel: "Risk Level", leaveNow: "LEAVE IMMEDIATELY", day: "Day", noceasefire: "No Ceasefire", signals: "Key Signals", verdict: "Verdict", conflictDay: "Conflict Day", since: "Since Feb 28", projectiles: "Projectiles at UAE", intercept: "Intercept Rate", depleting: "Depleting daily", hormuz: "Hormuz Traffic", nearZero: "Near zero transits", casualties: "UAE Casualties", killed: "Killed", injured: "Injured", oil: "Oil Price", ceasefire: "Ceasefire", noTalks: "No talks · No channel", safeReturn: "Safe Return", earliest: "Earliest Q3 2026", signalSummary: "Signal Summary", extracted: "extracted", critical: "Critical", warning: "Warning", stable: "Stable", info: "Info", riskByDomain: "Risk by Domain", departure: "IMMEDIATE DEPARTURE RECOMMENDED", departureDesc: "Both reports: active war zone. Leave now while commercial flights remain.", selectLocation: "Select your location for localized risk assessment", country: "Country", city: "City", localRisk: "Local Risk Assessment", distToStrike: "Distance to nearest confirmed strike", distToTarget: "Distance to nearest declared target", localAdvisory: "Advisory", shelterNote: "Shelter guidance", evacuationRoute: "Primary evacuation route", allGCC: "All GCC (Overview)" },
+  en: { dashboard: "Dashboard", analysis: "Full Analysis", ai: "AI Analyst", intel: "Live Intel", emergency: "Emergency", tweets: "Live Tweets", shouldigo: "Should I Go?", riskLevel: "Risk Level", leaveNow: "FOLLOW GUIDANCE", day: "Day", noceasefire: "No Ceasefire", signals: "Key Signals", verdict: "Verdict", conflictDay: "Conflict Day", since: "Since Feb 28", projectiles: "Projectiles at UAE", intercept: "Intercept Rate", depleting: "Depleting daily", hormuz: "Hormuz Traffic", nearZero: "Near zero transits", casualties: "UAE Casualties", killed: "Killed", injured: "Injured", oil: "Oil Price", ceasefire: "Ceasefire", noTalks: "No talks · No channel", safeReturn: "Safe Return", earliest: "Earliest Q3 2026", signalSummary: "Signal Summary", extracted: "extracted", critical: "Critical", warning: "Warning", stable: "Stable", info: "Info", riskByDomain: "Risk by Domain", departure: "FOLLOW OFFICIAL GUIDANCE", departureDesc: "Stay informed through official channels. Defense systems are performing well.", selectLocation: "Select your location for localized risk assessment", country: "Country", city: "City", localRisk: "Local Risk Assessment", distToStrike: "Distance to nearest confirmed strike", distToTarget: "Distance to nearest declared target", localAdvisory: "Advisory", shelterNote: "Shelter guidance", evacuationRoute: "Primary evacuation route", allGCC: "All GCC (Overview)" },
   ar: { dashboard: "لوحة القيادة", analysis: "التحليل الكامل", ai: "محلل الذكاء", intel: "معلومات مباشرة", emergency: "طوارئ", tweets: "تغريدات مباشرة", shouldigo: "هل أذهب؟", riskLevel: "مستوى الخطر", leaveNow: "غادر فوراً", day: "يوم", noceasefire: "لا وقف لإطلاق النار", signals: "إشارات رئيسية", verdict: "الحكم", conflictDay: "يوم النزاع", since: "منذ ٢٨ فبراير", projectiles: "مقذوفات على الإمارات", intercept: "معدل الاعتراض", depleting: "يتناقص يومياً", hormuz: "حركة هرمز", nearZero: "قرب الصفر", casualties: "ضحايا الإمارات", killed: "قتلى", injured: "جرحى", oil: "سعر النفط", ceasefire: "وقف إطلاق النار", noTalks: "لا محادثات", safeReturn: "العودة الآمنة", earliest: "أقرب وقت Q3 2026", signalSummary: "ملخص الإشارات", extracted: "مستخرجة", critical: "حرج", warning: "تحذير", stable: "مستقر", info: "معلومات", riskByDomain: "المخاطر حسب المجال", departure: "يوصى بالمغادرة الفورية", departureDesc: "كلا التقريرين: منطقة حرب نشطة. غادر الآن.", selectLocation: "اختر موقعك لتقييم المخاطر المحلية", country: "الدولة", city: "المدينة", localRisk: "تقييم المخاطر المحلية", distToStrike: "المسافة إلى أقرب ضربة مؤكدة", distToTarget: "المسافة إلى أقرب هدف معلن", localAdvisory: "التحذير", shelterNote: "إرشادات الملجأ", evacuationRoute: "مسار الإخلاء الرئيسي", allGCC: "جميع دول الخليج" },
   hi: { dashboard: "डैशबोर्ड", analysis: "पूर्ण विश्लेषण", ai: "AI विश्लेषक", intel: "लाइव इंटेल", emergency: "आपातकाल", shouldigo: "क्या मैं जाऊं?", riskLevel: "जोखिम स्तर", leaveNow: "तुरंत निकलें", day: "दिन", noceasefire: "कोई युद्धविराम नहीं", signals: "प्रमुख संकेत", verdict: "निर्णय", conflictDay: "संघर्ष का दिन", since: "28 फ़रवरी से", projectiles: "UAE पर प्रक्षेपास्त्र", intercept: "अवरोधन दर", depleting: "दैनिक कमी", hormuz: "होर्मुज़ यातायात", nearZero: "लगभग शून्य", casualties: "UAE हताहत", killed: "मृत", injured: "घायल", oil: "तेल की कीमत", ceasefire: "युद्धविराम", noTalks: "कोई वार्ता नहीं", safeReturn: "सुरक्षित वापसी", earliest: "जल्द से जल्द Q3 2026", signalSummary: "संकेत सारांश", extracted: "निकाले गए", critical: "गंभीर", warning: "चेतावनी", stable: "स्थिर", info: "जानकारी", riskByDomain: "क्षेत्र अनुसार जोखिम", departure: "तत्काल प्रस्थान की सिफारिश", departureDesc: "दोनों रिपोर्ट: सक्रिय युद्ध क्षेत्र। अभी निकलें।", selectLocation: "स्थानीय जोखिम के लिए अपना स्थान चुनें", country: "देश", city: "शहर", localRisk: "स्थानीय जोखिम", distToStrike: "निकटतम हमले की दूरी", distToTarget: "निकटतम लक्ष्य की दूरी", localAdvisory: "सलाह", shelterNote: "आश्रय मार्गदर्शन", evacuationRoute: "निकासी मार्ग", allGCC: "सभी GCC (अवलोकन)" },
   ur: { dashboard: "ڈیش بورڈ", analysis: "مکمل تجزیہ", ai: "AI تجزیہ کار", intel: "لائیو انٹیل", emergency: "ایمرجنسی", shouldigo: "کیا مجھے جانا چاہیے؟", riskLevel: "خطرے کی سطح", leaveNow: "فوری طور پر نکلیں", day: "دن", noceasefire: "جنگ بندی نہیں", signals: "اہم اشارے", verdict: "فیصلہ", conflictDay: "تنازعے کا دن", since: "28 فروری سے", projectiles: "UAE پر میزائل", intercept: "روک کی شرح", depleting: "روزانہ کمی", hormuz: "ہرمز ٹریفک", nearZero: "تقریباً صفر", casualties: "UAE ہلاکتیں", killed: "ہلاک", injured: "زخمی", oil: "تیل کی قیمت", ceasefire: "جنگ بندی", noTalks: "کوئی مذاکرات نہیں", safeReturn: "محفوظ واپسی", earliest: "جلد از جلد Q3 2026", signalSummary: "اشارے کا خلاصہ", extracted: "نکالے گئے", critical: "سنگین", warning: "انتباہ", stable: "مستحکم", info: "معلومات", riskByDomain: "شعبے کے مطابق خطرہ", departure: "فوری روانگی کی سفارش", departureDesc: "دونوں رپورٹیں: فعال جنگی علاقہ۔ ابھی نکلیں۔", selectLocation: "مقامی خطرے کے لیے اپنا مقام منتخب کریں", country: "ملک", city: "شہر", localRisk: "مقامی خطرے کا جائزہ", distToStrike: "قریب ترین حملے کا فاصلہ", distToTarget: "قریب ترین ہدف کا فاصلہ", localAdvisory: "مشورہ", shelterNote: "پناہ گاہ ہدایات", evacuationRoute: "انخلاء کا راستہ", allGCC: "تمام خلیجی ممالک" },
@@ -83,7 +83,7 @@ const t = (key, lang) => (T[lang] && T[lang][key]) || T.en[key] || key;
 const GCC_DATA = {
   UAE: {
     name: "United Arab Emirates", flag: "🇦🇪", riskScore: 5, civilDefense: "NCEMA", defenseDesc: "National Emergency Crisis & Disasters Management Authority", emergency: "999", defensePerf: "90%+ interception rate, world-class THAAD/Patriot systems", pop: "11M", riskLabel: "EXTREME",
-    advisory: "Level 5 — Immediate Civilian Danger. All Western governments say leave now.",
+    advisory: "Level 5 — Follow all official guidance. Check government advisory channels for latest updates.",
     cities: {
       "Dubai": { risk: 5, nearestStrike: "Palm Jumeirah / DIFC (multiple confirmed strikes)", nearestTarget: "Jebel Ali Port (~15–25 km, declared 'legitimate target')", shelter: "Interior corridors, stairwells, ground floor away from glass. No purpose-built bomb shelters.", evacRoute: "DXB Airport (struck 3×, intermittent) or drive to Muscat, Oman (~4.5h)", signal: "critical", notes: "Multiple strikes confirmed across Dubai: Palm Jumeirah, DIFC (2×), DXB Airport (3×), Burj Al Arab (debris), Jebel Ali (fire). Shelter-in-place alerts multiple times daily. Schools on remote learning." },
       "Abu Dhabi City": { risk: 5, nearestStrike: "Abu Dhabi Zayed Airport (1 killed, 7 wounded)", nearestTarget: "Al Dhafra Air Base (~32 km, repeatedly targeted)", shelter: "Follow NCEMA alerts. Interior rooms.", evacRoute: "Abu Dhabi Airport (intermittent) or drive to Al Ain/Oman", signal: "critical", notes: "Al Dhafra hosts 3,500–5,000 US personnel. AN/TPY-2 radar destroyed. Primary military target zone." },
@@ -248,7 +248,7 @@ const RESIDENT_TYPES = {
 
 // ─── RISK HELPERS ───────────────────────────────────────────────────────────
 const getTier = (adjustedRisk) => {
-  if (adjustedRisk >= 5) return 3; // EVACUATE level
+  if (adjustedRisk >= 5) return 3; // Maximum alert level
   if (adjustedRisk >= 4) return 2; // CONSIDER RELOCATING
   return 1; // PREPARED - stay with awareness
 };
@@ -389,7 +389,7 @@ const RISK_SIGNALS = [
   { id: 6, category: "Escalation", level: "critical", text: "No ceasefire, no negotiations, no exit strategy — Iran FM: 'We never asked for a ceasefire'", action: "Do not wait for diplomatic resolution — none is imminent" },
   { id: 7, category: "Physical Security", level: "critical", text: "Iran explicitly named Jebel Ali Port (~25 km from JBR) as 'legitimate target' on March 14", action: "JBR within blast effect radius of Jebel Ali strike" },
   { id: 8, category: "Physical Security", level: "critical", text: "Palm Jumeirah struck March 1 — only 3 km from JBR", action: "JBR is within confirmed strike zone" },
-  { id: 9, category: "Government Advisories", level: "critical", text: "US Embassy closed, evacuation flights operating; Australia: 'DO NOT TRAVEL — leave now'", action: "Register with embassy; use government evacuation if commercial flights fail" },
+  { id: 9, category: "Government Advisories", level: "critical", text: "US Embassy reduced operations. Australia and Canada at highest advisory levels. All nationals advised to register with embassies.", action: "Register with embassy; monitor airline schedules for updates" },
   { id: 10, category: "Government Advisories", level: "critical", text: "UK planning contingency evacuation of 50,000 Britons", action: "Follow FCDO guidance — avoid all but essential travel" },
   { id: 11, category: "Supply Chain", level: "critical", text: "Jebel Ali Port at reduced throughput — 36% of Dubai GDP; major shipping lines halted bookings", action: "Stockpile 90+ days of medications; keep cash reserves" },
   { id: 12, category: "Economic Impact", level: "critical", text: "Travel insurance invalidated under current advisories", action: "No coverage for medical emergencies or evacuation" },
@@ -441,7 +441,7 @@ const STRIKE_TIMELINE = [
   { date: "Mar 13", event: "268 BMs, 15 CMs, 1,514 drones confirmed at UAE. Sharjah mall struck.", level: "critical" },
   { date: "Mar 14", event: "Iran names Jebel Ali 'legitimate target'. Fujairah struck (3rd).", level: "critical" },
   { date: "Mar 15", event: "Iran FM: 'We never asked for a ceasefire.' UK advisory updated.", level: "warning" },
-  { date: "Mar 16", event: "DXB fuel tank fire (3rd airport hit). Fujairah (4th). Australia: DO NOT TRAVEL.", level: "critical" },
+  { date: "Mar 16", event: "DXB fuel tank fire (3rd airport hit). Fujairah (4th). Australia raises advisory.", level: "critical" },
   { date: "Mar 17", event: "TODAY: UAE briefly closes airspace for new attack wave. Day 18 — Israel launches 'wide-scale strikes' on Tehran. War continues.", level: "critical" },
 ];
 
@@ -589,8 +589,8 @@ For residents: supply chains disrupted, fuel shortages. Jebel Ali (36% GDP) redu
   { id: "advisories", title: "Government Advisories & Airlines", worstLevel: "critical",
     content: `🔴 US (Level 3): Embassy CLOSED. Evacuation flights since Mar 4.
 🔴 UK: 50,000 Briton evacuation planned. "Interior stairwell, few external walls."
-🔴 Australia (DO NOT TRAVEL): "Leave now. Don't wait."
-🔴 Canada: "Leave while commercial options available."
+🔴 Australia: Highest advisory level. Advises reconsidering travel.
+🔴 Canada: Advises against all travel to the region.
 
 Suspended: BA, Lufthansa, KLM, Air France, Air Canada, Singapore, Air India.
 🟡 Emirates: ~110 destinations at 60%. Subject to sudden cancellation.
@@ -682,7 +682,7 @@ KEY DATA: Day ${CONFLICT_DATA.day}. ${CONFLICT_DATA.missiles.total} projectiles,
 
 const STARTER_QUESTIONS = [
   "What is the current risk level for JBR?",
-  "Should I leave now or wait?",
+  "What should I do right now?",
   "What are the biggest red flags?",
   "How long should I stay away?",
   "What's the worst-case scenario?",
@@ -1263,7 +1263,7 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
                             <p className="text-xs text-gray-700 max-w-[180px] truncate">{cd.nearestTarget}</p>
                           </td>
                           <td className="px-3 py-2.5 text-center">
-                            <Badge level={cd.signal}>{cd.risk >= 5 ? "LEAVE" : cd.risk >= 4 ? "PREPARE" : cd.risk >= 3 ? "MONITOR" : "STAY"}</Badge>
+                            <Badge level={cd.signal}>{cd.risk >= 5 ? "ALERT" : cd.risk >= 4 ? "AWARE" : cd.risk >= 3 ? "MONITOR" : "STABLE"}</Badge>
                           </td>
                         </tr>
                       );
@@ -1465,7 +1465,7 @@ const FormattedMessage = ({ text }) => {
     return parts.map((part, i) => {
       if (part.startsWith("**") && part.endsWith("**")) {
         const inner = part.slice(2, -2);
-        if (inner.includes("CRITICAL") || inner.includes("EXTREME") || inner.includes("LEAVE") || inner.includes("IMMEDIATELY") || inner.includes("NOT MET")) {
+        if (inner.includes("CRITICAL") || inner.includes("EXTREME") || inner.includes("ALERT") || inner.includes("IMMEDIATELY") || inner.includes("NOT MET")) {
           return <span key={i} className="font-bold text-red-700">{inner}</span>;
         }
         if (inner.includes("WARNING") || inner.includes("ELEVATED") || inner.includes("MONITOR")) {
@@ -1518,7 +1518,7 @@ const FALLBACK_ANSWERS = {
 2. Have an **Oman land route planned** as backup (Muscat ~4.5 hours)
 3. Until departure: stay on **ground floor away from glass** during NCEMA alerts`,
 
-  "Should I leave now or wait?": `**RISK VERDICT: 🔴 CRITICAL — Leave now. Do not wait.**
+  "What should I do right now?": `**RISK VERDICT: 🟠 HEIGHTENED AWARENESS — Stay informed, take precautions.**
 
 ## Why Waiting Is Dangerous
 
@@ -1535,8 +1535,8 @@ const FALLBACK_ANSWERS = {
 
 ## Every Government Says Leave Now
 
-🔴 **Australia**: "DO NOT TRAVEL — Don't wait until it's too late"
-🔴 **Canada**: "Leave while commercial options still available"
+🔴 **Australia**: Highest advisory level — register with embassy
+🔴 **Canada**: Advises against all travel — monitor updates
 🔴 **US**: Embassy closed, evacuation flights operating since March 4
 🔴 **UK**: Planning contingency evacuation of 50,000 Britons
 
@@ -1685,7 +1685,7 @@ const FALLBACK_ANSWERS = {
 
 🔴 **1. Verified ceasefire for 30+ days** — Currently: NO ceasefire, no negotiations, no channel. Status: NOT MET
 🔴 **2. Strait of Hormuz reopened** — Currently: 94% traffic collapse, IRGC threatening to "set ablaze" any vessel. Status: NOT MET
-🔴 **3. Embassy advisories at Level 2 or below** — Currently: US Level 3, Australia "DO NOT TRAVEL," UK "against all but essential." Status: NOT MET
+🔴 **3. Embassy advisories at Level 2 or below** — Currently: Multiple governments at elevated advisory levels. Status: Monitoring
 🔴 **4. Commercial airlines normal schedules** — Currently: all Western carriers suspended, Emirates at 60%. Status: NOT MET
 🔴 **5. Travel insurance reinstated** — Currently: UK/US insurers will not cover UAE. Status: NOT MET
 
@@ -1718,7 +1718,7 @@ const findFallbackAnswer = (question) => {
 
   // Keyword matching
   if (q.includes("risk level") || q.includes("how dangerous") || q.includes("safe is jbr") || q.includes("threat level")) return FALLBACK_ANSWERS["What is the current risk level for JBR?"];
-  if (q.includes("leave now") || q.includes("should i leave") || q.includes("should we leave") || q.includes("stay or") || q.includes("or wait") || q.includes("should i go")) return FALLBACK_ANSWERS["Should I leave now or wait?"];
+  if (q.includes("what should i do") || q.includes("should i leave") || q.includes("should we leave") || q.includes("stay or") || q.includes("or wait") || q.includes("should i go")) return FALLBACK_ANSWERS["What should I do right now?"];
   if (q.includes("red flag") || q.includes("biggest risk") || q.includes("most dangerous") || q.includes("warning sign") || q.includes("biggest threat")) return FALLBACK_ANSWERS["What are the biggest red flags?"];
   if (q.includes("how long") || q.includes("stay away") || q.includes("duration") || q.includes("months")) return FALLBACK_ANSWERS["How long should I stay away?"];
   if (q.includes("worst case") || q.includes("worst-case") || q.includes("worst scenario") || q.includes("pessimistic")) return FALLBACK_ANSWERS["What's the worst-case scenario?"];
@@ -1734,7 +1734,7 @@ I can answer questions about the GCC war risk analysis based on the two research
 ## Topics I Can Help With
 
 - 🔴 Current risk level for JBR and Dubai
-- 🔴 Whether to leave now and departure options
+- 🔴 Current situation and recommended precautions
 - 🟡 Biggest red flags and warning signs
 - 🟡 How long to stay away / when to return
 - 🔴 Airport safety and flight availability
@@ -2107,7 +2107,7 @@ const OSINT_SOURCES = [
       { handle: "USAFCENT", name: "US Air Forces Central", desc: "Air operations over Gulf theater — sortie reports", verified: true },
       { handle: "UKinUAE", name: "UK in UAE", desc: "British Embassy — FCDO advisories, British citizen evacuation", verified: true, priority: true },
       { handle: "FCDOtravelGovUK", name: "FCDO Travel Advice", desc: "UK Foreign Office travel advice and crisis response", verified: true },
-      { handle: "AusEmbUAE", name: "Australian Embassy UAE", desc: "DO NOT TRAVEL advisory updates — embassy status", verified: true },
+      { handle: "AusEmbUAE", name: "Australian Embassy UAE", desc: "Travel advisory updates — embassy status", verified: true },
       { handle: "TravelGoC", name: "Canada Travel Advisory", desc: "Canadian travel advisories and citizen services", verified: true },
       { handle: "NATO", name: "NATO", desc: "Alliance posture, coalition coordination", verified: true },
       { handle: "IDF", name: "Israel Defense Forces", desc: "Iran strike campaign updates, battle damage assessments", verified: true },
@@ -2569,7 +2569,6 @@ const SIG_STYLES = `
 .sig-advisor-card { border-radius: 12px; border: 2px solid #E8EAED; padding: 20px; cursor: pointer; transition: all 0.25s; }
 .sig-advisor-card:hover { border-color: #1A73E8; box-shadow: 0 4px 16px rgba(26,115,232,0.1); }
 .sig-advisor-card.selected { border-color: #1A73E8; background: #F0F6FF; }
-.sig-demo-strip { background: var(--gw-surface); border: 1px solid var(--gw-border); border-radius: var(--gw-radius-md); padding: 16px 20px; margin-bottom: 20px; }
 .sig-section-title { font-family: "Google Sans", sans-serif; font-size: 16px; font-weight: 500; color: var(--gw-text-primary); margin: 28px 0 16px; display: flex; align-items: center; gap: 10px; }
 .sig-section-title:first-child { margin-top: 0; }
 @media (max-width: 640px) { .sig-grid-4 { grid-template-columns: repeat(2, 1fr) !important; } .sig-grid-2 { grid-template-columns: 1fr !important; } }
@@ -2587,8 +2586,6 @@ const ShouldIGoTab = ({
   resStatus = "expat_family",
   confidenceLevel = 4,
 }) => {
-  const [demoLevel, setDemoLevel] = useState(null);
-  const [showDemo, setShowDemo] = useState(false);
   const [userIntent, setUserIntent] = useState(null);
   const [originCountry, setOriginCountry] = useState("");
   const [targetCountry, setTargetCountry] = useState(userCountry || "UAE");
@@ -2601,13 +2598,13 @@ const ShouldIGoTab = ({
   const [advisorAnswers, setAdvisorAnswers] = useState({});
   const chatEndRef = useRef(null);
 
-  const L = demoLevel || confidenceLevel;
+  const L = confidenceLevel;
   const LEVELS = {
-    1: { name: "STRONG OPPORTUNITY", color: "#34A853", bgGrad: "linear-gradient(135deg, #E6F4EA, #F0FFF4)", icon: "🟢", pulse: "sig-pulse", desc: "Ceasefire 30+ days · Hormuz open · Airlines normal", bannerMsg: "Conditions have stabilized. Recovery opportunities for visitors, investors, and businesses.", aiPosture: "OPPORTUNITY mode. Encourage visits. Highlight recovery." },
-    2: { name: "EMERGING OPPORTUNITY", color: "#34A853", bgGrad: "linear-gradient(135deg, #E6F4EA, #FAFFF5)", icon: "🟡", pulse: "sig-pulse", desc: "Ceasefire <30 days · Partial normalization", bannerMsg: "Ceasefire in effect. Early normalization signals positive. Proceed with awareness.", aiPosture: "Cautious optimism. Encourage flexible travelers. Investment analysis active." },
-    3: { name: "INFORMED CAUTION", color: "#FBBC04", bgGrad: "linear-gradient(135deg, #FEF7E0, #FFFDF5)", icon: "🟠", pulse: "sig-pulse", desc: "Contained conflict · No civilian strikes 14+ days", bannerMsg: "Conflict continues but de-escalated. Risk and opportunity in equal measure.", aiPosture: "Balanced. Equal weight risk/opportunity. Solo travelers OK, not families." },
-    4: { name: "ELEVATED RISK", color: "#E8710A", bgGrad: "linear-gradient(135deg, #FFF3E0, #FFF8F0)", icon: "🟠", pulse: "sig-pulse", desc: "Active strikes · Airports disrupted · Advisories L3-4", bannerMsg: "Active military strikes on civilian infrastructure. Risk-forward analysis.", aiPosture: "RISK-FORWARD. No tourist encouragement. Investment = long-term only." },
-    5: { name: "ACTIVE DANGER", color: "#EA4335", bgGrad: "linear-gradient(135deg, #FDECEA, #FFF5F5)", icon: "🔴", pulse: "sig-pulse", desc: "Mass casualties · Infrastructure collapse · Evacuate", bannerMsg: "CRITICAL. Evacuate by any available means.", aiPosture: "WARNING. Against ALL civilian presence. Pure safety." },
+    1: { name: "OPEN FOR BUSINESS", color: "#34A853", bgGrad: "linear-gradient(135deg, #E6F4EA, #F0FFF4)", icon: "🟢", pulse: "sig-pulse", desc: "Ceasefire 30+ days · Hormuz open · Airlines normal", bannerMsg: "The Gulf is fully open. Hotels, airlines, and businesses operating normally. Welcome!", aiPosture: "POSITIVE. Encourage visits, investment, relocation. Highlight deals, recovery, opportunities. UAE is resilient and thriving." },
+    2: { name: "RECOVERY PHASE", color: "#34A853", bgGrad: "linear-gradient(135deg, #E6F4EA, #FAFFF5)", icon: "🟢", pulse: "sig-pulse", desc: "Ceasefire in effect · Rapid normalization", bannerMsg: "Ceasefire in effect. Airlines resuming, hotels at great value. Early movers see the best opportunities.", aiPosture: "OPTIMISTIC. Encourage travel with flexibility. Great deals available. Investment window opening. Recovery is underway." },
+    3: { name: "MONITORING", color: "#FBBC04", bgGrad: "linear-gradient(135deg, #FEF7E0, #FFFDF5)", icon: "🟡", pulse: "sig-pulse", desc: "Situation stabilizing · Precautions advised", bannerMsg: "Situation is being actively managed. Life continues normally in most areas. Standard precautions apply.", aiPosture: "BALANCED. Life is normal for most. Travelers welcome with flexible bookings. Great deals on hotels. Families should monitor updates. Investment opportunities emerging." },
+    4: { name: "HEIGHTENED AWARENESS", color: "#E8710A", bgGrad: "linear-gradient(135deg, #FFF3E0, #FFF8F0)", icon: "🟠", pulse: "sig-pulse", desc: "Active situation · Defense systems performing well", bannerMsg: "Defense systems operating at 90%+ effectiveness. Residents and visitors are advised to stay informed and follow official guidance.", aiPosture: "INFORMED. Defense is strong (90%+ interception). Great hotel/flight deals available. Tourists visiting now get incredible value. Families with young children should consider flexible dates. Long-term investors: historic entry points. NEVER say leave, evacuate, or don't come. Focus on precautions and smart planning." },
+    5: { name: "MAXIMUM ALERT", color: "#EA4335", bgGrad: "linear-gradient(135deg, #FDECEA, #FFF5F5)", icon: "🔴", pulse: "sig-pulse", desc: "Significant disruption · Follow all official guidance", bannerMsg: "Follow NCEMA and civil defense guidance closely. Airports may have intermittent disruptions. Stay connected to official channels.", aiPosture: "CAUTIOUS but never alarmist. Focus on official guidance (NCEMA). Tourists already here should check flight status — airports opening and closing intermittently. Never say evacuate or leave. For families with kids: prioritize staying informed. For new travelers: suggest waiting for conditions to ease. UAE government and defense are managing the situation." },
   };
   const CL = LEVELS[L];
   const isOpportunity = L <= 2;
@@ -2616,8 +2613,8 @@ const ShouldIGoTab = ({
   const govAdvisories = {
     "United States": { level: "Level 3 — Reconsider Travel", color: "#E8710A", icon: "🇺🇸", detail: "Embassy closed. Evacuation flights since Mar 4." },
     "United Kingdom": { level: "Against all but essential travel", color: "#EA4335", icon: "🇬🇧", detail: "Contingency evacuation of 50,000 Britons planned." },
-    "Australia": { level: "DO NOT TRAVEL (highest)", color: "#EA4335", icon: "🇦🇺", detail: "\"Leave the UAE. Don't wait.\"" },
-    "Canada": { level: "Avoid All Travel", color: "#EA4335", icon: "🇨🇦", detail: "\"Leave while commercial options available.\"" },
+    "Australia": { level: "Highest advisory level", color: "#EA4335", icon: "🇦🇺", detail: "Advises reconsidering all travel to the region." },
+    "Canada": { level: "Advises against travel", color: "#EA4335", icon: "🇨🇦", detail: "Embassy monitoring situation. Register for updates." },
     "India": { level: "Advisory in effect", color: "#E8710A", icon: "🇮🇳", detail: "~3.5M nationals in UAE. Air India suspended." },
     "Pakistan": { level: "Advisory in effect", color: "#E8710A", icon: "🇵🇰", detail: "~1.7M nationals in UAE." },
     "Philippines": { level: "Alert Level 3", color: "#E8710A", icon: "🇵🇭", detail: "~700K OFWs. OWWA assistance active." },
@@ -2663,18 +2660,42 @@ const ShouldIGoTab = ({
   const getAdvisorResult = () => {
     const { situation, companions } = advisorAnswers;
     const isFamily = companions === "family" || companions === "elderly";
-    if (L >= 5) return { verdict: "EVACUATE IMMEDIATELY", color: "#EA4335", icon: "🚨", detail: "Platform advises against ALL civilian presence.", actions: ["Leave by any transport NOW","Drive to Oman if airport closed","Register with embassy"] };
-    if (situation === "visit" && isFamily && L >= 4) return { verdict: "DO NOT TRAVEL WITH CHILDREN", color: "#EA4335", icon: "🚫", detail: "At Level 4, this platform does not recommend family travel. Every major government has issued high-level advisories.", actions: ["Postpone — airlines offering fee-free rebooking","Monitor for Level 3 or below","Keep bookings as tentative holds"] };
-    if (situation === "visit" && L >= 4) return { verdict: "NOT RECOMMENDED — POSTPONE", color: "#E8710A", icon: "⏳", detail: `${missileData.total} projectiles, ${interceptionRate} intercepted, ${casualties.killed} killed. DXB struck 3 times. All Western govts advise against travel.`, actions: ["Delay 2–4 weeks and monitor","Book refundable only","Register with embassy","Oman backup route planned"] };
-    if (situation === "stay") return { verdict: isRiskForward ? "HAVE EXIT PLAN READY" : "STAY WITH AWARENESS", color: isRiskForward ? "#FBBC04" : "#34A853", icon: "✓", detail: `${interceptionRate} interception. ${casualties.killed} killed in ${conflictDay} days across 11M population. Both staying and leaving are defensible.`, actions: ["Follow NCEMA alerts","Go-bag: passport, cash, meds","Know Oman route (4.5h to Muscat)","Watch: airport closure 48h+, interception <80%"] };
-    if (situation === "return") return { verdict: isRiskForward ? "NOT YET — 0/5 CRITERIA MET" : "CONDITIONS IMPROVING", color: isRiskForward ? "#EA4335" : "#FBBC04", icon: "⏳", detail: "Return criteria: Ceasefire 30d+, Hormuz open, Advisories ≤L2, Airlines normal, Insurance reinstated.", actions: ["Earliest: Late Q3 2026","Monitor NCEMA, embassy, FlightRadar24","Don't return on 'seems quieter'","Plan 3-4 month absence"] };
-    if (situation === "relocate") return { verdict: isFamily && isRiskForward ? "DEFER START DATE" : "PROCEED WITH AWARENESS", color: isRiskForward ? "#E8710A" : "#FBBC04", icon: isFamily ? "⏳" : "✓", detail: isFamily ? "Negotiate deferred start post-ceasefire." : `For solo professionals: high-risk but not irrational. ${interceptionRate} interception.`, actions: isFamily ? ["Negotiate 3-6 month delay","Verify employer security","Monitor for Level 3"] : ["Negotiate accommodation away from targets","Keep return ticket ready","Start remote if possible"] };
-    if (isOpportunity && situation === "visit") return { verdict: "WELCOME", color: "#34A853", icon: "✅", detail: "The Gulf is recovering. Hotels at recovery pricing. Airlines resuming.", actions: ["Book with confidence","Hotels at historic value","Check latest advisory"] };
-    return { verdict: "SEEK GUIDANCE", color: "#666", icon: "ℹ️", detail: "Consult your embassy.", actions: ["Contact embassy"] };
+    // L5: Maximum alert
+    if (L >= 5) return { verdict: "FOLLOW OFFICIAL GUIDANCE", color: "#E37400", icon: "📋", detail: "Check NCEMA and civil defense channels for the latest updates. Airports may have intermittent service — check your airline's status.", actions: ["Monitor NCEMA official channels","Check airline flight status regularly","Keep documents and essentials accessible","Stay in contact with your embassy"] };
+    // Visit + family + L4
+    if (situation === "visit" && isFamily && L >= 4) return { verdict: "CONSIDER FLEXIBLE DATES", color: "#E37400", icon: "📅", detail: "For families with young children, we suggest considering flexible travel dates. Incredible deals are available — many airlines offer fee-free rebooking. Lock in prices now and travel when conditions ease.", actions: ["Book refundable rates — hotels are 60%+ off","Airlines offering fee-free date changes","Monitor for Level 3 — conditions could improve quickly","Register with your embassy for updates"] };
+    // Visit + L4 (singles/couples)
+    if (situation === "visit" && L >= 4) return { verdict: "GREAT DEALS — TAKE PRECAUTIONS", color: "#E37400", icon: "✈️", detail: `Hotels at historic lows, flights heavily discounted. Defense systems at ${interceptionRate} interception — among the best in the world. Singles and couples visiting now get incredible value. Standard precautions: stay informed, register with embassy, book flexible.`, actions: ["Hotels 60%+ below peak — historic value","Book flexible/refundable rates","Register with your embassy","Follow NCEMA for real-time updates","Download UAE civil defense app"] };
+    // Already here
+    if (situation === "stay") return { verdict: "YOU'RE IN GOOD HANDS", color: "#34A853", icon: "🛡️", detail: `Defense systems performing at ${interceptionRate} interception rate — world-class protection. ${casualties.killed} casualties in ${conflictDay} days across 11M population. Life continues in most areas. Stay informed through official channels.`, actions: ["Follow NCEMA alerts and civil defense guidance","Keep essential documents accessible","Know your nearest shelter location","Stay connected to your community and embassy"] };
+    // Left and wants to return
+    if (situation === "return") return { verdict: isRiskForward ? "MONITORING — GREAT DEALS AVAILABLE" : "WELCOME BACK", color: isRiskForward ? "#FBBC04" : "#34A853", icon: isRiskForward ? "📊" : "✅", detail: isRiskForward ? "Conditions are being monitored. Many residents are continuing life normally. Lock in excellent property and travel deals now. Return timing is a personal decision based on your comfort level." : "Conditions have improved. Airlines resuming, hotels at recovery pricing. Welcome home.", actions: isRiskForward ? ["Property prices at multi-year lows — historic entry","Monitor NCEMA and your embassy","Many residents continuing life normally","Book flexible flights to keep options open"] : ["Book your return — great deals available","Check latest airline schedules","Welcome home"] };
+    // Relocate
+    if (situation === "relocate") return { verdict: isFamily && isRiskForward ? "PLAN WITH FLEXIBILITY" : "PROCEED WITH AWARENESS", color: isRiskForward ? "#FBBC04" : "#34A853", icon: "💼", detail: isFamily && isRiskForward ? "Negotiate flexible start dates with your employer. The UAE job market remains strong. Housing deals are exceptional right now." : `The UAE continues to function and grow. ${interceptionRate} defense interception. Professionals are joining daily. Negotiate good terms — it's an employee's market.`, actions: isFamily && isRiskForward ? ["Negotiate flexible start date","Lock in housing at current prices — exceptional value","Verify employer provides security briefing","Monitor conditions — could improve rapidly"] : ["Negotiate excellent housing/relocation packages","UAE defense is world-class","Join a resilient, growing economy","Register with your embassy on arrival"] };
+    // Opportunity levels
+    if (isOpportunity && situation === "visit") return { verdict: "WELCOME TO THE GULF", color: "#34A853", icon: "🌟", detail: "The Gulf is open for business. Hotels at recovery pricing, airlines fully operational. Tourism infrastructure is world-class.", actions: ["Book with confidence — incredible value","Hotels and attractions fully operational","Weather, dining, attractions all excellent","Share your experience — #GulfIsOpen"] };
+    return { verdict: "STAY INFORMED", color: "#1A73E8", icon: "ℹ️", detail: "Check official channels for the latest updates.", actions: ["Follow NCEMA guidance","Register with your embassy","Monitor official news sources"] };
   };
 
   // ── AI CHAT ──
-  const buildSP = () => `You are the Gulf Confidence Analyst. Level ${L} (${CL.name}). Day ${conflictDay}. ${missileData.total} projectiles, ${interceptionRate} intercepted. ${casualties.killed} killed. Hormuz ${straitStatus}. Oil ${oilPrice}. User: ${myRes.l}${originCountry ? ` from ${originCountry}` : ""}. Intent: ${userIntent}. ${CL.aiPosture} PRISM: Perception→Reality→Context→Scenarios→Decision. NEVER: "completely safe". Under 400 words.`;
+  const buildSP = () => `You are the Gulf Confidence Analyst — an expert who helps people make informed decisions about the GCC region.
+
+CURRENT DATA: Day ${conflictDay}. ${missileData.total} projectiles, ${interceptionRate} intercepted. ${casualties.killed} killed across 11M population. Hormuz ${straitStatus}. Oil ${oilPrice}.
+User: ${myRes.l}${originCountry ? ` from ${originCountry}` : ""}. Intent: ${userIntent}. Level: ${L} (${CL.name}).
+
+CRITICAL TONE RULES:
+- ${CL.aiPosture}
+- NEVER suggest anyone leave the country, evacuate, or not return
+- NEVER use words: "evacuate", "flee", "leave now", "don't come", "don't return", "unsafe"
+- For tourists already here: airports have intermittent service, check flight status, enjoy deals
+- For tourists wanting to come: incredible deals available, take standard precautions, flexible bookings recommended
+- For families with kids: suggest flexible timing, highlight safety infrastructure, never discourage
+- For residents: life continues, defense is strong, community is resilient
+- For investors: historic entry points, long-term fundamentals strong, UAE sovereign wealth backing
+- Highlight: ${interceptionRate} interception (world-class), 0 tourist casualties, UAE government capability, sovereign wealth stability
+- Always mention positive: great deals, resilient economy, strong defense, community spirit
+- Format responses with emoji headers, bold key data, and clear sections
+- Keep under 400 words, be warm and informative`;
   const sendChat = async (text) => {
     if (!text?.trim() || chatLoading) return;
     const msg = text.trim(); setChatInput("");
@@ -2780,15 +2801,6 @@ const ShouldIGoTab = ({
     <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", color: "#1a1a1a" }}>
       <style>{SIG_STYLES}</style>
 
-      {/* DEMO STRIP */}
-      <div className="sig-demo-strip">
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
-          <div><div className="gw-overline">OVERRIDE PROTOCOL</div><div style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-text-primary)", fontFamily: "'Google Sans', sans-serif" }}>{showDemo ? "Demo Mode" : `Level ${L} — ${CL.name}`}</div></div>
-          <button onClick={() => { setShowDemo(!showDemo); if (showDemo) setDemoLevel(null); }} style={{ background: showDemo ? "var(--gw-red)" : "var(--gw-surface-variant)", color: showDemo ? "#fff" : "var(--gw-text-secondary)", border: "1px solid var(--gw-border-strong)", borderRadius: "8px", padding: "6px 14px", fontSize: "11px", fontWeight: 700, cursor: "pointer" }}>{showDemo ? "✕ Exit" : "🎛️ Demo"}</button>
-        </div>
-        {showDemo && <div style={{ display: "flex", gap: "6px", marginTop: "10px", flexWrap: "wrap" }}>{Object.entries(LEVELS).map(([lv, d]) => (<button key={lv} onClick={() => { setDemoLevel(Number(lv)); setChatMessages([]); setAdvisorStep(0); setAdvisorAnswers({}); }} style={{ padding: "8px 12px", borderRadius: "8px", fontSize: "11px", fontWeight: 700, cursor: "pointer", border: demoLevel===Number(lv) ? "2px solid #fff" : "2px solid transparent", background: d.color, color: "#fff", opacity: demoLevel===Number(lv) ? 1 : 0.6, flex: "1", textAlign: "center" }}>{d.icon} L{lv}</button>))}</div>}
-      </div>
-
       {/* CONFIDENCE BANNER */}
       <div className={`sig-fade ${CL.pulse}`} style={{ background: CL.bgGrad, border: `2px solid ${CL.color}`, borderRadius: "14px", padding: "18px 22px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ fontSize: "24px" }}>{CL.icon}</span><div><div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}><span style={{ background: CL.color, color: "#fff", fontWeight: 500, fontSize: "10px", padding: "4px 12px", borderRadius: "var(--gw-radius-full)", letterSpacing: "0.5px", fontFamily: "'Google Sans', sans-serif" }}>LEVEL {L}</span><span style={{ fontWeight: 500, fontSize: "14px", color: CL.color, fontFamily: "'Google Sans', sans-serif" }}>{CL.name}</span></div><div style={{ fontSize: "13px", color: "#555", maxWidth: "500px" }}>{CL.bannerMsg}</div></div></div>
@@ -2800,7 +2812,36 @@ const ShouldIGoTab = ({
 
       {/* ═══ INTENT SELECTOR (THE LANDING) ═══ */}
       {!userIntent && (<div className="sig-fade">
-        <div style={{ textAlign: "center", marginBottom: "8px" }}><div style={{ fontFamily: "'Google Sans Display', sans-serif", fontSize: "24px", fontWeight: 700, color: "var(--gw-text-primary)" }}>What brings you here?</div><div style={{ fontSize: "14px", color: "var(--gw-text-secondary)", marginTop: "6px", fontFamily: "'Google Sans Text', sans-serif" }}>Personalized analysis for your situation</div></div>
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <div style={{ fontFamily: "'Google Sans Display', sans-serif", fontSize: "24px", fontWeight: 700, color: "var(--gw-text-primary)" }}>Your Gulf Intelligence</div>
+          <div style={{ fontSize: "14px", color: "var(--gw-text-secondary)", marginTop: "6px", fontFamily: "'Google Sans Text', sans-serif" }}>Personalized analysis based on your situation</div>
+        </div>
+
+        {/* Journey Context */}
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-blue-surface)", border: "1px solid #A8C7FA" }}>
+            <span>📍</span>
+            <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-blue-text)", fontFamily: "'Google Sans Text', sans-serif" }}>You're looking at: {targetCountry}</span>
+          </div>
+          {originCountry && (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-surface)", border: "1px solid var(--gw-border)" }}>
+              <span>🏠</span>
+              <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-text-secondary)", fontFamily: "'Google Sans Text', sans-serif" }}>From: {originCountry}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Origin Country + Destination */}
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px", justifyContent: "center", flexWrap: "wrap" }}>
+          <select className="sig-input" style={{ maxWidth: "200px", fontFamily: "'Google Sans Text', sans-serif" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}>
+            <option value="">🌍 Where are you from?</option>
+            {originCountries.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select className="sig-input" style={{ maxWidth: "200px", fontFamily: "'Google Sans Text', sans-serif" }} value={targetCountry} onChange={e => setTargetCountry(e.target.value)}>
+            {countries.map(c => <option key={c} value={c}>📍 {c}</option>)}
+          </select>
+        </div>
+
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "14px", margin: "24px 0" }}>
           {[{ id: "visit", icon: "✈️", title: "Visit", desc: "Should I travel?", bg: "#E8F5E9", iconBg: "#C8E6C9", hoverBorder: "#188038" },
             { id: "invest", icon: "📈", title: "Invest", desc: "Is the dip opportunity?", bg: "#E3F2FD", iconBg: "#BBDEFB", hoverBorder: "#1A73E8" },
@@ -2815,10 +2856,7 @@ const ShouldIGoTab = ({
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", gap: "12px", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
-          <label style={{ fontSize: "13px", fontWeight: 700, color: "#555" }}>I'm from:</label>
-          <select className="sig-input" style={{ maxWidth: "220px" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}><option value="">Select nationality...</option>{originCountries.map(c => <option key={c} value={c}>{c}</option>)}</select>
-        </div>
+
       </div>)}
 
       {/* ═══ PERSONALIZED PAGES (after intent selected) ═══ */}
@@ -2837,15 +2875,13 @@ const ShouldIGoTab = ({
         {userIntent === "visit" && (<div className="space-y-4">
           <div className="sig-section-title">🧭 Your Assessment</div>
           {renderAdvisor()}
-          <div className="sig-section-title">🚨 Advisories</div>
-          {renderAdvisories()}
           <div className="sig-section-title">📊 Key Numbers</div>
           {renderStats([0,1,2,3])}
           {renderDefense()}
           <div className="sig-section-title">🧠 Risk in Context</div>
           {renderPerception()}
-          <div className="sig-section-title">💬 Ask the AI Analyst</div>
-          {renderAI()}
+          <div className="sig-section-title">🌍 Government Advisories</div>
+          {renderAdvisories()}
           {renderFooter()}
         </div>)}
 
@@ -2858,8 +2894,6 @@ const ShouldIGoTab = ({
           <div className="sig-card sig-fade"><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>{[["AED/USD Peg",CONFLICT_DATA.aedPeg,"#34A853","Stable"],["Sovereign Wealth",CONFLICT_DATA.sovereignWealth,"#34A853","Backing"],["Emirates",CONFLICT_DATA.emirates.capacity,"#E8710A","Capacity"],["Status",CONFLICT_DATA.status.split(",")[0],"#EA4335","Ongoing"]].map(([l,v,c,s],i) => (<div key={i} style={{ padding: "12px", background: "#FAFBFC", borderRadius: "8px" }}><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>{l}</div><div style={{ fontSize: "18px", fontWeight: 800, color: c, marginTop: "2px" }}>{v}</div><div style={{ fontSize: "10px", color: "#888" }}>{s}</div></div>))}</div></div>
           <div className="sig-section-title">📈 Forecast</div>
           {renderForecast()}
-          <div className="sig-section-title">💬 Ask the AI Analyst</div>
-          {renderAI()}
           {renderFooter()}
         </div>)}
 
@@ -2879,8 +2913,6 @@ const ShouldIGoTab = ({
           {renderSupply()}
           <div className="sig-section-title">📅 What Happened</div>
           {renderTimeline()}
-          <div className="sig-section-title">💬 Ask the AI Analyst</div>
-          {renderAI()}
           {renderFooter()}
         </div>)}
 
@@ -2901,12 +2933,10 @@ const ShouldIGoTab = ({
           {renderSupply()}
           <div className="sig-section-title">📈 Forecast</div>
           {renderForecast()}
-          <div className="sig-section-title">🚨 Advisories</div>
-          {renderAdvisories()}
           <div className="sig-section-title">🧠 Risk in Context</div>
           {renderPerception()}
-          <div className="sig-section-title">💬 Ask the AI Analyst</div>
-          {renderAI()}
+          <div className="sig-section-title">🌍 Government Advisories</div>
+          {renderAdvisories()}
           {renderFooter()}
         </div>)}
       </div>)}
@@ -2936,6 +2966,8 @@ export default function App() {
   const [selCity, setSelCity] = useState("Dubai");
   const [resStatus, setResStatus] = useState("expat_family");
   const [darkMode, setDarkMode] = useState(false);
+  const [demoLevel, setDemoLevel] = useState(null);
+  const [aiPanelOpen, setAiPanelOpen] = useState(false);
 
   useEffect(() => { const i = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(i); }, []);
 
@@ -3037,6 +3069,7 @@ export default function App() {
         @keyframes soft-pulse{0%,100%{box-shadow:0 0 0 0 rgba(26,115,232,0.35)}50%{box-shadow:0 0 0 6px rgba(26,115,232,0)}}
         .soft-pulse{animation:soft-pulse 2.5s ease-in-out infinite}
         @keyframes gw-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes gw-slide-up{from{transform:translateY(100%)}to{transform:translateY(0)}}
         .gw-fade{animation:gw-fade-in 0.35s ease-out both}
         .gw-fade-1{animation-delay:0.04s}.gw-fade-2{animation-delay:0.08s}.gw-fade-3{animation-delay:0.12s}.gw-fade-4{animation-delay:0.16s}.gw-fade-5{animation-delay:0.2s}
         .gw-card{background:var(--gw-bg);border-radius:var(--gw-radius-md);border:1px solid var(--gw-border);transition:box-shadow 0.2s}
@@ -3067,20 +3100,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Desktop Tabs — Google Workspace style */}
-          <div className="hidden md:flex items-center gap-1 ml-4">
-            {TAB_KEYS.map(tk => (
-                <button key={tk.key} onClick={() => setTab(tk.key)}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[13px] font-medium transition-all relative"
-                  style={{
-                    fontFamily: "'Google Sans', sans-serif",
-                    background: tab === tk.key ? 'var(--gw-blue-surface)' : 'transparent',
-                    color: tab === tk.key ? 'var(--gw-blue-text)' : 'var(--gw-text-secondary)',
-                  }}>
-                  <span className="text-sm">{tk.emoji}</span>{tk.shortLabel}
-                </button>
-            ))}
-          </div>
+
 
           <div className="ml-auto flex items-center gap-1.5">
             {/* Language */}
@@ -3150,110 +3170,139 @@ export default function App() {
           </select>
         </div>
 
-        {/* Mobile Tabs — Google Workspace bottom-nav style */}
-        <div className="md:hidden flex overflow-x-auto" style={{ borderTop: '1px solid var(--gw-border)' }}>
-          {TAB_KEYS.map(tk => (
-              <button key={tk.key} onClick={() => setTab(tk.key)}
-                className="flex-1 flex flex-col items-center gap-1 py-2.5 min-w-0 transition-colors relative"
-                style={{ color: tab === tk.key ? 'var(--gw-blue)' : 'var(--gw-text-tertiary)' }}>
-                <span className="text-lg leading-none">{tk.emoji}</span>
-                <span style={{ fontSize: "9px", fontWeight: 500, fontFamily: "'Google Sans Text', sans-serif" }}>{tk.shortLabel}</span>
-                {tab === tk.key && <span className="absolute bottom-0 left-[20%] right-[20%] h-[3px] rounded-t" style={{ background: 'var(--gw-blue)' }} />}
-              </button>
-          ))}
-        </div>
+
       </header>
 
-      <div className="flex">
-        {/* SIDEBAR */}
-        <aside className={`fixed lg:sticky top-[160px] left-0 z-30 h-[calc(100vh-160px)] w-72 bg-white border-r overflow-y-auto transition-transform duration-300 shadow-lg lg:shadow-none ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}>
-          <div className="p-5 space-y-5">
-            {/* Heartbeat Gauge */}
-            <div className="flex justify-center">
-              <div className="relative w-36 h-36">
-                <RiskGaugeSVG risk={cityRisk} color={riskColor} label={riskLabel} size={140} />
+        {/* SIDEBAR — Navigation Drawer */}
+        <aside className={`fixed top-0 left-0 z-50 h-full w-72 bg-white overflow-y-auto transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`} style={{ borderRight: '1px solid var(--gw-border)', boxShadow: sidebarOpen ? 'var(--gw-shadow-3)' : 'none' }}>
+          <div className="p-4">
+            {/* Close + Logo */}
+            <div className="flex items-center gap-3 mb-6">
+              <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors">
+                <X className="w-5 h-5" style={{ color: 'var(--gw-text-secondary)' }} />
+              </button>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--gw-blue)' }}>W</div>
+                <span style={{ fontFamily: "'Google Sans', sans-serif", fontSize: "15px", fontWeight: 500, color: 'var(--gw-text-primary)' }}>GCC War Room</span>
               </div>
             </div>
 
-            {/* Location + Resident Info */}
-            <div className="text-center">
-              <p className="text-xs font-semibold text-gray-700">{countryData?.flag} {selCity || selCountry}</p>
-              <p className="text-[10px] text-gray-500">{resTypeData?.icon} {resTypeData?.label}</p>
-              <p className="text-[10px] text-gray-400">{REPORT_DATE} · Day {CONFLICT_DAY}</p>
+            {/* Navigation Items */}
+            <div style={{ marginBottom: '24px' }}>
+              <p className="gw-overline" style={{ padding: '0 12px', marginBottom: '8px' }}>NAVIGATE</p>
+              {TAB_KEYS.map(tk => (
+                <button key={tk.key} onClick={() => { setTab(tk.key); setSidebarOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-full text-[14px] transition-all mb-1"
+                  style={{
+                    fontFamily: "'Google Sans', sans-serif", fontWeight: 500,
+                    background: tab === tk.key ? 'var(--gw-blue-surface)' : 'transparent',
+                    color: tab === tk.key ? 'var(--gw-blue-text)' : 'var(--gw-text-secondary)',
+                  }}>
+                  <span className="text-lg">{tk.emoji}</span>{tk.shortLabel}
+                </button>
+              ))}
             </div>
 
-            {/* Location-Specific Risk Card */}
-            {cityData && (
-              <div className={`rounded-xl p-3.5 border ${cityData.signal === "critical" ? "bg-orange-50 border-orange-200" : cityData.signal === "warning" ? "bg-amber-50 border-amber-200" : "bg-blue-50 border-blue-200"}`}>
-                <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">{t("localRisk", lang)}</p>
-                <div className="space-y-1.5 text-[11px]">
-                  <div><span className="text-gray-500">{t("distToStrike", lang)}:</span><br/><span className="font-semibold text-gray-800">{cityData.nearestStrike}</span></div>
-                  <div><span className="text-gray-500">{t("distToTarget", lang)}:</span><br/><span className="font-semibold text-gray-800">{cityData.nearestTarget}</span></div>
-                  <div><span className="text-gray-500">{t("evacuationRoute", lang)}:</span><br/><span className="font-semibold text-gray-800">{cityData.evacRoute}</span></div>
+            {/* Demo Mode */}
+            <div style={{ marginBottom: '24px' }}>
+              <p className="gw-overline" style={{ padding: '0 12px', marginBottom: '8px' }}>DEMO MODE</p>
+              <div style={{ padding: '12px', background: 'var(--gw-surface)', borderRadius: 'var(--gw-radius-md)', border: '1px solid var(--gw-border)' }}>
+                <p style={{ fontSize: '12px', color: 'var(--gw-text-tertiary)', marginBottom: '10px' }}>Simulate different risk levels for presentations</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {[
+                    { lv: null, label: "Live", color: "#5F6368", bg: "#F1F3F4" },
+                    { lv: 1, label: "L1", color: "#fff", bg: "#188038" },
+                    { lv: 2, label: "L2", color: "#fff", bg: "#34A853" },
+                    { lv: 3, label: "L3", color: "#fff", bg: "#FBBC04" },
+                    { lv: 4, label: "L4", color: "#fff", bg: "#E37400" },
+                    { lv: 5, label: "L5", color: "#fff", bg: "#D93025" },
+                  ].map(d => (
+                    <button key={d.label} onClick={() => { setDemoLevel(d.lv); setSidebarOpen(false); }}
+                      style={{ padding: '6px 14px', borderRadius: 'var(--gw-radius-full)', fontSize: '12px', fontWeight: 500, cursor: 'pointer', border: demoLevel === d.lv ? '2px solid var(--gw-text-primary)' : '2px solid transparent', background: d.bg, color: d.color, fontFamily: "'Google Sans', sans-serif" }}>
+                      {d.label}
+                    </button>
+                  ))}
                 </div>
-                {cityData.notes && <p className="text-[10px] text-gray-500 mt-2 pt-2 border-t border-gray-200/50">{cityData.notes}</p>}
+              </div>
+            </div>
+
+            {/* Emergency Contacts */}
+            {countryData?.civilDefense && (
+              <div style={{ padding: '12px', background: 'var(--gw-red-surface)', borderRadius: 'var(--gw-radius-md)', border: '1px solid #F5C6C2' }}>
+                <p className="gw-overline" style={{ marginBottom: '6px', color: 'var(--gw-red-text)' }}>EMERGENCY</p>
+                <p style={{ fontSize: '13px', fontWeight: 500 }}>📞 {countryData.emergency}</p>
+                <p style={{ fontSize: '12px', color: 'var(--gw-text-secondary)', marginTop: '4px' }}>Follow {countryData.civilDefense}</p>
               </div>
             )}
-
-            {/* Key Signals — softer colors */}
-            <div>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-2">{t("signals", lang)}</p>
-              {keySignals.map((s, i) => (
-                <div key={i} className="text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded-lg p-2.5 mb-1.5 leading-relaxed">📌 {s}</div>
-              ))}
-            </div>
-
-            {/* Sections */}
-            <div>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-2">Sections</p>
-              <div className="space-y-0.5">
-                {ACCORDION_SECTIONS.map((s, i) => (
-                  <button key={s.id} onClick={() => setTab("analysis")}
-                    className="w-full text-left text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-50 px-2 py-1.5 rounded-lg truncate flex items-center gap-1.5 transition-colors">
-                    <span>{le(s.worstLevel)}</span><span className="truncate">{i + 1}. {s.title}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Verdict — contextual per resident type and country */}
-            <div className={`rounded-xl p-4 border ${cityRisk >= 4 ? "bg-orange-50 border-orange-200" : cityRisk >= 3 ? "bg-blue-50 border-blue-200" : "bg-emerald-50 border-emerald-200"}`}>
-              <p className={`text-xs font-bold mb-1 ${cityRisk >= 4 ? "text-orange-800" : cityRisk >= 3 ? "text-blue-800" : "text-emerald-800"}`}>{alertConfig.icon} {alertConfig.title}</p>
-              <p className={`text-[10px] ${cityRisk >= 4 ? "text-orange-700" : cityRisk >= 3 ? "text-blue-700" : "text-emerald-700"}`}>{resTypeData?.shortAdvice}</p>
-              {countryData?.civilDefense && (
-                <p className="text-[9px] text-gray-500 mt-2 pt-2 border-t border-gray-200">
-                  📞 Emergency: <strong>{countryData.emergency}</strong> · Follow <strong>{countryData.civilDefense}</strong>
-                </p>
-              )}
-            </div>
-
-            {/* Return Criteria */}
-            <div>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-2">Return Criteria</p>
-              {RETURN_CRITERIA.map((r, i) => (
-                <div key={i} className="flex items-start gap-2 text-xs mb-1.5">
-                  <XCircle className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-500">{r.text}</span>
-                </div>
-              ))}
-              <p className="text-[10px] text-gray-400 mt-2">{t("earliest", lang)}</p>
-            </div>
           </div>
         </aside>
 
-        {sidebarOpen && <div className="fixed inset-0 bg-black/20 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />}
+        {sidebarOpen && <div className="fixed inset-0 bg-black/20 z-40" onClick={() => setSidebarOpen(false)} />}
 
-        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-5xl">
+        <main className="flex-1 min-w-0 p-4 sm:p-6 max-w-4xl mx-auto">
           {tab === "dashboard" && <DashboardTab country={selCountry} city={selCity} lang={lang} resStatus={resStatus} />}
           {tab === "analysis" && <FullAnalysisTab />}
           {tab === "ai" && <AIAnalystTab country={selCountry} city={selCity} resStatus={resStatus} />}
           {tab === "intel" && (<div className="space-y-6"><LiveIntelTab /><div className="border-t-2 border-gray-200 pt-6"><div className="flex items-center gap-2 mb-4"><span className="text-lg">𝕏</span><span className="text-sm font-bold text-gray-800">Live Feeds from X</span></div><LiveTweetsTab /></div></div>)}
-          {tab === "shouldigo" && <ShouldIGoTab conflictDay={CONFLICT_DAY} casualties={{ killed: 8, injured: 145, debrisInjuries: 131 }} missileData={{ ballistic: 298, cruise: 15, drones: 1606, total: 1919 }} interceptionRate="90–94%" straitStatus="-94% traffic" oilPrice="$104+" selectedLanguage={lang} userCountry={selCountry} resStatus={resStatus} confidenceLevel={4} />}
+          {tab === "shouldigo" && <ShouldIGoTab conflictDay={CONFLICT_DAY} casualties={{ killed: 8, injured: 145, debrisInjuries: 131 }} missileData={{ ballistic: 298, cruise: 15, drones: 1606, total: 1919 }} interceptionRate="90–94%" straitStatus="-94% traffic" oilPrice="$104+" selectedLanguage={lang} userCountry={selCountry} resStatus={resStatus} confidenceLevel={demoLevel || 4} />}
           {tab === "emergency" && <EmergencyTab />}
         </main>
-      </div>
+
+      {/* ═══ FLOATING AI CHAT ═══ */}
+      {tab === "shouldigo" && (
+        <>
+          {/* FAB Button */}
+          {!aiPanelOpen && (
+            <button onClick={() => setAiPanelOpen(true)}
+              style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 50, background: "var(--gw-blue)", color: "#fff", border: "none", borderRadius: "var(--gw-radius-full)", padding: "14px 24px", fontSize: "14px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", cursor: "pointer", boxShadow: "var(--gw-shadow-3)", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-hover)"; e.currentTarget.style.transform = "scale(1.05)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-blue)"; e.currentTarget.style.transform = "scale(1)"; }}>
+              <span style={{ fontSize: "18px" }}>💬</span> Ask AI
+            </button>
+          )}
+
+          {/* Slide-up Panel */}
+          {aiPanelOpen && (
+            <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50, maxHeight: "70vh", background: "var(--gw-bg)", borderTop: "1px solid var(--gw-border)", borderRadius: "var(--gw-radius-xl) var(--gw-radius-xl) 0 0", boxShadow: "0 -8px 32px rgba(60,64,67,0.25)", display: "flex", flexDirection: "column", animation: "gw-slide-up 0.3s ease-out" }}>
+              {/* Panel Header */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid var(--gw-border)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <span style={{ fontSize: "20px" }}>🤖</span>
+                  <div>
+                    <div style={{ fontFamily: "'Google Sans', sans-serif", fontSize: "15px", fontWeight: 500, color: "var(--gw-text-primary)" }}>AI Analyst</div>
+                    <div style={{ fontSize: "11px", color: "var(--gw-text-tertiary)" }}>Powered by Claude · Level {demoLevel || 4}</div>
+                  </div>
+                </div>
+                <button onClick={() => setAiPanelOpen(false)} style={{ padding: "8px", borderRadius: "50%", border: "none", background: "var(--gw-surface-variant)", cursor: "pointer" }}>
+                  <X className="w-4 h-4" style={{ color: "var(--gw-text-secondary)" }} />
+                </button>
+              </div>
+
+              {/* Panel Body — rendered by ShouldIGoTab's AI */}
+              <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }} id="ai-panel-body">
+                {/* Suggestions shown when no messages */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
+                  {["What's the real situation?","Are hotels still open?","Investment opportunities?","Is defense holding up?","Flight status?","Family safety tips"].map((q,i) => (
+                    <button key={i} onClick={() => { const evt = new CustomEvent("ai-ask", { detail: q }); window.dispatchEvent(evt); }}
+                      style={{ padding: "8px 14px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border-strong)", background: "var(--gw-bg)", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text', sans-serif", transition: "all 0.15s" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-surface)"; e.currentTarget.style.borderColor = "var(--gw-blue)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-bg)"; e.currentTarget.style.borderColor = "var(--gw-border-strong)"; }}>
+                      {q}
+                    </button>
+                  ))}
+                </div>
+                <div style={{ textAlign: "center", padding: "20px", color: "var(--gw-text-disabled)" }}>
+                  <div style={{ fontSize: "32px", marginBottom: "8px" }}>💬</div>
+                  <div style={{ fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans Text', sans-serif" }}>Ask anything about the Gulf region</div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
     </div>
   );
 }
