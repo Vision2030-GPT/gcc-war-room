@@ -136,7 +136,7 @@ const RESIDENT_TYPES = {
     label: "Expat Resident (Family)",
     icon: "👨‍👩‍👧",
     riskAdjust: -2,
-    tier1msg: "Your family is safe. Schools operating remotely as precaution — this is normal in the situation. Follow NCEMA shelter drills with your children. The country is defending itself well (90%+ interception rate, 7 casualties in 11M people). Have a family contingency plan as common sense. This is your home — the nation's defenses are world-class.",
+    tier1msg: "Your family is safe. Schools operating remotely as precaution — this is normal in the situation. Follow NCEMA shelter drills with your children. The country is defending itself well (90%+ interception rate, 8 casualties in 11M people). Have a family contingency plan as common sense. This is your home — the nation's defenses are world-class.",
     tier2msg: "Situation has materially worsened. Families with young children should consider temporary relocation. Activate your contingency plan.",
     tier3msg: "Evacuate with your family. Follow official guidance. Use prepared exit routes.",
     shortAdvice: "Family safe — follow shelter drills, have a plan",
@@ -172,44 +172,37 @@ const getTier = (adjustedRisk) => {
 const getAlertConfig = (adjustedRisk, resType) => {
   const rt = RESIDENT_TYPES[resType];
   if (adjustedRisk >= 5) return {
-    bg: "bg-red-50 border border-red-200",
-    textColor: "text-red-800",
-    subColor: "text-red-600",
+    bg: "bg-gradient-to-r from-rose-500 to-orange-400",
     title: resType === "tourist" ? "DEPART ON SCHEDULE OR EARLIER" : resType === "diplomatic" ? "FOLLOW MISSION GUIDANCE" : "ELEVATED SITUATION — HAVE EXIT PLAN READY",
     msg: rt.tier2msg,
     icon: "⚠️",
   };
   if (adjustedRisk >= 4) return {
-    bg: "bg-amber-50 border border-amber-200",
-    textColor: "text-amber-800",
-    subColor: "text-amber-600",
+    bg: "bg-gradient-to-r from-amber-400 to-yellow-300",
     title: "STAY PREPARED — MONITOR SITUATION",
     msg: rt.tier1msg,
     icon: "⚡",
+    dark: true,
   };
   if (adjustedRisk >= 3) return {
-    bg: "bg-blue-50 border border-blue-200",
-    textColor: "text-blue-800",
-    subColor: "text-blue-600",
+    bg: "bg-gradient-to-r from-blue-400 to-sky-300",
     title: "STAY AWARE — SITUATION ONGOING",
     msg: rt.tier1msg,
     icon: "ℹ️",
   };
   if (adjustedRisk >= 2) return {
-    bg: "bg-cyan-50 border border-cyan-200",
-    textColor: "text-cyan-800",
-    subColor: "text-cyan-600",
+    bg: "bg-gradient-to-r from-cyan-400 to-teal-300",
     title: "MODERATE AWARENESS",
     msg: rt.tier1msg,
     icon: "✓",
+    dark: true,
   };
   return {
-    bg: "bg-emerald-50 border border-emerald-200",
-    textColor: "text-emerald-800",
-    subColor: "text-emerald-600",
+    bg: "bg-gradient-to-r from-emerald-400 to-green-300",
     title: "NORMAL PRECAUTIONS",
     msg: "Standard safety awareness. Stay informed through official channels.",
     icon: "✓",
+    dark: true,
   };
 };
 
@@ -883,18 +876,29 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
 
   return (
     <div className="space-y-5">
-      {/* ─── HERO: RISK GAUGE + LOCAL ASSESSMENT ─────────────────── */}
+      {/* ─── HERO: RISK GAUGE + ALERT + LOCAL ASSESSMENT ────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Risk Gauge */}
-        <Card className="p-6 flex flex-col items-center justify-center lg:col-span-1">
-          <div className="relative w-36 h-36">
-            <RiskGaugeSVG risk={cRisk} color={rCol} label={rLbl} size={140} />
+        {/* Risk Gauge + Alert Banner together */}
+        <div className="lg:col-span-1 space-y-3">
+          <Card className="p-6 flex flex-col items-center justify-center">
+            <div className="relative w-36 h-36">
+              <RiskGaugeSVG risk={cRisk} color={rCol} label={rLbl} size={140} />
+            </div>
+            <p className="text-sm font-bold text-gray-800 mt-2">{cData.flag} {city || country}</p>
+            <p className="text-[10px] text-gray-500">{resType.icon} {resType.label}</p>
+            <p className="text-[10px] text-gray-400">Day {CONFLICT_DAY} · {REPORT_DATE}</p>
+            {baseRisk !== cRisk && <p className="text-[9px] text-gray-400 mt-1">Base threat: {baseRisk} → Your risk: {cRisk}</p>}
+          </Card>
+
+          {/* Alert Banner — directly under gauge */}
+          <div className={`rounded-xl p-4 flex items-start gap-3 shadow-sm ${alertCfg.bg}`}>
+            <span className="text-xl flex-shrink-0">{alertCfg.icon}</span>
+            <div>
+              <p className={`font-bold text-sm ${alertCfg.dark ? "text-gray-900" : "text-white"}`}>{alertCfg.title}</p>
+              <p className={`text-xs mt-1 leading-relaxed ${alertCfg.dark ? "text-gray-800/80" : "text-white/85"}`}>{alertCfg.msg}</p>
+            </div>
           </div>
-          <p className="text-sm font-bold text-gray-800 mt-2">{cData.flag} {city || country}</p>
-          <p className="text-[10px] text-gray-500">{resType.icon} {resType.label}</p>
-          <p className="text-[10px] text-gray-400">Day {CONFLICT_DAY} · {REPORT_DATE}</p>
-          {baseRisk !== cRisk && <p className="text-[9px] text-gray-400 mt-1">Base threat: {baseRisk} → Your risk: {cRisk}</p>}
-        </Card>
+        </div>
 
         {/* Local Assessment */}
         <Card className="p-5 lg:col-span-2">
@@ -926,15 +930,6 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
             <p className="text-sm text-gray-500">Select a city from the header to see localized risk data.</p>
           )}
         </Card>
-      </div>
-
-      {/* ─── CONTEXTUAL ALERT BANNER ─────────────────────────────── */}
-      <div className={`rounded-xl p-4 flex items-start gap-3 ${alertCfg.bg}`}>
-        <span className="text-xl flex-shrink-0 mt-0.5">{alertCfg.icon}</span>
-        <div>
-          <p className={`font-bold text-sm ${alertCfg.textColor}`}>{alertCfg.title}</p>
-          <p className={`text-sm mt-1 ${alertCfg.subColor}`}>{alertCfg.msg}</p>
-        </div>
       </div>
 
       {/* ─── LIVE NEWS FEED ───────────────────────────────────────── */}
@@ -2354,32 +2349,34 @@ export default function App() {
           </div>
         </div>
 
-        {/* Country / City Selector Strip */}
-        <div className="flex items-center gap-2 px-4 py-1.5 bg-gray-50 border-t border-gray-100 overflow-x-auto">
-          <MapPin className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-          <select value={selCountry} onChange={e => { setSelCountry(e.target.value); const cities = Object.keys(GCC_DATA[e.target.value]?.cities || {}); setSelCity(cities[0] || ""); }}
-            className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
-            {Object.entries(GCC_DATA).map(([k, v]) => (
-              <option key={k} value={k}>{v.flag} {v.name}</option>
-            ))}
-          </select>
-          <ChevronRight className="w-3 h-3 text-gray-300 flex-shrink-0" />
-          <select value={selCity} onChange={e => setSelCity(e.target.value)}
-            className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
-            {Object.keys(countryData?.cities || {}).map(c => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-          <ChevronRight className="w-3 h-3 text-gray-300 flex-shrink-0" />
-          <select value={resStatus} onChange={e => setResStatus(e.target.value)}
-            className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
-            {Object.entries(RESIDENT_TYPES).map(([k, v]) => (
-              <option key={k} value={k}>{v.icon} {v.label}</option>
-            ))}
-          </select>
-          {cityData && (
-            <Badge level={cityRisk >= 5 ? "critical" : cityRisk >= 4 ? "warning" : cityRisk >= 3 ? "neutral" : "positive"} className="ml-1">L{cityRisk} — {riskLabel}</Badge>
-          )}
+        {/* Country / City / Resident Selector Strip */}
+        <div className="px-4 py-2 bg-gray-50 border-t border-gray-100 overflow-x-auto">
+          <div className="flex items-center gap-2 mb-2 sm:mb-0">
+            <MapPin className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+            <select value={selCountry} onChange={e => { setSelCountry(e.target.value); const cities = Object.keys(GCC_DATA[e.target.value]?.cities || {}); setSelCity(cities[0] || ""); }}
+              className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
+              {Object.entries(GCC_DATA).map(([k, v]) => (
+                <option key={k} value={k}>{v.flag} {v.name}</option>
+              ))}
+            </select>
+            <ChevronRight className="w-3 h-3 text-gray-300 flex-shrink-0" />
+            <select value={selCity} onChange={e => setSelCity(e.target.value)}
+              className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer">
+              {Object.keys(countryData?.cities || {}).map(c => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+          {/* Resident Status - Dropdown */}
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider flex-shrink-0">I am a:</span>
+            <select value={resStatus} onChange={e => setResStatus(e.target.value)}
+              className="text-sm font-semibold text-gray-700 bg-white border-2 border-blue-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer soft-pulse">
+              {Object.entries(RESIDENT_TYPES).map(([k, v]) => (
+                <option key={k} value={k}>{v.icon} {v.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Mobile Tabs */}
@@ -2400,7 +2397,7 @@ export default function App() {
 
       <div className="flex">
         {/* SIDEBAR */}
-        <aside className={`fixed lg:sticky top-[105px] left-0 z-30 h-[calc(100vh-105px)] w-72 bg-white border-r border-gray-200 overflow-y-auto transition-transform duration-300 shadow-lg lg:shadow-none ${
+        <aside className={`fixed lg:sticky top-[140px] left-0 z-30 h-[calc(100vh-140px)] w-72 bg-white border-r border-gray-200 overflow-y-auto transition-transform duration-300 shadow-lg lg:shadow-none ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}>
           <div className="p-5 space-y-5">
