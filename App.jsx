@@ -711,14 +711,14 @@ const Badge = ({ level, children, className = "" }) => (
 );
 
 const Card = ({ children, className = "", ...p }) => (
-  <div className={`bg-white rounded-xl ${className}`} style={{ border: '1px solid var(--gw-border)', transition: 'box-shadow 0.2s' }} {...p}>{children}</div>
+  <div className={`rounded-2xl ${className}`} style={{ background: '#EBEBEB', border: 'none', transition: 'transform 0.15s' }} {...p}>{children}</div>
 );
 
 const StatBox = ({ label, value, sub, level = "neutral" }) => (
-  <Card className="p-4">
-    <p className="gw-overline" style={{ marginBottom: '4px' }}>{label}</p>
-    <p className={`text-2xl font-bold ${lc(level).text} mt-1 gw-display`}>{value}</p>
-    {sub && <p className="text-[11px] mt-1" style={{ color: 'var(--gw-text-tertiary)' }}>{sub}</p>}
+  <Card className="p-5">
+    <p className="t-label">{label}</p>
+    <p className={`${lc(level).text} mt-1`} style={{ fontFamily: "'Google Sans Display', sans-serif", fontSize: "28px", fontWeight: 700 }}>{value}</p>
+    {sub && <p style={{ fontSize: "12px", color: "#8E8E93", marginTop: "4px" }}>{sub}</p>}
   </Card>
 );
 
@@ -1295,6 +1295,16 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
         )}
       </Card>
 
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -1349,6 +1359,16 @@ const FullAnalysisTab = () => {
           );
         })}
       </div>
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -1906,6 +1926,16 @@ const AIAnalystTab = ({ country, city, resStatus: aiRes }) => {
           <Send className="w-4 h-4" />
         </button>
       </div>
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -2067,6 +2097,16 @@ Respond with ONLY this JSON (no markdown, no backticks, no explanation):
 
       {/* ─── OSINT SOURCES PANEL ─────────────────────────────────── */}
       <OsintSourcesPanel />
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -2301,6 +2341,16 @@ const OsintSourcesPanel = () => {
           <p className="text-[10px] text-amber-600 leading-relaxed">Cross-reference minimum 3 independent sources before acting on any report. Video game footage (Arma 3) and old footage regularly shared as real. Use InVID/WeVerify plugins. In the UAE, sharing "rumours or unknown sources" on social media is prosecutable.</p>
         </div>
       </div>
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -2456,6 +2506,16 @@ const LiveTweetsTab = () => {
           </button>
         ))}
       </Card>
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -2532,6 +2592,16 @@ const EmergencyTab = () => {
         </div>
         <p className="text-xs text-gray-400 mt-3 pt-3 border-t border-gray-100">Earliest plausible return: Late Q3 2026 (August–September)</p>
       </Card>
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
@@ -2551,10 +2621,10 @@ const SIG_STYLES = `
 .sig-fade { animation: sigFadeIn 0.4s ease-out both; }
 .sig-fade-1 { animation-delay: 0.05s; } .sig-fade-2 { animation-delay: 0.1s; } .sig-fade-3 { animation-delay: 0.15s; } .sig-fade-4 { animation-delay: 0.2s; }
 .sig-pulse { animation: sigPulse 2s ease-in-out infinite; }
-.sig-card { background: var(--gw-bg); border-radius: var(--gw-radius-md); border: 1px solid var(--gw-border); padding: 20px; margin-bottom: 16px; transition: box-shadow 0.2s; }
-.sig-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
-.sig-stat { text-align: center; padding: 20px 16px; background: var(--gw-bg); border-radius: var(--gw-radius-md); border: 1px solid var(--gw-border); transition: transform 0.2s; }
-.sig-stat:hover { transform: translateY(-2px); box-shadow: var(--gw-shadow-1); }
+.sig-card { background: #EBEBEB; border-radius: 16px; border: none; padding: 20px; margin-bottom: 16px; transition: transform 0.15s; }
+.sig-card:hover { transform: translateY(-1px); }
+.sig-stat { text-align: center; padding: 20px 16px; background: #EBEBEB; border-radius: 16px; border: none; transition: transform 0.2s; }
+.sig-stat:hover { transform: translateY(-2px); }
 .sig-pill { padding: 8px 20px; border-radius: var(--gw-radius-full); font-family: 'Google Sans Text', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
 .sig-intent { border-radius: 16px; border: 2px solid #E8EAED; padding: 28px 16px; cursor: pointer; text-align: center; transition: all 0.25s; min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 .sig-intent:hover { border-color: #1A73E8; background: #F0F6FF; transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,115,232,0.15); }
@@ -2752,7 +2822,7 @@ CRITICAL TONE RULES:
         </div>
         {advisorStep > 0 && <button onClick={() => setAdvisorStep(s => s - 1)} style={{ marginTop: "12px", background: "none", border: "none", color: "#1A73E8", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>← Back</button>}
       </div>) : (<div>
-        {(() => { const r = getAdvisorResult(); return (<div className="sig-card" style={{ borderColor: r.color, borderWidth: "2px" }}><div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}><span style={{ fontSize: "28px" }}>{r.icon}</span><div><div style={{ fontSize: "10px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>LEVEL {L} ASSESSMENT</div><div style={{ fontSize: "16px", fontWeight: 700, color: r.color, fontFamily: "'Google Sans Display', sans-serif" }}>{r.verdict}</div></div></div><div style={{ fontSize: "14px", lineHeight: "1.7", color: "#444", padding: "14px", background: "#F8F9FA", borderRadius: "10px", marginBottom: "16px" }}>{r.detail}</div>{r.actions.map((a,i) => (<div key={i} style={{ display: "flex", gap: "10px", padding: "8px 0", borderBottom: i < r.actions.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span style={{ fontWeight: 800, color: "#1A73E8" }}>{i+1}.</span><span>{a}</span></div>))}</div>); })()}
+        {(() => { const r = getAdvisorResult(); return (<div style={{ background: "#EBEBEB", borderRadius: "16px", padding: "20px", marginBottom: "16px", borderLeft: "4px solid " + r.color }}><div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}><span style={{ fontSize: "28px" }}>{r.icon}</span><div><div style={{ fontSize: "10px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>LEVEL {L} ASSESSMENT</div><div style={{ fontSize: "16px", fontWeight: 700, color: r.color, fontFamily: "'Google Sans Display', sans-serif" }}>{r.verdict}</div></div></div><div style={{ fontSize: "14px", lineHeight: "1.7", color: "#444", padding: "14px", background: "#F8F9FA", borderRadius: "10px", marginBottom: "16px" }}>{r.detail}</div>{r.actions.map((a,i) => (<div key={i} style={{ display: "flex", gap: "10px", padding: "8px 0", borderBottom: i < r.actions.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span style={{ fontWeight: 800, color: "#1A73E8" }}>{i+1}.</span><span>{a}</span></div>))}</div>); })()}
         <button onClick={() => { setAdvisorStep(0); setAdvisorAnswers({}); }} style={{ marginTop: "12px", background: "none", border: "2px solid #1A73E8", color: "#1A73E8", borderRadius: "10px", padding: "8px 18px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>↺ Start Over</button>
       </div>)}
     </div>
@@ -2775,7 +2845,7 @@ CRITICAL TONE RULES:
 
   const renderEscapeRoutes = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>🛣️ Escape Routes</div>{ESCAPE_ROUTES.map((r,i) => { const sc = r.status === "active" || r.status === "open" ? "color:#059669;background:#ECFDF5" : r.status === "limited" ? "color:#D97706;background:#FFFBEB" : "color:#DC2626;background:#FEF2F2"; return (<div key={i} style={{ display: "flex", gap: "10px", padding: "10px 0", borderBottom: i < ESCAPE_ROUTES.length-1 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}><span>{r.type === "air" ? "✈️" : "🚗"}</span><div style={{ flex: 1 }}><strong>{r.name}</strong> <span style={{ fontSize: "11px", padding: "2px 6px", borderRadius: "6px", fontWeight: 700, ...Object.fromEntries(sc.split(";").map(s => s.split(":").map(x => x.trim()))) }}>{r.status}</span><div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>{r.detail}</div></div></div>); })}</div>);
 
-  const renderSupply = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>📦 Supply Chain</div><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "10px" }}>{SUPPLY_STATUS.map((s,i) => (<div key={i} style={{ padding: "10px", borderRadius: "10px", border: "1px solid #E8EAED", background: "#FAFBFC" }}><div style={{ fontSize: "12px", fontWeight: 700, color: "#333", marginBottom: "6px" }}>{s.name}</div><div style={{ height: "6px", background: "#F1F3F4", borderRadius: "3px", marginBottom: "4px" }}><div style={{ width: `${s.value}%`, height: "100%", borderRadius: "3px", background: s.status === "critical" ? "#EA4335" : s.status === "warning" ? "#F59E0B" : "#34A853" }} /></div><div style={{ fontSize: "11px", color: "#888" }}>{s.value}{s.unit}</div></div>))}</div></div>);
+  const renderSupply = () => (<div style={{ background: "#EBEBEB", borderRadius: "16px", padding: "20px", marginBottom: "16px" }}><div className="t-label">SUPPLY CHAIN STATUS</div><div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "8px" }}>{SUPPLY_STATUS.map((s,i) => (<div key={i}><div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}><span style={{ fontSize: "13px", fontWeight: 500, color: "#1C1C1E" }}>{s.name}</span><span style={{ fontSize: "13px", fontWeight: 700, color: s.status === "critical" ? "#EF4444" : s.status === "warning" ? "#D97706" : "#059669" }}>{s.value}{s.unit}</span></div><div style={{ height: "6px", background: "#E5E5E5", borderRadius: "3px", overflow: "hidden" }}><div style={{ width: `${s.value}%`, height: "100%", background: s.status === "critical" ? "#EF4444" : s.status === "warning" ? "#D97706" : "#059669", borderRadius: "3px" }} /></div></div>))}</div></div>);
 
   const renderForecast = () => (<div className="sig-card sig-fade"><div style={{ fontFamily: "'Google Sans', sans-serif", fontWeight: 500, fontSize: "15px", color: "var(--gw-text-primary)", marginBottom: "14px" }}>📈 3-6 Month Forecast</div>{FORECAST.map((f,i) => (<div key={i} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "6px 0", fontSize: "13px" }}><span style={{ padding: "2px 8px", borderRadius: "8px", fontSize: "11px", fontWeight: 700, background: f.level === "critical" ? "#FDECEA" : f.level === "warning" ? "#FEF7E0" : f.level === "positive" ? "#E6F4EA" : "#F1F3F4", color: f.level === "critical" ? "#EA4335" : f.level === "warning" ? "#D97706" : f.level === "positive" ? "#34A853" : "#888", minWidth: "70px", textAlign: "center" }}>{f.prob}</span><span style={{ flex: 1, color: "#444" }}>{f.scenario}</span></div>))}</div>);
 
@@ -2795,6 +2865,41 @@ CRITICAL TONE RULES:
     </div>
   </div>);
 
+  const renderAIInsight = () => {
+    const [insight, setInsight] = useState("");
+    const [insightDone, setInsightDone] = useState(false);
+    const [showChat, setShowChat] = useState(false);
+    const insightText = `Defense systems performing at ${interceptionRate} interception — world-class by any standard. Zero tourist casualties in ${conflictDay} days. Hotels offering 60%+ discounts, airlines have flexible rebooking.${userIntent === "invest" ? ` DFM down 30% — historic entry point. AED/USD peg rock-solid at ${CONFLICT_DATA.aedPeg}, backed by ${CONFLICT_DATA.sovereignWealth} sovereign wealth.` : userIntent === "visit" ? " For singles and couples, incredible value right now. Families with young children should consider flexible dates." : " Life continues normally for most residents. Stay connected to NCEMA for updates."}`;
+    useEffect(() => { setInsight(""); setInsightDone(false); let i = 0; const t = setInterval(() => { if (i < insightText.length) { setInsight(insightText.slice(0, i+1)); i++; } else { clearInterval(t); setInsightDone(true); } }, 8); return () => clearInterval(t); }, [userIntent]);
+    return (<div style={{ marginBottom: "16px" }}>
+      <div style={{ background: "#fff", borderRadius: "16px", padding: "20px", border: "1px solid #E8E8E8" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ fontSize: "18px" }}>✨</span><span style={{ fontFamily: "'Google Sans'", fontSize: "15px", fontWeight: 500, color: "#1C1C1E" }}>AI Insight</span></div>
+          <span style={{ fontSize: "11px", color: "#8E8E93" }}>Just now</span>
+        </div>
+        <div style={{ fontSize: "14px", lineHeight: 1.7, color: "#3C3C43" }}><span className={insightDone ? "" : "t-typing"}>{insight}</span></div>
+        {insightDone && !showChat && (
+          <div style={{ display: "flex", gap: "8px", marginTop: "14px", flexWrap: "wrap" }}>
+            {["Tell me more", "Hotel deals?", "Flight status?", "Investment outlook?"].map(q => (
+              <button key={q} onClick={() => { setShowChat(true); sendChat(q); }} style={{ padding: "7px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text'", transition: "all 0.15s" }}>{q}</button>
+            ))}
+          </div>
+        )}
+        {showChat && (<div style={{ marginTop: "14px", borderTop: "1px solid #E8E8E8", paddingTop: "14px" }}>
+          <div style={{ maxHeight: "250px", overflowY: "auto", marginBottom: "12px" }}>
+            {chatMessages.map((m, idx) => (<div key={idx} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "10px" }}><div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.content}</div></div>))}
+            {chatLoading && <div><div className="sig-chat-ai" style={{ color: "#8E8E93" }}>● ● ● Analyzing...</div></div>}
+            <div ref={chatEndRef} />
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat(chatInput)} placeholder="Ask anything..." style={{ flex: 1, padding: "10px 16px", borderRadius: "100px", border: "1px solid #DADADA", fontSize: "14px", fontFamily: "'Google Sans Text'", outline: "none" }} />
+            <button onClick={() => sendChat(chatInput)} disabled={chatLoading} style={{ padding: "10px 20px", borderRadius: "100px", background: "var(--gw-blue)", border: "none", color: "#fff", fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans'", cursor: chatLoading ? "not-allowed" : "pointer", opacity: chatLoading ? 0.5 : 1 }}>Send</button>
+          </div>
+        </div>)}
+      </div>
+    </div>);
+  };
+
   const renderFooter = () => (<div style={{ background: "#F8F9FA", borderRadius: "14px", padding: "20px", marginTop: "24px", fontSize: "12px", color: "#666", lineHeight: "1.6" }}><div style={{ fontWeight: 500, fontSize: "14px", color: "var(--gw-text-primary)", marginBottom: "10px", fontFamily: "'Google Sans', sans-serif" }}>🔒 Trust & Transparency · Level {L}</div><div style={{ fontSize: "11px", color: "#AAA", marginTop: "10px", padding: "10px", background: "#fff", borderRadius: "8px" }}><strong>Disclaimer:</strong> Informational analysis. Not safety guarantees or financial advice. Always consult official advisories. gcc-war-room.vercel.app</div></div>);
 
   // ═══════ MAIN RENDER ═══════
@@ -2806,6 +2911,75 @@ CRITICAL TONE RULES:
       <div className={`sig-fade ${CL.pulse}`} style={{ background: CL.bgGrad, border: `2px solid ${CL.color}`, borderRadius: "14px", padding: "18px 22px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ fontSize: "24px" }}>{CL.icon}</span><div><div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}><span style={{ background: CL.color, color: "#fff", fontWeight: 500, fontSize: "10px", padding: "4px 12px", borderRadius: "var(--gw-radius-full)", letterSpacing: "0.5px", fontFamily: "'Google Sans', sans-serif" }}>LEVEL {L}</span><span style={{ fontWeight: 500, fontSize: "14px", color: CL.color, fontFamily: "'Google Sans', sans-serif" }}>{CL.name}</span></div><div style={{ fontSize: "13px", color: "#555", maxWidth: "500px" }}>{CL.bannerMsg}</div></div></div>
         <div style={{ textAlign: "right" }}><div style={{ fontSize: "12px", fontWeight: 600, color: "#555" }}>Day {conflictDay}</div><div style={{ fontSize: "11px", color: "#888" }}>{myRes.i} {myRes.l}</div></div>
+      </div>
+
+
+      {/* ═══ T212 HERO SITUATION CARD ═══ */}
+      {(() => {
+        const heroGrad = userIntent === "invest"
+          ? "linear-gradient(135deg, #0D9488, #14B8A6)"
+          : L <= 2 ? "linear-gradient(135deg, #059669, #10B981)"
+          : L <= 3 ? "linear-gradient(135deg, #0891B2, #06B6D4)"
+          : L <= 4 ? "linear-gradient(135deg, #0891B2, #22D3EE)"
+          : "linear-gradient(135deg, #D97706, #F59E0B)";
+        return (
+          <div className="sig-fade" style={{ background: heroGrad, borderRadius: "20px", padding: "24px", color: "#fff", position: "relative", overflow: "hidden", marginBottom: "16px" }}>
+            <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
+            <div style={{ position: "absolute", bottom: -30, left: -30, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", position: "relative" }}>
+              {userIntent === "invest" ? (<>
+                <div>
+                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>OIL</div>
+                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{oilPrice}</div>
+                  <div style={{ fontSize: "13px", opacity: 0.8 }}>per barrel</div>
+                </div>
+                <div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} />
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DFM INDEX</div>
+                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>-30%</div>
+                  <div style={{ fontSize: "13px", opacity: 0.8 }}>from peak</div>
+                </div>
+              </>) : (<>
+                <div>
+                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DEFENSE</div>
+                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{interceptionRate}</div>
+                  <div style={{ fontSize: "13px", opacity: 0.8 }}>Intercepted</div>
+                </div>
+                <div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} />
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>SITUATION</div>
+                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>Day {conflictDay}</div>
+                  <div style={{ fontSize: "13px", opacity: 0.8 }}>{missileData.total.toLocaleString()} projectiles</div>
+                </div>
+              </>)}
+            </div>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {userIntent === "invest" ? (<>
+                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>AED/USD: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.aedPeg} ✓</span></div>
+                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Sovereign: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.sovereignWealth}</span></div>
+              </>) : (<>
+                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Casualties: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{casualties.killed} killed</span></div>
+                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Tourist: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>0 casualties</span></div>
+              </>)}
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* ═══ T212 DEFENSE/THREAT BAR ═══ */}
+      <div className="sig-fade sig-fade-1" style={{ background: "#EBEBEB", borderRadius: "16px", padding: "16px 20px", marginBottom: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+          <div><span style={{ fontSize: "13px", fontWeight: 700, color: "#0891B2" }}>92%</span><span style={{ fontSize: "11px", color: "#8E8E93", marginLeft: "6px" }}>DEFENDED</span></div>
+          <div><span style={{ fontSize: "11px", color: "#8E8E93", marginRight: "6px" }}>THREAT</span><span style={{ fontSize: "13px", fontWeight: 700, color: "#EF4444" }}>8%</span></div>
+        </div>
+        <div className="t-bar">
+          <div className="t-bar-fill" style={{ width: "92%", background: "linear-gradient(90deg, #0891B2, #06B6D4)", borderRadius: "4px 0 0 4px" }} />
+          <div className="t-bar-fill" style={{ width: "8%", background: "#EF4444", borderRadius: "0 4px 4px 0" }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}>
+          <span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span>
+          <span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span>
+        </div>
       </div>
 
       {/* ORIGIN ADVISORY */}
@@ -2870,6 +3044,7 @@ CRITICAL TONE RULES:
           {renderPerception()}
           <div className="sig-section-title">🌍 Government Advisories</div>
           {renderAdvisories()}
+          {renderAIInsight()}
           {renderFooter()}
         </div>)}
 
@@ -2882,6 +3057,7 @@ CRITICAL TONE RULES:
           <div className="sig-card sig-fade"><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>{[["AED/USD Peg",CONFLICT_DATA.aedPeg,"#34A853","Stable"],["Sovereign Wealth",CONFLICT_DATA.sovereignWealth,"#34A853","Backing"],["Emirates",CONFLICT_DATA.emirates.capacity,"#E8710A","Capacity"],["Status",CONFLICT_DATA.status.split(",")[0],"#EA4335","Ongoing"]].map(([l,v,c,s],i) => (<div key={i} style={{ padding: "12px", background: "#FAFBFC", borderRadius: "8px" }}><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>{l}</div><div style={{ fontSize: "18px", fontWeight: 800, color: c, marginTop: "2px" }}>{v}</div><div style={{ fontSize: "10px", color: "#888" }}>{s}</div></div>))}</div></div>
           <div className="sig-section-title">📈 Forecast</div>
           {renderForecast()}
+          {renderAIInsight()}
           {renderFooter()}
         </div>)}
 
@@ -2901,6 +3077,7 @@ CRITICAL TONE RULES:
           {renderSupply()}
           <div className="sig-section-title">📅 What Happened</div>
           {renderTimeline()}
+          {renderAIInsight()}
           {renderFooter()}
         </div>)}
 
@@ -2925,71 +3102,21 @@ CRITICAL TONE RULES:
           {renderPerception()}
           <div className="sig-section-title">🌍 Government Advisories</div>
           {renderAdvisories()}
+          {renderAIInsight()}
           {renderFooter()}
         </div>)}
       </div>)}
 
-      {/* FLOATING AI CHAT */}
-      {!aiPanelOpen && (
-        <button onClick={() => setAiPanelOpen(true)}
-          style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 50, background: "var(--gw-blue)", color: "#fff", border: "none", borderRadius: "var(--gw-radius-full)", padding: "14px 24px", fontSize: "14px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", cursor: "pointer", boxShadow: "var(--gw-shadow-3)", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}
-          onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-hover)"; e.currentTarget.style.transform = "scale(1.05)"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-blue)"; e.currentTarget.style.transform = "scale(1)"; }}>
-          <span style={{ fontSize: "18px" }}>💬</span> Ask AI
-        </button>
-      )}
 
-      {aiPanelOpen && (
-        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50, maxHeight: "75vh", background: "var(--gw-bg)", borderTop: "1px solid var(--gw-border)", borderRadius: "var(--gw-radius-xl) var(--gw-radius-xl) 0 0", boxShadow: "0 -8px 32px rgba(60,64,67,0.25)", display: "flex", flexDirection: "column", animation: "gw-slide-up 0.3s ease-out" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid var(--gw-border)", flexShrink: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ fontSize: "20px" }}>🤖</span>
-              <div>
-                <div style={{ fontFamily: "'Google Sans', sans-serif", fontSize: "15px", fontWeight: 500, color: "var(--gw-text-primary)" }}>AI Analyst</div>
-                <div style={{ fontSize: "11px", color: "var(--gw-text-tertiary)" }}>Powered by Claude · Level {L}</div>
-              </div>
-            </div>
-            <button onClick={() => setAiPanelOpen(false)} style={{ padding: "8px 12px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border)", background: "var(--gw-surface)", cursor: "pointer", fontSize: "13px", fontWeight: 500, color: "var(--gw-text-secondary)" }}>Close</button>
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
           </div>
-
-          {chatMessages.length === 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", padding: "14px 20px", borderBottom: "1px solid var(--gw-border)" }}>
-              {["What's the situation?", "Hotels open?", "Investment outlook?", "Defense strength?", "Flight status?", "Family tips?"].map((q, i) => (
-                <button key={i} onClick={() => sendChat(q)}
-                  style={{ padding: "8px 14px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border-strong)", background: "var(--gw-bg)", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text', sans-serif", transition: "all 0.15s" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-surface)"; e.currentTarget.style.borderColor = "var(--gw-blue)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-bg)"; e.currentTarget.style.borderColor = "var(--gw-border-strong)"; }}>
-                  {q}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px", minHeight: "120px" }}>
-            {chatMessages.length === 0 && (
-              <div style={{ textAlign: "center", padding: "30px", color: "var(--gw-text-disabled)" }}>
-                <div style={{ fontSize: "32px", marginBottom: "8px" }}>💬</div>
-                <div style={{ fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans Text', sans-serif" }}>Ask anything about the Gulf region</div>
-              </div>
-            )}
-            {chatMessages.map((m, idx) => (
-              <div key={idx} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "12px" }}>
-                <div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.content}</div>
-              </div>
-            ))}
-            {chatLoading && <div style={{ display: "flex" }}><div className="sig-chat-ai" style={{ color: "var(--gw-text-disabled)" }}>● ● ● Analyzing...</div></div>}
-            <div ref={chatEndRef} />
-          </div>
-
-          <div style={{ display: "flex", gap: "8px", padding: "12px 20px", borderTop: "1px solid var(--gw-border)", background: "var(--gw-surface)", flexShrink: 0 }}>
-            <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat(chatInput)}
-              placeholder="Ask anything..."
-              style={{ flex: 1, padding: "10px 16px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border-strong)", background: "var(--gw-bg)", fontSize: "14px", fontFamily: "'Google Sans Text', sans-serif", outline: "none" }} />
-            <button onClick={() => sendChat(chatInput)} disabled={chatLoading}
-              style={{ padding: "10px 20px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-blue)", border: "none", cursor: chatLoading ? "not-allowed" : "pointer", color: "#fff", fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", opacity: chatLoading ? 0.5 : 1 }}>Send</button>
-          </div>
-        </div>
-      )}
+        ))}
+      </div>
 
     </div>
   );
@@ -3120,10 +3247,22 @@ export default function App() {
         .soft-pulse{animation:soft-pulse 2.5s ease-in-out infinite}
         @keyframes gw-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes gw-slide-up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+        @keyframes t-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+        .t-typing::after{content:'▋';animation:t-pulse 0.8s infinite;color:var(--gw-blue)}
+        .t-label{font-size:11px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:#8E8E93;margin-bottom:6px}
+        .t-bar{height:8px;border-radius:4px;overflow:hidden;display:flex}
+        .t-bar-fill{height:100%;transition:width 0.6s ease-out}
+        .t-bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;align-items:center;justify-content:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom));border-top:1px solid #E8E8E8;z-index:100}
+        .t-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;cursor:pointer;transition:all 0.15s}
+        .t-nav-icon{width:44px;height:32px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all 0.2s}
+        .t-nav-item.active .t-nav-icon{background:#1C1C1E}
+        .t-nav-label{font-size:10px;font-weight:500;color:#8E8E93;font-family:'Google Sans Text',sans-serif}
+        .t-nav-item.active .t-nav-label{color:#1C1C1E;font-weight:600}
         .gw-fade{animation:gw-fade-in 0.35s ease-out both}
         .gw-fade-1{animation-delay:0.04s}.gw-fade-2{animation-delay:0.08s}.gw-fade-3{animation-delay:0.12s}.gw-fade-4{animation-delay:0.16s}.gw-fade-5{animation-delay:0.2s}
-        .gw-card{background:var(--gw-bg);border-radius:var(--gw-radius-md);border:1px solid var(--gw-border);transition:box-shadow 0.2s}
-        .gw-card:hover{box-shadow:var(--gw-shadow-1)}
+        .gw-card{background:#EBEBEB;border-radius:16px;border:none;transition:transform 0.15s}
+        .gw-card:hover{transform:translateY(-1px)}
+        
         .gw-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--gw-radius-sm);border:1px solid var(--gw-border-strong);background:var(--gw-bg);font-size:13px;font-weight:500;color:var(--gw-text-primary);cursor:pointer;transition:all 0.15s;font-family:'Google Sans Text',sans-serif}
         .gw-chip:hover{border-color:var(--gw-blue);background:var(--gw-blue-surface)}
         .gw-chip.active{border-color:var(--gw-blue);background:var(--gw-blue-surface);color:var(--gw-blue-text)}
@@ -3291,7 +3430,7 @@ export default function App() {
 
         {sidebarOpen && <div className="fixed inset-0 bg-black/20 z-40" onClick={() => setSidebarOpen(false)} />}
 
-        <main className="flex-1 min-w-0 p-4 sm:p-6 max-w-4xl mx-auto">
+        <main className="flex-1 min-w-0 p-4 sm:p-6 max-w-4xl mx-auto" style={{ paddingBottom: "80px" }}>
           {tab === "dashboard" && <DashboardTab country={selCountry} city={selCity} lang={lang} resStatus={resStatus} />}
           {tab === "analysis" && <FullAnalysisTab />}
           {tab === "ai" && <AIAnalystTab country={selCountry} city={selCity} resStatus={resStatus} />}
@@ -3300,6 +3439,16 @@ export default function App() {
           {tab === "emergency" && <EmergencyTab />}
         </main>
 
+
+      {/* ═══ T212 BOTTOM NAV ═══ */}
+      <div className="t-bottom-nav">
+        {TAB_KEYS.map(tk => (
+          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
+            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
+            <span className="t-nav-label">{tk.shortLabel}</span>
+          </div>
+        ))}
+      </div>
 
     </div>
   );
