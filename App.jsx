@@ -2597,6 +2597,7 @@ const ShouldIGoTab = ({
   const [advisorStep, setAdvisorStep] = useState(0);
   const [advisorAnswers, setAdvisorAnswers] = useState({});
   const chatEndRef = useRef(null);
+  const [aiPanelOpen, setAiPanelOpen] = useState(false);
 
   const L = confidenceLevel;
   const LEVELS = {
@@ -2817,29 +2818,16 @@ CRITICAL TONE RULES:
           <div style={{ fontSize: "14px", color: "var(--gw-text-secondary)", marginTop: "6px", fontFamily: "'Google Sans Text', sans-serif" }}>Personalized analysis based on your situation</div>
         </div>
 
-        {/* Journey Context */}
-        <div style={{ display: "flex", gap: "10px", marginBottom: "20px", flexWrap: "wrap", justifyContent: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-blue-surface)", border: "1px solid #A8C7FA" }}>
+        {/* Country Selector — single pill */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "4px 6px 4px 16px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-blue-surface)", border: "1px solid #A8C7FA" }}>
             <span>📍</span>
-            <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-blue-text)", fontFamily: "'Google Sans Text', sans-serif" }}>You're looking at: {targetCountry}</span>
+            <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-blue-text)", fontFamily: "'Google Sans Text', sans-serif" }}>Analyzing:</span>
+            <select value={targetCountry} onChange={e => setTargetCountry(e.target.value)}
+              style={{ fontSize: "14px", fontWeight: 600, color: "var(--gw-blue-text)", fontFamily: "'Google Sans', sans-serif", background: "transparent", border: "none", outline: "none", cursor: "pointer", padding: "8px 28px 8px 4px", appearance: "none", backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23174EA6' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 8px center" }}>
+              {countries.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
           </div>
-          {originCountry && (
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-surface)", border: "1px solid var(--gw-border)" }}>
-              <span>🏠</span>
-              <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--gw-text-secondary)", fontFamily: "'Google Sans Text', sans-serif" }}>From: {originCountry}</span>
-            </div>
-          )}
-        </div>
-
-        {/* Origin Country + Destination */}
-        <div style={{ display: "flex", gap: "10px", marginBottom: "20px", justifyContent: "center", flexWrap: "wrap" }}>
-          <select className="sig-input" style={{ maxWidth: "200px", fontFamily: "'Google Sans Text', sans-serif" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}>
-            <option value="">🌍 Where are you from?</option>
-            {originCountries.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <select className="sig-input" style={{ maxWidth: "200px", fontFamily: "'Google Sans Text', sans-serif" }} value={targetCountry} onChange={e => setTargetCountry(e.target.value)}>
-            {countries.map(c => <option key={c} value={c}>📍 {c}</option>)}
-          </select>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "14px", margin: "24px 0" }}>
@@ -2940,6 +2928,69 @@ CRITICAL TONE RULES:
           {renderFooter()}
         </div>)}
       </div>)}
+
+      {/* FLOATING AI CHAT */}
+      {!aiPanelOpen && (
+        <button onClick={() => setAiPanelOpen(true)}
+          style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 50, background: "var(--gw-blue)", color: "#fff", border: "none", borderRadius: "var(--gw-radius-full)", padding: "14px 24px", fontSize: "14px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", cursor: "pointer", boxShadow: "var(--gw-shadow-3)", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-hover)"; e.currentTarget.style.transform = "scale(1.05)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-blue)"; e.currentTarget.style.transform = "scale(1)"; }}>
+          <span style={{ fontSize: "18px" }}>💬</span> Ask AI
+        </button>
+      )}
+
+      {aiPanelOpen && (
+        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50, maxHeight: "75vh", background: "var(--gw-bg)", borderTop: "1px solid var(--gw-border)", borderRadius: "var(--gw-radius-xl) var(--gw-radius-xl) 0 0", boxShadow: "0 -8px 32px rgba(60,64,67,0.25)", display: "flex", flexDirection: "column", animation: "gw-slide-up 0.3s ease-out" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid var(--gw-border)", flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ fontSize: "20px" }}>🤖</span>
+              <div>
+                <div style={{ fontFamily: "'Google Sans', sans-serif", fontSize: "15px", fontWeight: 500, color: "var(--gw-text-primary)" }}>AI Analyst</div>
+                <div style={{ fontSize: "11px", color: "var(--gw-text-tertiary)" }}>Powered by Claude · Level {L}</div>
+              </div>
+            </div>
+            <button onClick={() => setAiPanelOpen(false)} style={{ padding: "8px 12px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border)", background: "var(--gw-surface)", cursor: "pointer", fontSize: "13px", fontWeight: 500, color: "var(--gw-text-secondary)" }}>Close</button>
+          </div>
+
+          {chatMessages.length === 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", padding: "14px 20px", borderBottom: "1px solid var(--gw-border)" }}>
+              {["What's the situation?", "Hotels open?", "Investment outlook?", "Defense strength?", "Flight status?", "Family tips?"].map((q, i) => (
+                <button key={i} onClick={() => sendChat(q)}
+                  style={{ padding: "8px 14px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border-strong)", background: "var(--gw-bg)", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text', sans-serif", transition: "all 0.15s" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-surface)"; e.currentTarget.style.borderColor = "var(--gw-blue)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-bg)"; e.currentTarget.style.borderColor = "var(--gw-border-strong)"; }}>
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px", minHeight: "120px" }}>
+            {chatMessages.length === 0 && (
+              <div style={{ textAlign: "center", padding: "30px", color: "var(--gw-text-disabled)" }}>
+                <div style={{ fontSize: "32px", marginBottom: "8px" }}>💬</div>
+                <div style={{ fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans Text', sans-serif" }}>Ask anything about the Gulf region</div>
+              </div>
+            )}
+            {chatMessages.map((m, idx) => (
+              <div key={idx} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "12px" }}>
+                <div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.content}</div>
+              </div>
+            ))}
+            {chatLoading && <div style={{ display: "flex" }}><div className="sig-chat-ai" style={{ color: "var(--gw-text-disabled)" }}>● ● ● Analyzing...</div></div>}
+            <div ref={chatEndRef} />
+          </div>
+
+          <div style={{ display: "flex", gap: "8px", padding: "12px 20px", borderTop: "1px solid var(--gw-border)", background: "var(--gw-surface)", flexShrink: 0 }}>
+            <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat(chatInput)}
+              placeholder="Ask anything..."
+              style={{ flex: 1, padding: "10px 16px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border-strong)", background: "var(--gw-bg)", fontSize: "14px", fontFamily: "'Google Sans Text', sans-serif", outline: "none" }} />
+            <button onClick={() => sendChat(chatInput)} disabled={chatLoading}
+              style={{ padding: "10px 20px", borderRadius: "var(--gw-radius-full)", background: "var(--gw-blue)", border: "none", cursor: chatLoading ? "not-allowed" : "pointer", color: "#fff", fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", opacity: chatLoading ? 0.5 : 1 }}>Send</button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
@@ -2967,7 +3018,6 @@ export default function App() {
   const [resStatus, setResStatus] = useState("expat_family");
   const [darkMode, setDarkMode] = useState(false);
   const [demoLevel, setDemoLevel] = useState(null);
-  const [aiPanelOpen, setAiPanelOpen] = useState(false);
 
   useEffect(() => { const i = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(i); }, []);
 
@@ -3250,58 +3300,6 @@ export default function App() {
           {tab === "emergency" && <EmergencyTab />}
         </main>
 
-      {/* ═══ FLOATING AI CHAT ═══ */}
-      {tab === "shouldigo" && (
-        <>
-          {/* FAB Button */}
-          {!aiPanelOpen && (
-            <button onClick={() => setAiPanelOpen(true)}
-              style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 50, background: "var(--gw-blue)", color: "#fff", border: "none", borderRadius: "var(--gw-radius-full)", padding: "14px 24px", fontSize: "14px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", cursor: "pointer", boxShadow: "var(--gw-shadow-3)", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-hover)"; e.currentTarget.style.transform = "scale(1.05)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-blue)"; e.currentTarget.style.transform = "scale(1)"; }}>
-              <span style={{ fontSize: "18px" }}>💬</span> Ask AI
-            </button>
-          )}
-
-          {/* Slide-up Panel */}
-          {aiPanelOpen && (
-            <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50, maxHeight: "70vh", background: "var(--gw-bg)", borderTop: "1px solid var(--gw-border)", borderRadius: "var(--gw-radius-xl) var(--gw-radius-xl) 0 0", boxShadow: "0 -8px 32px rgba(60,64,67,0.25)", display: "flex", flexDirection: "column", animation: "gw-slide-up 0.3s ease-out" }}>
-              {/* Panel Header */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid var(--gw-border)" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <span style={{ fontSize: "20px" }}>🤖</span>
-                  <div>
-                    <div style={{ fontFamily: "'Google Sans', sans-serif", fontSize: "15px", fontWeight: 500, color: "var(--gw-text-primary)" }}>AI Analyst</div>
-                    <div style={{ fontSize: "11px", color: "var(--gw-text-tertiary)" }}>Powered by Claude · Level {demoLevel || 4}</div>
-                  </div>
-                </div>
-                <button onClick={() => setAiPanelOpen(false)} style={{ padding: "8px", borderRadius: "50%", border: "none", background: "var(--gw-surface-variant)", cursor: "pointer" }}>
-                  <X className="w-4 h-4" style={{ color: "var(--gw-text-secondary)" }} />
-                </button>
-              </div>
-
-              {/* Panel Body — rendered by ShouldIGoTab's AI */}
-              <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }} id="ai-panel-body">
-                {/* Suggestions shown when no messages */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
-                  {["What's the real situation?","Are hotels still open?","Investment opportunities?","Is defense holding up?","Flight status?","Family safety tips"].map((q,i) => (
-                    <button key={i} onClick={() => { const evt = new CustomEvent("ai-ask", { detail: q }); window.dispatchEvent(evt); }}
-                      style={{ padding: "8px 14px", borderRadius: "var(--gw-radius-full)", border: "1px solid var(--gw-border-strong)", background: "var(--gw-bg)", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text', sans-serif", transition: "all 0.15s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "var(--gw-blue-surface)"; e.currentTarget.style.borderColor = "var(--gw-blue)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "var(--gw-bg)"; e.currentTarget.style.borderColor = "var(--gw-border-strong)"; }}>
-                      {q}
-                    </button>
-                  ))}
-                </div>
-                <div style={{ textAlign: "center", padding: "20px", color: "var(--gw-text-disabled)" }}>
-                  <div style={{ fontSize: "32px", marginBottom: "8px" }}>💬</div>
-                  <div style={{ fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans Text', sans-serif" }}>Ask anything about the Gulf region</div>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )}
 
     </div>
   );
