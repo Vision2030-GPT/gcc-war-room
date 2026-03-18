@@ -2846,81 +2846,6 @@ CRITICAL TONE RULES:
     <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", color: "#1a1a1a" }}>
       <style>{SIG_STYLES}</style>
 
-      {/* CONFIDENCE BANNER */}
-      <div className={`sig-fade ${CL.pulse}`} style={{ background: CL.bgGrad, border: `2px solid ${CL.color}`, borderRadius: "14px", padding: "18px 22px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ fontSize: "24px" }}>{CL.icon}</span><div><div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}><span style={{ background: CL.color, color: "#fff", fontWeight: 500, fontSize: "10px", padding: "4px 12px", borderRadius: "var(--gw-radius-full)", letterSpacing: "0.5px", fontFamily: "'Google Sans', sans-serif" }}>LEVEL {L}</span><span style={{ fontWeight: 500, fontSize: "14px", color: CL.color, fontFamily: "'Google Sans', sans-serif" }}>{CL.name}</span></div><div style={{ fontSize: "13px", color: "#555", maxWidth: "500px" }}>{CL.bannerMsg}</div></div></div>
-        <div style={{ textAlign: "right" }}><div style={{ fontSize: "12px", fontWeight: 600, color: "#555" }}>Day {conflictDay}</div><div style={{ fontSize: "11px", color: "#888" }}>{myRes.i} {myRes.l}</div></div>
-      </div>
-
-
-      {/* ═══ T212 HERO SITUATION CARD ═══ */}
-      {(() => {
-        const heroGrad = userIntent === "invest"
-          ? "linear-gradient(135deg, #0D9488, #14B8A6)"
-          : L <= 2 ? "linear-gradient(135deg, #059669, #10B981)"
-          : L <= 3 ? "linear-gradient(135deg, #0891B2, #06B6D4)"
-          : L <= 4 ? "linear-gradient(135deg, #0891B2, #22D3EE)"
-          : "linear-gradient(135deg, #D97706, #F59E0B)";
-        return (
-          <div className="sig-fade" style={{ background: heroGrad, borderRadius: "20px", padding: "24px", color: "#fff", position: "relative", overflow: "hidden", marginBottom: "16px" }}>
-            <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
-            <div style={{ position: "absolute", bottom: -30, left: -30, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", position: "relative" }}>
-              {userIntent === "invest" ? (<>
-                <div>
-                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>OIL</div>
-                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{oilPrice}</div>
-                  <div style={{ fontSize: "13px", opacity: 0.8 }}>per barrel</div>
-                </div>
-                <div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} />
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DFM INDEX</div>
-                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>-30%</div>
-                  <div style={{ fontSize: "13px", opacity: 0.8 }}>from peak</div>
-                </div>
-              </>) : (<>
-                <div>
-                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DEFENSE</div>
-                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{interceptionRate}</div>
-                  <div style={{ fontSize: "13px", opacity: 0.8 }}>Intercepted</div>
-                </div>
-                <div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} />
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>SITUATION</div>
-                  <div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>Day {conflictDay}</div>
-                  <div style={{ fontSize: "13px", opacity: 0.8 }}>{missileData.total.toLocaleString()} projectiles</div>
-                </div>
-              </>)}
-            </div>
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              {userIntent === "invest" ? (<>
-                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>AED/USD: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.aedPeg} ✓</span></div>
-                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Sovereign: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.sovereignWealth}</span></div>
-              </>) : (<>
-                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Casualties: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{casualties.killed} killed</span></div>
-                <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Tourist: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>0 casualties</span></div>
-              </>)}
-            </div>
-          </div>
-        );
-      })()}
-
-      {/* ═══ T212 DEFENSE/THREAT BAR ═══ */}
-      <div className="sig-fade sig-fade-1" style={{ background: "#EBEBEB", borderRadius: "16px", padding: "16px 20px", marginBottom: "16px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-          <div><span style={{ fontSize: "13px", fontWeight: 700, color: "#0891B2" }}>92%</span><span style={{ fontSize: "11px", color: "#8E8E93", marginLeft: "6px" }}>DEFENDED</span></div>
-          <div><span style={{ fontSize: "11px", color: "#8E8E93", marginRight: "6px" }}>THREAT</span><span style={{ fontSize: "13px", fontWeight: 700, color: "#EF4444" }}>8%</span></div>
-        </div>
-        <div className="t-bar">
-          <div className="t-bar-fill" style={{ width: "92%", background: "linear-gradient(90deg, #0891B2, #06B6D4)", borderRadius: "4px 0 0 4px" }} />
-          <div className="t-bar-fill" style={{ width: "8%", background: "#EF4444", borderRadius: "0 4px 4px 0" }} />
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}>
-          <span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span>
-          <span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span>
-        </div>
-      </div>
-
       {/* ORIGIN ADVISORY */}
       {myAdvisory && L >= 3 && (<div className="sig-fade sig-fade-1" style={{ background: "#fff", borderRadius: "12px", border: `2px solid ${myAdvisory.color}`, padding: "14px 18px", marginBottom: "20px", display: "flex", gap: "12px" }}><span style={{ fontSize: "24px" }}>{myAdvisory.icon}</span><div><div style={{ fontSize: "10px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>YOUR GOVERNMENT</div><div style={{ fontSize: "14px", fontWeight: 700, color: myAdvisory.color }}>{myAdvisory.level}</div><div style={{ fontSize: "12px", color: "#555", marginTop: "2px" }}>{myAdvisory.detail}</div></div></div>)}
 
@@ -2970,6 +2895,29 @@ CRITICAL TONE RULES:
             <div style={{ fontSize: "18px", fontWeight: 500, color: "var(--gw-text-primary)", fontFamily: "'Google Sans Display', sans-serif" }}>{userIntent === "visit" ? "✈️ Should I Visit?" : userIntent === "invest" ? "📈 Investment Analysis" : userIntent === "move" ? "🏠 Should I Stay / Move?" : "🔍 Full Risk Picture"}</div>
           </div>
           {!originCountry && <select className="sig-input" style={{ maxWidth: "200px" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}><option value="">Select nationality...</option>{originCountries.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+        </div>
+
+
+        {/* T212 Hero Card — dynamic per country */}
+        {(() => {
+          const cd = GCC_DATA[targetCountry] || GCC_DATA["UAE"];
+          const heroGrad = userIntent === "invest" ? "linear-gradient(135deg, #0D9488, #14B8A6)" : L <= 2 ? "linear-gradient(135deg, #059669, #10B981)" : L <= 3 ? "linear-gradient(135deg, #0891B2, #06B6D4)" : L <= 4 ? "linear-gradient(135deg, #0891B2, #22D3EE)" : "linear-gradient(135deg, #D97706, #F59E0B)";
+          return (
+            <div className="sig-fade" style={{ background: heroGrad, borderRadius: "20px", padding: "24px", color: "#fff", position: "relative", overflow: "hidden", marginBottom: "16px" }}>
+              <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", position: "relative" }}>
+                {userIntent === "invest" ? (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>OIL</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{oilPrice}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>per barrel</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{CONFLICT_DATA.dfm}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>market impact</div></div></>) : (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DEFENSE</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{interceptionRate}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>Intercepted</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>Day {conflictDay}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>{missileData.total.toLocaleString()} projectiles</div></div></>)}
+              </div>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {userIntent === "invest" ? (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>AED/USD: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.aedPeg} ✓</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Sovereign: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.sovereignWealth}</span></div></>) : (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Risk: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.riskScore}/5</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Tourist: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>0 casualties</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Emergency: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.emergency}</span></div></>)}
+              </div>
+            </div>
+          );
+        })()}
+        <div className="sig-fade sig-fade-1" style={{ background: "#EBEBEB", borderRadius: "16px", padding: "16px 20px", marginBottom: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}><div><span style={{ fontSize: "13px", fontWeight: 700, color: "#0891B2" }}>92%</span><span style={{ fontSize: "11px", color: "#8E8E93", marginLeft: "6px" }}>DEFENDED</span></div><div><span style={{ fontSize: "11px", color: "#8E8E93", marginRight: "6px" }}>THREAT</span><span style={{ fontSize: "13px", fontWeight: 700, color: "#EF4444" }}>8%</span></div></div>
+          <div className="t-bar"><div className="t-bar-fill" style={{ width: "92%", background: "linear-gradient(90deg, #0891B2, #06B6D4)", borderRadius: "4px 0 0 4px" }} /><div className="t-bar-fill" style={{ width: "8%", background: "#EF4444", borderRadius: "0 4px 4px 0" }} /></div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}><span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span><span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span></div>
         </div>
 
         {/* ═══ VISIT PAGE ═══ */}
@@ -3046,6 +2994,35 @@ CRITICAL TONE RULES:
         </div>)}
       </div>)}
 
+
+
+      {/* FLOATING AI CHAT */}
+      {!aiPanelOpen && (
+        <button onClick={() => setAiPanelOpen(true)} style={{ position: "fixed", bottom: "24px", right: "24px", zIndex: 50, background: "var(--gw-blue)", color: "#fff", border: "none", borderRadius: "var(--gw-radius-full)", padding: "14px 24px", fontSize: "14px", fontWeight: 500, fontFamily: "'Google Sans', sans-serif", cursor: "pointer", boxShadow: "var(--gw-shadow-3)", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.2s" }}
+          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
+          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+          <span style={{ fontSize: "18px" }}>💬</span> Ask AI
+        </button>
+      )}
+      {aiPanelOpen && (
+        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50, maxHeight: "75vh", background: "#fff", borderRadius: "24px 24px 0 0", boxShadow: "0 -8px 32px rgba(60,64,67,0.25)", display: "flex", flexDirection: "column", animation: "gw-slide-up 0.3s ease-out" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #E8E8E8", flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}><span style={{ fontSize: "20px" }}>🤖</span><div><div style={{ fontFamily: "'Google Sans'", fontSize: "15px", fontWeight: 500, color: "#1C1C1E" }}>AI Analyst</div><div style={{ fontSize: "11px", color: "#8E8E93" }}>Powered by Claude · Level {L}</div></div></div>
+            <button onClick={() => setAiPanelOpen(false)} style={{ padding: "8px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#F5F5F5", cursor: "pointer", fontSize: "13px", fontWeight: 500, color: "#666" }}>Close</button>
+          </div>
+          {chatMessages.length === 0 && (<div style={{ display: "flex", flexWrap: "wrap", gap: "8px", padding: "14px 20px", borderBottom: "1px solid #E8E8E8" }}>{["What's the situation?", "Hotel deals?", "Investment outlook?", "Defense status?", "Flight info?", "Family tips?"].map((q, qi) => (<button key={qi} onClick={() => sendChat(q)} style={{ padding: "8px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text'" }}>{q}</button>))}</div>)}
+          <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px", minHeight: "120px" }}>
+            {chatMessages.length === 0 && <div style={{ textAlign: "center", padding: "30px", color: "#8E8E93" }}><div style={{ fontSize: "32px", marginBottom: "8px" }}>💬</div><div style={{ fontSize: "13px", fontWeight: 500 }}>Ask anything about the Gulf region</div></div>}
+            {chatMessages.map((m, mi) => (<div key={mi} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "12px" }}><div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.content}</div></div>))}
+            {chatLoading && <div><div className="sig-chat-ai" style={{ color: "#8E8E93" }}>● ● ● Analyzing...</div></div>}
+            <div ref={chatEndRef} />
+          </div>
+          <div style={{ display: "flex", gap: "8px", padding: "12px 20px", borderTop: "1px solid #E8E8E8", background: "#F5F5F5", flexShrink: 0 }}>
+            <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat(chatInput)} placeholder="Ask anything..." style={{ flex: 1, padding: "10px 16px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "14px", fontFamily: "'Google Sans Text'", outline: "none" }} />
+            <button onClick={() => sendChat(chatInput)} disabled={chatLoading} style={{ padding: "10px 20px", borderRadius: "100px", background: "var(--gw-blue)", border: "none", color: "#fff", fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans'", cursor: chatLoading ? "not-allowed" : "pointer", opacity: chatLoading ? 0.5 : 1 }}>Send</button>
+          </div>
+        </div>
+      )}
 
     </div>
   );
@@ -3181,12 +3158,7 @@ export default function App() {
         .t-label{font-size:11px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:#8E8E93;margin-bottom:6px}
         .t-bar{height:8px;border-radius:4px;overflow:hidden;display:flex}
         .t-bar-fill{height:100%;transition:width 0.6s ease-out}
-        .t-bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;align-items:center;justify-content:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom));border-top:1px solid #E8E8E8;z-index:100}
-        .t-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;cursor:pointer;transition:all 0.15s}
-        .t-nav-icon{width:44px;height:32px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all 0.2s}
-        .t-nav-item.active .t-nav-icon{background:#1C1C1E}
-        .t-nav-label{font-size:10px;font-weight:500;color:#8E8E93;font-family:'Google Sans Text',sans-serif}
-        .t-nav-item.active .t-nav-label{color:#1C1C1E;font-weight:600}
+
         .gw-fade{animation:gw-fade-in 0.35s ease-out both}
         .gw-fade-1{animation-delay:0.04s}.gw-fade-2{animation-delay:0.08s}.gw-fade-3{animation-delay:0.12s}.gw-fade-4{animation-delay:0.16s}.gw-fade-5{animation-delay:0.2s}
         .gw-card{background:#EBEBEB;border-radius:16px;border:none;transition:transform 0.15s}
@@ -3359,7 +3331,7 @@ export default function App() {
 
         {sidebarOpen && <div className="fixed inset-0 bg-black/20 z-40" onClick={() => setSidebarOpen(false)} />}
 
-        <main className="flex-1 min-w-0 p-4 sm:p-6 max-w-4xl mx-auto" style={{ paddingBottom: "80px" }}>
+        <main className="flex-1 min-w-0 p-4 sm:p-6 max-w-4xl mx-auto">
           {tab === "dashboard" && <DashboardTab country={selCountry} city={selCity} lang={lang} resStatus={resStatus} />}
           {tab === "analysis" && <FullAnalysisTab />}
           {tab === "ai" && <AIAnalystTab country={selCountry} city={selCity} resStatus={resStatus} />}
@@ -3369,16 +3341,6 @@ export default function App() {
         </main>
 
 
-
-      {/* ═══ T212 BOTTOM NAV ═══ */}
-      <div className="t-bottom-nav">
-        {TAB_KEYS.map(tk => (
-          <div key={tk.key} className={`t-nav-item ${tab === tk.key ? "active" : ""}`} onClick={() => setTab(tk.key)}>
-            <div className="t-nav-icon">{tab === tk.key ? <span style={{ filter: "grayscale(1) brightness(10)" }}>{tk.emoji}</span> : tk.emoji}</div>
-            <span className="t-nav-label">{tk.shortLabel}</span>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
