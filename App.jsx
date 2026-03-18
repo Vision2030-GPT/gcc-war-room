@@ -50,7 +50,7 @@ const t = (key, lang) => (T[lang] && T[lang][key]) || T.en[key] || key;
 
 const GCC_DATA = {
   UAE: {
-    name: "United Arab Emirates", flag: "🇦🇪", riskScore: 5, riskLabel: "EXTREME",
+    name: "United Arab Emirates", flag: "🇦🇪", riskScore: 5, civilDefense: "NCEMA", defenseDesc: "National Emergency Crisis & Disasters Management Authority", emergency: "999", defensePerf: "90%+ interception rate, world-class THAAD/Patriot systems", pop: "11M", riskLabel: "EXTREME",
     advisory: "Level 5 — Immediate Civilian Danger. All Western governments say leave now.",
     cities: {
       "Dubai": { risk: 5, nearestStrike: "Palm Jumeirah / DIFC (multiple confirmed strikes)", nearestTarget: "Jebel Ali Port (~15–25 km, declared 'legitimate target')", shelter: "Interior corridors, stairwells, ground floor away from glass. No purpose-built bomb shelters.", evacRoute: "DXB Airport (struck 3×, intermittent) or drive to Muscat, Oman (~4.5h)", signal: "critical", notes: "Multiple strikes confirmed across Dubai: Palm Jumeirah, DIFC (2×), DXB Airport (3×), Burj Al Arab (debris), Jebel Ali (fire). Shelter-in-place alerts multiple times daily. Schools on remote learning." },
@@ -62,7 +62,7 @@ const GCC_DATA = {
     }
   },
   "Saudi Arabia": {
-    name: "Saudi Arabia", flag: "🇸🇦", riskScore: 4, riskLabel: "HIGH",
+    name: "Saudi Arabia", flag: "🇸🇦", riskScore: 4, civilDefense: "Saudi Civil Defense", defenseDesc: "General Directorate of Civil Defense", emergency: "998", defensePerf: "Patriot systems active, vast territorial depth", pop: "36M", riskLabel: "HIGH",
     advisory: "Level 4 — Direct GCC Threat. Riyadh and eastern province struck. Ras Tanura ablaze.",
     cities: {
       "Riyadh": { risk: 4, nearestStrike: "Riyadh struck by Iranian missiles", nearestTarget: "Government and military sites", shelter: "Follow civil defense alerts.", evacRoute: "King Khalid Int'l Airport or drive to Jeddah/Yanbu", signal: "warning", notes: "Capital struck but has vast territorial depth. Less concentrated target zone than UAE." },
@@ -72,28 +72,28 @@ const GCC_DATA = {
     }
   },
   Bahrain: {
-    name: "Bahrain", flag: "🇧🇭", riskScore: 5, riskLabel: "EXTREME",
+    name: "Bahrain", flag: "🇧🇭", riskScore: 5, civilDefense: "Bahrain Civil Defense", defenseDesc: "Ministry of Interior Civil Defense", emergency: "999", defensePerf: "US 5th Fleet provides defense umbrella, minimal strategic depth", pop: "1.5M", riskLabel: "EXTREME",
     advisory: "Level 5 — Major strikes on Bapco refinery and naval HQ. Negligible strategic depth.",
     cities: {
       "Manama": { risk: 5, nearestStrike: "Bapco refinery, naval HQ struck", nearestTarget: "US 5th Fleet HQ", shelter: "Smallest GCC state — limited options.", evacRoute: "Bahrain Airport or King Fahd Causeway to Saudi", signal: "critical", notes: "Negligible strategic depth. Entire country within blast radius of major strikes. US 5th Fleet HQ makes it priority target." },
     }
   },
   Qatar: {
-    name: "Qatar", flag: "🇶🇦", riskScore: 4, riskLabel: "HIGH",
+    name: "Qatar", flag: "🇶🇦", riskScore: 4, civilDefense: "Qatar Civil Defense", defenseDesc: "Ministry of Interior", emergency: "999", defensePerf: "Al Udeid US base provides defense umbrella", pop: "3M", riskLabel: "HIGH",
     advisory: "Level 4 — 47 drones, 118 BMs intercepted. Al Udeid (largest US base) targeted. LNG halted.",
     cities: {
       "Doha": { risk: 4, nearestStrike: "Multiple interceptions over Qatar", nearestTarget: "Al Udeid Air Base (largest US base in region)", shelter: "Follow civil defense alerts.", evacRoute: "Hamad International Airport", signal: "warning", notes: "Al Udeid hosts largest US base. LNG force majeure declared March 4. Low strategic depth." },
     }
   },
   Kuwait: {
-    name: "Kuwait", flag: "🇰🇼", riskScore: 4, riskLabel: "HIGH",
+    name: "Kuwait", flag: "🇰🇼", riskScore: 4, civilDefense: "Kuwait Civil Defense", defenseDesc: "Kuwait Fire Service Directorate", emergency: "112", defensePerf: "Camp Arifjan US Army Central provides defense coordination", pop: "4.5M", riskLabel: "HIGH",
     advisory: "Level 4 — Airport struck. Camp Arifjan (US Army Central HQ) targeted.",
     cities: {
       "Kuwait City": { risk: 4, nearestStrike: "Kuwait Airport struck", nearestTarget: "Camp Arifjan (US Army Central)", shelter: "Civil defense guidance.", evacRoute: "Kuwait Airport (intermittent) or drive to Saudi/Iraq", signal: "warning", notes: "Moderate strategic depth. US Army Central HQ at Camp Arifjan is major target." },
     }
   },
   Oman: {
-    name: "Oman", flag: "🇴🇲", riskScore: 3, riskLabel: "ELEVATED",
+    name: "Oman", flag: "🇴🇲", riskScore: 3, civilDefense: "Oman NCSI", defenseDesc: "National Committee for Civil Defense", emergency: "9999", defensePerf: "Historically neutral, limited air defense", pop: "5M", riskLabel: "ELEVATED",
     advisory: "Level 3 — Historically neutral but struck for first time ever. 5 injured, 2 killed.",
     cities: {
       "Muscat": { risk: 3, nearestStrike: "Oman struck (first time ever) — 5 injured, 2 killed", nearestTarget: "Limited military targets", shelter: "Standard precautions.", evacRoute: "Muscat International Airport (operational)", signal: "warning", notes: "Key evacuation hub for UAE residents. Airport operational. ~4.5h drive from Dubai. Historically neutral but now in conflict." },
@@ -102,7 +102,7 @@ const GCC_DATA = {
   },
   // ─── WIDER MIDDLE EAST ─────────────────────────────────────────
   Jordan: {
-    name: "Jordan", flag: "🇯🇴", riskScore: 3, riskLabel: "ELEVATED",
+    name: "Jordan", flag: "🇯🇴", riskScore: 3, civilDefense: "Jordan Civil Defense", defenseDesc: "General Directorate of Civil Defense", emergency: "911", defensePerf: "Jordanian air force intercepting over Amman, US coordination", pop: "11M", riskLabel: "ELEVATED",
     advisory: "Level 3 — Airspace violations, missile interceptions over Amman. 28 injuries reported. US embassy staff evacuated.",
     cities: {
       "Amman": { risk: 3, nearestStrike: "Missile interceptions over Amman airspace", nearestTarget: "US military facilities in Jordan", shelter: "Follow civil defense alerts.", evacRoute: "Queen Alia International Airport (operational)", signal: "warning", notes: "Jordanian defenses intercepted missiles over Amman. 28 injuries, no deaths. US-Jordanian embassy evacuated. Jordan has geographic buffer but within Iranian missile range." },
@@ -110,7 +110,7 @@ const GCC_DATA = {
     }
   },
   Iraq: {
-    name: "Iraq", flag: "🇮🇶", riskScore: 4, riskLabel: "HIGH",
+    name: "Iraq", flag: "🇮🇶", riskScore: 4, civilDefense: "Iraq Civil Defense", defenseDesc: "Civil Defense Directorate", emergency: "115", defensePerf: "Complex multi-faction environment, US bases provide limited umbrella", pop: "44M", riskLabel: "HIGH",
     advisory: "Level 4 — 29 killed. Erbil Airport struck. PMF HQ targeted. Baghdad Green Zone explosions.",
     cities: {
       "Baghdad": { risk: 4, nearestStrike: "Green Zone explosions, PMF HQ struck", nearestTarget: "US Embassy compound, military sites", shelter: "Reinforced structures. Follow security advisories.", evacRoute: "Baghdad Airport (limited operations)", signal: "critical", notes: "Multiple explosions near Green Zone. Pro-Iran PMF forces targeted by US strikes. Complex multi-faction security environment." },
@@ -119,7 +119,7 @@ const GCC_DATA = {
     }
   },
   Lebanon: {
-    name: "Lebanon", flag: "🇱🇧", riskScore: 5, riskLabel: "CRITICAL",
+    name: "Lebanon", flag: "🇱🇧", riskScore: 5, civilDefense: "Lebanese Civil Defense", defenseDesc: "Directorate General of Civil Defense", emergency: "125", defensePerf: "Minimal air defense, active ground invasion by Israel", pop: "5.5M", riskLabel: "CRITICAL",
     advisory: "Level 5 — Active Israeli ground invasion. 850+ killed, 1M+ displaced. Hezbollah front open since March 2.",
     cities: {
       "Beirut": { risk: 5, nearestStrike: "Dahiyeh suburbs under sustained Israeli bombardment", nearestTarget: "Hezbollah HQ, southern suburbs, port area", shelter: "Seek reinforced structures. Avoid southern suburbs entirely.", evacRoute: "Rafic Hariri Airport (intermittent) or land to Syria/Turkey", signal: "critical", notes: "Israel conducting largest ground invasion since 2006. Beirut southern suburbs devastated. 20% of population displaced. Active urban warfare zone." },
@@ -127,14 +127,14 @@ const GCC_DATA = {
     }
   },
   Syria: {
-    name: "Syria", flag: "🇸🇾", riskScore: 4, riskLabel: "HIGH",
+    name: "Syria", flag: "🇸🇾", riskScore: 4, civilDefense: "Syrian Civil Defense", defenseDesc: "Ministry of Interior", emergency: "113", defensePerf: "Russian air defense provides partial coverage", pop: "22M", riskLabel: "HIGH",
     advisory: "Level 4 — Caught between multiple fronts. Israeli strikes on Iranian assets. US bases targeted.",
     cities: {
       "Damascus": { risk: 4, nearestStrike: "Israeli strikes on Iranian military assets near Damascus", nearestTarget: "Iranian/Hezbollah facilities, military airports", shelter: "Reinforced structures.", evacRoute: "Damascus Airport (very limited) or land to Lebanon/Jordan", signal: "critical", notes: "Israeli strikes targeting Iranian assets in Syria intensified. Complex multi-faction environment — Russian, Iranian, Turkish, US, Israeli forces all present." },
     }
   },
   Israel: {
-    name: "Israel", flag: "🇮🇱", riskScore: 5, riskLabel: "CRITICAL",
+    name: "Israel", flag: "🇮🇱", riskScore: 5, civilDefense: "Home Front Command", defenseDesc: "IDF Home Front Command (Pikud HaOref)", emergency: "104", defensePerf: "Iron Dome, Arrow, David's Sling — multi-layered but interceptor depletion concern", pop: "10M", riskLabel: "CRITICAL",
     advisory: "Level 5 — Direct Iranian missile exchange. 15 killed, 3,530+ injured. Simultaneous Lebanon ground invasion.",
     cities: {
       "Tel Aviv": { risk: 5, nearestStrike: "Multiple Iranian ballistic missile impacts in central Israel", nearestTarget: "Primary Iranian target zone — 38.5% of all attack waves", shelter: "Bomb shelters mandatory. Iron Dome active.", evacRoute: "Ben Gurion Airport (intermittent operations)", signal: "critical", notes: "Main target of Iranian missile barrages. Beit Shemesh strike killed 9. Iron Dome and Arrow systems active but interceptor depletion concern." },
@@ -142,14 +142,14 @@ const GCC_DATA = {
     }
   },
   Egypt: {
-    name: "Egypt", flag: "🇪🇬", riskScore: 2, riskLabel: "MODERATE",
+    name: "Egypt", flag: "🇪🇬", riskScore: 2, civilDefense: "Egyptian Civil Protection", defenseDesc: "National Authority for Civil Protection", emergency: "122", defensePerf: "Not under direct attack, functioning normally", pop: "110M", riskLabel: "MODERATE",
     advisory: "Level 2 — Not directly targeted. Suez Canal disruption risk from Houthi escalation. Regional economic spillover.",
     cities: {
       "Cairo": { risk: 2, nearestStrike: "No confirmed strikes on Egypt", nearestTarget: "Suez Canal (Houthi disruption risk)", shelter: "Standard precautions.", evacRoute: "Cairo International Airport (fully operational)", signal: "positive", notes: "Egypt not a party to conflict. Main risk is economic spillover and Suez Canal disruption if Houthis escalate. Functioning as refugee/evacuation hub." },
     }
   },
   Yemen: {
-    name: "Yemen", flag: "🇾🇪", riskScore: 4, riskLabel: "HIGH",
+    name: "Yemen", flag: "🇾🇪", riskScore: 4, civilDefense: "Yemen Civil Defense", defenseDesc: "Limited infrastructure", emergency: "199", defensePerf: "Minimal — Houthi-controlled areas have no formal air defense", pop: "34M", riskLabel: "HIGH",
     advisory: "Level 4 — Houthi forces on standby. Full entry into war assessed 65-75% within 4-8 weeks. Israeli strikes killed senior leaders in 2025.",
     cities: {
       "Sanaa": { risk: 4, nearestStrike: "Israeli strikes in Aug-Sep 2025 killed Houthi PM", nearestTarget: "Houthi military infrastructure", shelter: "Limited infrastructure.", evacRoute: "Sanaa Airport (very limited) or land routes", signal: "critical", notes: "Houthi-controlled. Not yet fully entered 2026 war but assessed as almost certain within weeks. Israeli strikes killed senior leaders in 2025. Dual chokepoint crisis risk." },
@@ -161,55 +161,55 @@ const RESIDENT_TYPES = {
   tourist: {
     label: "Tourist / Short-Stay",
     icon: "✈️",
-    riskAdjust: 0, // gets the full base risk
-    tier1msg: "Complete your trip and depart on your scheduled flight or earlier. Don't extend your stay. Flights are subject to sudden cancellation — book backup options. Travel insurance likely void under current advisories.",
-    tier2msg: "Depart immediately by any available means. Do not wait for your scheduled flight.",
-    tier3msg: "Follow government evacuation orders. Use any available transport.",
+    riskAdjust: 0,
+    getMsg: (cd) => `Complete your trip and depart on your scheduled flight or earlier. Don't extend your stay. Flights are subject to sudden cancellation — book backup options. Travel insurance likely void under current advisories. Follow ${cd.civilDefense} guidance.`,
+    tier2: (cd) => `Depart immediately by any available means. Do not wait for your scheduled flight. Contact your embassy and follow ${cd.civilDefense} alerts.`,
+    tier3: (cd) => "Follow government evacuation orders. Use any available transport.",
     shortAdvice: "Depart as planned — don't extend",
   },
   business: {
     label: "Business Visitor",
     icon: "💼",
     riskAdjust: -1,
-    tier1msg: "Conclude your business promptly. Keep flights flexible and book backups. Avoid scheduling new trips to the region until situation stabilises. Work remotely if possible.",
-    tier2msg: "Wrap up within 48 hours and depart. Situation has materially worsened.",
-    tier3msg: "Follow government evacuation orders immediately.",
+    getMsg: (cd) => `Conclude your business promptly. Keep flights flexible and book backups. Avoid scheduling new trips until situation stabilises. Follow ${cd.civilDefense} alerts and your embassy's guidance.`,
+    tier2: (cd) => `Wrap up within 48 hours and depart. Situation has materially worsened. Follow ${cd.civilDefense} shelter alerts.`,
+    tier3: (cd) => "Follow government evacuation orders immediately.",
     shortAdvice: "Conclude business — keep flights flexible",
   },
   expat_single: {
     label: "Expat Resident (Single)",
     icon: "🏠",
     riskAdjust: -2,
-    tier1msg: "Continue your routine with awareness. Follow NCEMA alerts and shelter drills — they work. Have a go-bag ready as common sense, not panic. The nation's defense is performing well (90%+ interception). This is your home.",
-    tier2msg: "Situation worsening — activate contingency plan. Consider temporary relocation if you have options abroad. Monitor closely.",
-    tier3msg: "Follow official evacuation guidance. Use prepared exit routes.",
-    shortAdvice: "Stay prepared — follow NCEMA alerts",
+    getMsg: (cd) => `Continue your routine with awareness. Follow ${cd.civilDefense} alerts and shelter drills — they work. Have a go-bag ready as common sense, not panic. ${cd.defensePerf ? "Defense performance: " + cd.defensePerf + "." : ""} This is your home.`,
+    tier2: (cd) => `Situation worsening — activate contingency plan. Follow ${cd.civilDefense} guidance closely. Consider temporary relocation if you have options abroad.`,
+    tier3: (cd) => `Follow official evacuation guidance from ${cd.civilDefense}. Use prepared exit routes.`,
+    shortAdvice: "Stay prepared — follow local alerts",
   },
   expat_family: {
     label: "Expat Resident (Family)",
     icon: "👨‍👩‍👧",
     riskAdjust: -2,
-    tier1msg: "Your family is safe. Schools operating remotely as precaution — this is normal in the situation. Follow NCEMA shelter drills with your children. The country is defending itself well (90%+ interception rate, 8 casualties in 11M people). Have a family contingency plan as common sense. This is your home — the nation's defenses are world-class.",
-    tier2msg: "Situation has materially worsened. Families with young children should consider temporary relocation. Activate your contingency plan.",
-    tier3msg: "Evacuate with your family. Follow official guidance. Use prepared exit routes.",
+    getMsg: (cd) => `Your family is safe. Follow ${cd.civilDefense} shelter drills with your children. ${cd.defensePerf ? "The country's defense: " + cd.defensePerf + "." : ""} Have a family contingency plan as common sense. Emergency: ${cd.emergency}.`,
+    tier2: (cd) => `Situation has materially worsened. Families with young children should consider temporary relocation. Follow ${cd.civilDefense} guidance. Emergency: ${cd.emergency}.`,
+    tier3: (cd) => `Evacuate with your family. Follow ${cd.civilDefense} guidance. Emergency: ${cd.emergency}.`,
     shortAdvice: "Family safe — follow shelter drills, have a plan",
   },
   national: {
-    label: "UAE / GCC National",
-    icon: "🇦🇪",
+    label: "National / Citizen",
+    icon: "🏛️",
     riskAdjust: -3,
-    tier1msg: "Your country's defense systems are among the world's best — 90%+ interception rate. Follow civil defense guidance and support your community. The nation is strong and defending itself effectively. Stay informed through NCEMA and official channels.",
-    tier2msg: "Situation is serious. Follow all government guidance. Support community preparedness. Consider relocating vulnerable family members temporarily.",
-    tier3msg: "Follow government evacuation orders if issued. Your safety is the priority.",
+    getMsg: (cd) => `Your country's defense systems are active. ${cd.defensePerf ? cd.defensePerf + "." : ""} Follow ${cd.civilDefense} guidance and support your community. Stay informed through official channels. Emergency: ${cd.emergency}.`,
+    tier2: (cd) => `Situation is serious. Follow all ${cd.civilDefense} guidance. Support community preparedness. Consider relocating vulnerable family members temporarily.`,
+    tier3: (cd) => "Follow government evacuation orders if issued. Your safety is the priority.",
     shortAdvice: "Your nation is strong — follow civil defense",
   },
   diplomatic: {
     label: "Diplomatic / Government",
     icon: "🏛️",
-    riskAdjust: 0, // follows embassy guidance separately
-    tier1msg: "Follow your mission's official guidance. Most Western embassies have ordered departure of non-essential staff and dependents. Coordinate with your government's crisis management team.",
-    tier2msg: "Follow mission guidance. Most embassies have activated evacuation protocols.",
-    tier3msg: "Follow your government's emergency extraction plan.",
+    riskAdjust: 0,
+    getMsg: (cd) => `Follow your mission's official guidance. Coordinate with your government's crisis management team and local ${cd.civilDefense} authority.`,
+    tier2: (cd) => "Follow mission guidance. Most embassies have activated evacuation protocols.",
+    tier3: (cd) => "Follow your government's emergency extraction plan.",
     shortAdvice: "Follow your mission's official guidance",
   },
 };
@@ -222,38 +222,39 @@ const getTier = (adjustedRisk) => {
 };
 
 // Get contextual alert banner config
-const getAlertConfig = (adjustedRisk, resType) => {
+const getAlertConfig = (adjustedRisk, resType, countryData) => {
   const rt = RESIDENT_TYPES[resType];
+  const cd = countryData || { civilDefense: "Civil Defense", emergency: "911", defensePerf: "", defenseDesc: "" };
   if (adjustedRisk >= 5) return {
     bg: "bg-gradient-to-r from-rose-500 to-orange-400",
     title: resType === "tourist" ? "DEPART ON SCHEDULE OR EARLIER" : resType === "diplomatic" ? "FOLLOW MISSION GUIDANCE" : "ELEVATED SITUATION — HAVE EXIT PLAN READY",
-    msg: rt.tier2msg,
+    msg: rt.tier2(cd),
     icon: "⚠️",
   };
   if (adjustedRisk >= 4) return {
     bg: "bg-gradient-to-r from-amber-400 to-yellow-300",
     title: "STAY PREPARED — MONITOR SITUATION",
-    msg: rt.tier1msg,
+    msg: rt.getMsg(cd),
     icon: "⚡",
     dark: true,
   };
   if (adjustedRisk >= 3) return {
     bg: "bg-gradient-to-r from-blue-400 to-sky-300",
     title: "STAY AWARE — SITUATION ONGOING",
-    msg: rt.tier1msg,
+    msg: rt.getMsg(cd),
     icon: "ℹ️",
   };
   if (adjustedRisk >= 2) return {
     bg: "bg-gradient-to-r from-cyan-400 to-teal-300",
     title: "MODERATE AWARENESS",
-    msg: rt.tier1msg,
+    msg: rt.getMsg(cd),
     icon: "✓",
     dark: true,
   };
   return {
     bg: "bg-gradient-to-r from-emerald-400 to-green-300",
     title: "NORMAL PRECAUTIONS",
-    msg: "Standard safety awareness. Stay informed through official channels.",
+    msg: `Standard safety awareness. Stay informed through ${cd.civilDefense} and official channels.`,
     icon: "✓",
     dark: true,
   };
@@ -924,7 +925,7 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
   const cRisk = Math.max(1, Math.min(5, baseRisk + (resType.riskAdjust || 0)));
   const rCol = cRisk >= 5 ? "#DC2626" : cRisk >= 4 ? "#D97706" : cRisk >= 3 ? "#2563EB" : cRisk >= 2 ? "#0891B2" : "#059669";
   const rLbl = cRisk >= 5 ? "CRITICAL" : cRisk >= 4 ? "HIGH" : cRisk >= 3 ? "ELEVATED" : cRisk >= 2 ? "MODERATE" : "LOW";
-  const alertCfg = getAlertConfig(cRisk, dashRes);
+  const alertCfg = getAlertConfig(cRisk, dashRes, cData);
   const [showRegional, setShowRegional] = useState(false);
 
   return (
@@ -975,7 +976,7 @@ const DashboardTab = ({ country, city, lang: dashLang, resStatus: dashRes }) => 
               </div>
               <div className="p-3 rounded-xl bg-gray-50 border border-gray-100">
                 <p className="text-[10px] text-gray-500 mb-0.5">Shelter guidance</p>
-                <p className="text-sm font-bold text-gray-800">{cyData.shelter || "Follow NCEMA alerts"}</p>
+                <p className="text-sm font-bold text-gray-800">{cyData.shelter || `Follow ${cData.civilDefense || "civil defense"} alerts`}</p>
               </div>
               {cyData.notes && <p className="text-xs text-gray-500 sm:col-span-2 bg-gray-50 rounded-lg p-2.5 border border-gray-100">{cyData.notes}</p>}
             </div>
@@ -2484,7 +2485,7 @@ export default function App() {
   const cityRisk = Math.max(1, Math.min(5, baseRisk + (resTypeData?.riskAdjust || 0)));
   const riskColor = cityRisk >= 5 ? "#DC2626" : cityRisk >= 4 ? "#D97706" : cityRisk >= 3 ? "#2563EB" : cityRisk >= 2 ? "#0891B2" : "#059669";
   const riskLabel = cityRisk >= 5 ? "CRITICAL" : cityRisk >= 4 ? "HIGH" : cityRisk >= 3 ? "ELEVATED" : cityRisk >= 2 ? "MODERATE" : "LOW";
-  const alertConfig = getAlertConfig(cityRisk, resStatus);
+  const alertConfig = getAlertConfig(cityRisk, resStatus, countryData);
   const isRTL = ["ar", "ur", "fa"].includes(lang);
 
   const keySignals = [
@@ -2671,10 +2672,15 @@ export default function App() {
               </div>
             </div>
 
-            {/* Verdict — contextual per resident type */}
+            {/* Verdict — contextual per resident type and country */}
             <div className={`rounded-xl p-4 border ${cityRisk >= 4 ? "bg-orange-50 border-orange-200" : cityRisk >= 3 ? "bg-blue-50 border-blue-200" : "bg-emerald-50 border-emerald-200"}`}>
               <p className={`text-xs font-bold mb-1 ${cityRisk >= 4 ? "text-orange-800" : cityRisk >= 3 ? "text-blue-800" : "text-emerald-800"}`}>{alertConfig.icon} {alertConfig.title}</p>
               <p className={`text-[10px] ${cityRisk >= 4 ? "text-orange-700" : cityRisk >= 3 ? "text-blue-700" : "text-emerald-700"}`}>{resTypeData?.shortAdvice}</p>
+              {countryData?.civilDefense && (
+                <p className="text-[9px] text-gray-500 mt-2 pt-2 border-t border-gray-200">
+                  📞 Emergency: <strong>{countryData.emergency}</strong> · Follow <strong>{countryData.civilDefense}</strong>
+                </p>
+              )}
             </div>
 
             {/* Return Criteria */}
