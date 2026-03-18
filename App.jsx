@@ -2456,10 +2456,46 @@ const EmergencyTab = () => {
 };
 
 // ============================================================================
-// SHOULD I GO? — Tab 7 for GCC War Room
-// Crisis Perception Intelligence Platform — MVP with 5 Modes
-// JSX version matching App.jsx import style (no React.createElement)
+// SHOULD I GO? — Tab 7 for GCC War Room v2.0
+// Crisis Perception Intelligence Platform — Full MVP
+// 5 Modes: Risk Clarity, Visit/Stay Advisor, Investment Lens,
+//          Perception vs Reality, AI Confidence Analyst
 // ============================================================================
+
+const SIG_STYLES = `
+@keyframes sigFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes sigPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(232,113,10,0.3); } 50% { box-shadow: 0 0 0 8px rgba(232,113,10,0); } }
+@keyframes sigBarGrow { from { width: 0%; } to { width: var(--target-width); } }
+@keyframes sigShimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.sig-fade { animation: sigFadeIn 0.4s ease-out both; }
+.sig-fade-1 { animation-delay: 0.05s; } .sig-fade-2 { animation-delay: 0.1s; }
+.sig-fade-3 { animation-delay: 0.15s; } .sig-fade-4 { animation-delay: 0.2s; }
+.sig-pulse { animation: sigPulse 2s ease-in-out infinite; }
+.sig-card { background: #fff; border-radius: 12px; border: 1px solid #E8EAED; padding: 20px; margin-bottom: 16px; transition: box-shadow 0.2s, border-color 0.2s; }
+.sig-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); border-color: #D0D5DD; }
+.sig-stat { text-align: center; padding: 20px 16px; background: #fff; border-radius: 12px; border: 1px solid #E8EAED; transition: transform 0.2s, box-shadow 0.2s; }
+.sig-stat:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.sig-pill { padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
+.sig-pill:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.sig-intent { border-radius: 16px; border: 2px solid #E8EAED; padding: 24px 16px; cursor: pointer; text-align: center; transition: all 0.25s; min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+.sig-intent:hover { border-color: #1A73E8; background: #F0F6FF; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,115,232,0.12); }
+.sig-intent.active { border-color: #1A73E8; background: #EBF2FF; box-shadow: 0 4px 16px rgba(26,115,232,0.15); }
+.sig-input { padding: 10px 14px; border-radius: 10px; border: 1px solid #DDD; font-size: 14px; background: #fff; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.sig-input:focus { border-color: #1A73E8; box-shadow: 0 0 0 3px rgba(26,115,232,0.12); }
+.sig-btn { background: #1A73E8; color: #fff; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.sig-btn:hover { background: #1557B0; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,115,232,0.3); }
+.sig-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+.sig-chat-user { background: linear-gradient(135deg, #1A73E8, #1557B0); color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 18px; max-width: 80%; margin-left: auto; font-size: 14px; line-height: 1.5; box-shadow: 0 2px 8px rgba(26,115,232,0.2); }
+.sig-chat-ai { background: #F8F9FA; color: #1a1a1a; border-radius: 18px 18px 18px 4px; padding: 14px 18px; max-width: 85%; font-size: 14px; line-height: 1.65; white-space: pre-wrap; border: 1px solid #E8EAED; }
+.sig-advisor-card { border-radius: 12px; border: 2px solid #E8EAED; padding: 20px; cursor: pointer; transition: all 0.25s; }
+.sig-advisor-card:hover { border-color: #1A73E8; box-shadow: 0 4px 16px rgba(26,115,232,0.1); }
+.sig-advisor-card.selected { border-color: #1A73E8; background: #F0F6FF; }
+@media (max-width: 640px) {
+  .sig-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+  .sig-grid-2 { grid-template-columns: 1fr !important; }
+  .sig-hide-mobile { display: none !important; }
+}
+`;
 
 const ShouldIGoTab = ({
   conflictDay = 18,
@@ -2470,490 +2506,561 @@ const ShouldIGoTab = ({
   oilPrice = "$104+",
   selectedLanguage = "EN",
   userCountry = "UAE",
+  resStatus = "expat_family",
 }) => {
   const [activeMode, setActiveMode] = useState(null);
   const [userIntent, setUserIntent] = useState(null);
   const [originCountry, setOriginCountry] = useState("");
-  const [targetCountry, setTargetCountry] = useState("UAE");
+  const [targetCountry, setTargetCountry] = useState(userCountry || "UAE");
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
   const [investmentScenario, setInvestmentScenario] = useState("base");
   const [showMethodology, setShowMethodology] = useState(false);
+  const [advisorStep, setAdvisorStep] = useState(0);
+  const [advisorAnswers, setAdvisorAnswers] = useState({});
   const chatEndRef = useRef(null);
 
-  const CONFIDENCE_LEVEL = 4;
-
-  const confidenceLevels = {
+  const LEVEL = 4;
+  const levels = {
     1: { name: "STRONG OPPORTUNITY", color: "#34A853", bg: "#E6F4EA", icon: "🟢", desc: "Ceasefire 30+ days, Hormuz open, airlines normal" },
     2: { name: "EMERGING OPPORTUNITY", color: "#34A853", bg: "#E6F4EA", icon: "🟡", desc: "Ceasefire <30 days, partial normalization" },
     3: { name: "INFORMED CAUTION", color: "#FBBC04", bg: "#FEF7E0", icon: "🟠", desc: "Active conflict but contained" },
     4: { name: "ELEVATED RISK", color: "#E8710A", bg: "#FFF3E0", icon: "🟠", desc: "Active strikes on civilian areas, airports disrupted" },
     5: { name: "ACTIVE DANGER", color: "#EA4335", bg: "#FDECEA", icon: "🔴", desc: "Mass casualties, infrastructure collapse" },
   };
-  const currentLevel = confidenceLevels[CONFIDENCE_LEVEL];
+  const cl = levels[LEVEL];
 
-  const countries = ["UAE","Saudi Arabia","Qatar","Bahrain","Kuwait","Oman","Jordan","Iraq","Lebanon","Syria","Israel","Egypt","Yemen"];
-  const originCountries = ["United States","United Kingdom","India","Pakistan","Philippines","Australia","Germany","France","Canada","China","Bangladesh","Egypt","South Africa","Brazil","Japan","South Korea","Russia","Nigeria","Kenya","Turkey","Indonesia","Malaysia","Singapore","New Zealand","Ireland","Netherlands","Sweden","Italy","Spain","Other"];
-
-  const advisories = {
-    us: { country: "United States", level: "Level 3 — Reconsider Travel", color: "#E8710A", detail: "Ordered departure of non-emergency personnel. Embassy closed. Evacuation flights operating since March 4." },
-    uk: { country: "United Kingdom", level: "Advises against all but essential travel", color: "#EA4335", detail: "Dependents withdrawn. Contingency evacuation planning for 50,000 Britons." },
-    australia: { country: "Australia", level: "DO NOT TRAVEL (highest level)", color: "#EA4335", detail: "\"Leave the UAE. Don't wait until it's too late.\" Embassy closed." },
-    canada: { country: "Canada", level: "Avoid All Travel", color: "#EA4335", detail: "\"Leave while commercial options are still available.\"" },
+  // ── ORIGIN COUNTRY ADVISORY DATABASE ──
+  const govAdvisories = {
+    "United States": { level: "Level 3 — Reconsider Travel", color: "#E8710A", icon: "🇺🇸", detail: "Embassy closed. Evacuation flights since Mar 4. Ordered departure of non-emergency personnel.", link: "travel.state.gov" },
+    "United Kingdom": { level: "Against all but essential travel", color: "#EA4335", icon: "🇬🇧", detail: "Contingency evacuation of 50,000 Britons planned. FCDO: shelter guidance issued.", link: "gov.uk/foreign-travel-advice" },
+    "Australia": { level: "DO NOT TRAVEL (highest level)", color: "#EA4335", icon: "🇦🇺", detail: "\"Leave the UAE. Don't wait until it's too late.\" Embassy closed.", link: "smartraveller.gov.au" },
+    "Canada": { level: "Avoid All Travel", color: "#EA4335", icon: "🇨🇦", detail: "\"Leave while commercial options are still available.\"", link: "travel.gc.ca" },
+    "India": { level: "Advisory in effect", color: "#E8710A", icon: "🇮🇳", detail: "MEA monitoring. Air India suspended. ~3.5M Indian nationals in UAE.", link: "mea.gov.in" },
+    "Pakistan": { level: "Advisory in effect", color: "#E8710A", icon: "🇵🇰", detail: "~1.7M Pakistani nationals in UAE. PIA operating limited.", link: "mofa.gov.pk" },
+    "Philippines": { level: "Alert Level 3 — Voluntary Repatriation", color: "#E8710A", icon: "🇵🇭", detail: "~700K OFWs in UAE. OWWA emergency assistance active.", link: "dfa.gov.ph" },
+    "Germany": { level: "Travel warning issued", color: "#EA4335", icon: "🇩🇪", detail: "Lufthansa suspended. Embassy on reduced operations.", link: "auswaertiges-amt.de" },
+    "France": { level: "Formally advises against travel", color: "#EA4335", icon: "🇫🇷", detail: "Air France suspended. French Air Force supporting UAE defense.", link: "diplomatie.gouv.fr" },
+    "Bangladesh": { level: "Advisory in effect", color: "#E8710A", icon: "🇧🇩", detail: "~1M+ nationals in UAE. Biman limited operations.", link: "mofa.gov.bd" },
+    "China": { level: "Safety reminder issued", color: "#FBBC04", icon: "🇨🇳", detail: "Embassy advising caution. Limited evacuation plans.", link: "cs.mfa.gov.cn" },
+    "South Korea": { level: "Travel advisory elevated", color: "#E8710A", icon: "🇰🇷", detail: "Cheongung-II defense system deployed with UAE forces.", link: "0404.go.kr" },
+    "Japan": { level: "Level 3 — Avoid travel", color: "#EA4335", icon: "🇯🇵", detail: "Embassy on reduced staff. Evacuation coordination active.", link: "anzen.mofa.go.jp" },
   };
 
+  const originCountries = Object.keys(govAdvisories);
+  const countries = ["UAE","Saudi Arabia","Qatar","Bahrain","Kuwait","Oman","Jordan","Iraq","Lebanon","Syria","Israel","Egypt","Yemen"];
+
+  // ── RESIDENT TYPE CONTEXT ──
+  const residentContext = {
+    tourist: { label: "Tourist", icon: "✈️", riskNote: "Short-stay visitor — maximum caution advised at Level 4", recommendation: "Do not extend your stay. Depart on schedule or earlier." },
+    business: { label: "Business", icon: "💼", riskNote: "Business visitor — conclude engagements promptly", recommendation: "Wrap up within 48 hours. Keep flights flexible." },
+    expat_single: { label: "Expat (Single)", icon: "🏠", riskNote: "Resident with personal flexibility — have exit plan ready", recommendation: "Continue routine with awareness. Go-bag packed." },
+    expat_family: { label: "Expat (Family)", icon: "👨‍👩‍👧", riskNote: "Family resident — children's safety is the priority", recommendation: "Follow NCEMA shelter drills. Consider temporary relocation for dependents." },
+    national: { label: "National", icon: "🏛️", riskNote: "Citizen — your country's defense systems are active", recommendation: "Follow civil defense guidance. Support community preparedness." },
+    diplomatic: { label: "Diplomatic", icon: "🏛️", riskNote: "Follow your mission's official guidance", recommendation: "Coordinate with crisis management team." },
+  };
+  const myResident = residentContext[resStatus] || residentContext.expat_family;
+  const myAdvisory = govAdvisories[originCountry];
+
+  // ── COMPARISON DATA ──
   const comparisonData = {
-    "United States": { traffic: { home: 2160, label: "Car accident deaths" }, guns: { home: 2340, label: "Gun deaths" }, medical: { home: 12330, label: "Medical error deaths" }, opioids: { home: 3600, label: "Opioid overdose deaths" }, violent: { home: 8100, label: "All violent deaths" } },
+    "United States": { traffic: { home: 2160, label: "Car accident deaths" }, guns: { home: 2340, label: "Gun deaths" }, medical: { home: 12330, label: "Medical error deaths" }, opioids: { home: 3600, label: "Opioid overdose deaths" } },
     "United Kingdom": { traffic: { home: 90, label: "Car accident deaths" }, violent: { home: 180, label: "Violent crime deaths" }, medical: { home: 900, label: "Medical error deaths" } },
     "India": { traffic: { home: 7470, label: "Car accident deaths" }, pollution: { home: 63000, label: "Air pollution deaths" } },
     "Pakistan": { traffic: { home: 720, label: "Car accident deaths" }, terrorism: { home: 45, label: "Terrorism deaths" } },
-    "Philippines": { traffic: { home: 540, label: "Car accident deaths" }, disasters: { home: 50, label: "Natural disaster deaths" } },
+    "Philippines": { traffic: { home: 540, label: "Car accident deaths" } },
     "Australia": { traffic: { home: 72, label: "Car accident deaths" } },
     "Germany": { traffic: { home: 144, label: "Car accident deaths" } },
     "France": { traffic: { home: 162, label: "Car accident deaths" } },
     "Canada": { traffic: { home: 144, label: "Car accident deaths" } },
     "China": { traffic: { home: 12600, label: "Car accident deaths" } },
+    "South Korea": { traffic: { home: 126, label: "Car accident deaths" } },
+    "Japan": { traffic: { home: 108, label: "Car accident deaths" } },
+    "Bangladesh": { traffic: { home: 1080, label: "Car accident deaths" } },
   };
 
-  const investmentData = {
-    historical: [
-      { year: "2008–09", event: "Global Financial Crisis", decline: "50–60%", recovery: "300%+ by 2014", entryReturn: "3–4x in 5 years" },
-      { year: "2014–15", event: "Oil Price Crash", decline: "15–20%", recovery: "2 years", entryReturn: "40–60%" },
-      { year: "2019", event: "Abqaiq Attack", decline: "Minimal", recovery: "Weeks", entryReturn: "N/A — minimal dip" },
-      { year: "2020", event: "COVID Shutdown", decline: "15–25%", recovery: "ATH by 2024", entryReturn: "2–3x in 4 years" },
-      { year: "2022", event: "Houthi Attacks on UAE", decline: "Brief 5–10%", recovery: "Months", entryReturn: "20–30%" },
-      { year: "2026", event: "Current Conflict", decline: "~30% (ongoing)", recovery: "TBD", entryReturn: "Active — see scenarios" },
-    ],
-    scenarios: {
-      optimistic: { probability: "25–30%", timeline: "Ceasefire within 6 weeks", propertyTrajectory: "Stabilizes Q3 2026, recovers to pre-war by Q2 2027", return3yr: "40–80%", color: "#34A853" },
-      base: { probability: "40–45%", timeline: "Prolonged air campaign 2–4 months", propertyTrajectory: "Declines 10–15% more, bottoms H2 2026", return3yr: "20–50%", color: "#FBBC04" },
-      pessimistic: { probability: "15–20%", timeline: "Expanded conflict, ground operations", propertyTrajectory: "Declines 40–50% from peak, recovery 2028+", return3yr: "-10% to +20%", color: "#EA4335" },
-    },
+  const investScenarios = {
+    optimistic: { probability: "25–30%", timeline: "Ceasefire within 6 weeks", property: "Stabilizes Q3 2026, recovers pre-war by Q2 2027", return3yr: "40–80%", color: "#34A853" },
+    base: { probability: "40–45%", timeline: "Prolonged air campaign 2–4 months", property: "Declines 10–15% more, bottoms H2 2026", return3yr: "20–50%", color: "#FBBC04" },
+    pessimistic: { probability: "15–20%", timeline: "Expanded conflict, ground ops", property: "Declines 40–50% from peak, recovery 2028+", return3yr: "-10% to +20%", color: "#EA4335" },
   };
 
-  const suggestedQuestions = {
-    visit: ["Is it safe to fly to Dubai right now?","What's the real chance a tourist gets hurt?","Are hotels and restaurants still operating?","My parents want to visit from India. What should I tell them?"],
-    invest: ["Dubai property is down 30%. Is this the bottom?","Which sectors will recover fastest after a ceasefire?","Is the Dubai stock market a buy right now?","How does the AED peg hold up during war?"],
-    move: ["I got a job offer in Dubai. Am I insane to accept?","I'm already in Dubai. Should I leave or stay?","Are international schools still operating?","If I leave now, will I lose my residency?"],
-    understand: ["How does this compare to previous Gulf crises?","What is the air defense interception rate?","When will this war end?","Is the whole Gulf region dangerous right now?"],
+  const suggestedQ = {
+    visit: ["Is it safe to fly to Dubai right now?","What's the real chance a tourist gets hurt?","My parents want to visit from India — what do I tell them?","Are hotels and restaurants still open?"],
+    invest: ["Dubai property is down 30%. Is this the bottom?","Which sectors recover fastest after ceasefire?","How does the AED peg hold up during war?","Is this like 2008 for Dubai?"],
+    move: ["I got a job offer in Dubai. Am I insane?","I'm already here. Should I leave or stay?","If I leave, will I lose my residency?","Are international schools open?"],
+    understand: ["How does this compare to previous Gulf crises?","What is the air defense interception rate?","When will this war end?","Is the whole Gulf dangerous right now?"],
   };
 
-  // ── SYSTEM PROMPT ──
-  const buildSystemPrompt = () => `You are the Gulf Confidence Analyst — an AI advisor built into the GCC War Room platform. Your mission is to help people make informed, calibrated decisions about the Gulf region during the current conflict.
+  // ── VISIT/STAY ADVISOR DECISION TREE ──
+  const advisorSteps = [
+    { q: "What describes you best?", opts: [
+      { label: "I'm thinking of visiting", value: "visit", icon: "✈️" },
+      { label: "I'm already here — should I stay?", value: "stay", icon: "🏠" },
+      { label: "I left — when do I come back?", value: "return", icon: "🔄" },
+      { label: "I have a job offer here", value: "relocate", icon: "💼" },
+    ]},
+    { q: "Who are you traveling with / responsible for?", opts: [
+      { label: "Just me", value: "solo", icon: "👤" },
+      { label: "With partner", value: "partner", icon: "👫" },
+      { label: "Family with children", value: "family", icon: "👨‍👩‍👧" },
+      { label: "Elderly dependents", value: "elderly", icon: "👴" },
+    ]},
+    { q: "What's your flexibility?", opts: [
+      { label: "Completely flexible — can change plans", value: "flexible", icon: "🔄" },
+      { label: "Some flexibility — prefer not to change", value: "some", icon: "⚖️" },
+      { label: "Locked in — contractual or financial reasons", value: "locked", icon: "🔒" },
+    ]},
+  ];
+
+  const getAdvisorResult = () => {
+    const { situation, companions, flexibility } = advisorAnswers;
+    const isFamily = companions === "family" || companions === "elderly";
+
+    if (situation === "visit") {
+      if (isFamily) return { verdict: "POSTPONE", color: "#EA4335", icon: "🚫", detail: "At Level 4, this platform does not recommend new family travel to the UAE. Every major government has issued high-level advisories. Shelter alerts are issued multiple times daily. Schools are on distance learning.", actions: ["Postpone trip — most airlines offering fee-free rebooking","Monitor recovery signals: ceasefire, advisory downgrades, flight resumption","Use this platform to track when conditions improve","Keep existing bookings as tentative holds where possible"] };
+      if (flexibility === "flexible") return { verdict: "WAIT & MONITOR", color: "#E8710A", icon: "⏳", detail: `The data: ${missileData.total} projectiles fired, ${interceptionRate} intercepted, ${casualties.killed} killed, zero tourist casualties. Defense systems performing well. But DXB has been struck 3 times and all Western governments advise against travel.`, actions: ["Delay 2–4 weeks and monitor conditions","Set up alerts for ceasefire news and advisory changes","If conditions don't improve in 4 weeks, postpone further","Book refundable tickets only — no non-refundable commitments"] };
+      return { verdict: "HIGH RISK — PROCEED WITH EXTREME CAUTION", color: "#EA4335", icon: "⚠️", detail: "If you must travel despite advisories, understand: you're entering an active conflict zone. Travel insurance is likely void. Airport may close without warning. Shelter alerts are daily.", actions: ["Confirm travel insurance covers conflict zones (most don't)","Register with your embassy (STEP for US, FCDO for UK)","Have land route to Oman mapped as backup exit","Pack go-bag: passports, cash, medications, power bank"] };
+    }
+
+    if (situation === "stay") {
+      if (isFamily && flexibility !== "locked") return { verdict: "CONSIDER TEMPORARY RELOCATION FOR DEPENDENTS", color: "#E8710A", icon: "👨‍👩‍👧", detail: `Defense systems are performing well (${interceptionRate}). Daily life continues for most. But ${casualties.debrisInjuries} of ${casualties.injured} injuries are from debris — a risk in all populated areas. Children face daily disruption with shelter alerts and distance learning.`, actions: ["Consider sending family to a safe location temporarily","You can stay for work while dependents relocate","Have departure plan ready: flights + Oman land route","Pack go-bags for the whole family now"] };
+      return { verdict: "STAY PREPARED — HAVE EXIT PLAN READY", color: "#FBBC04", icon: "✓", detail: `Both staying and leaving are defensible. ${interceptionRate} interception rate is world-class. ${casualties.killed} killed in ${conflictDay} days across 11M population. Your home, your community, your life is here — that matters.`, actions: ["Follow NCEMA alerts — they work","Go-bag packed: passport, cash, 90-day meds","Know your route to Oman (4.5h to Muscat)","Watch for departure triggers: sustained airport closure (48h+), interception below 80%, mass casualties"] };
+    }
+
+    if (situation === "return") return { verdict: "NOT YET — 0 OF 5 RETURN CRITERIA MET", color: "#EA4335", icon: "⏳", detail: "All five return criteria must be met: (1) Verified ceasefire 30+ days, (2) Hormuz reopened, (3) Advisories at Level 2 or below, (4) Airlines on normal schedules, (5) Travel insurance reinstated. Currently: none met.", actions: ["Earliest plausible return: Late Q3 2026 (Aug–Sep)","Monitor via NCEMA app, embassy alerts, FlightRadar24","Don't return based on 'things seem quieter'","Plan for 3–4 month minimum absence"] };
+
+    if (situation === "relocate") {
+      if (isFamily) return { verdict: "DEFER START DATE IF POSSIBLE", color: "#E8710A", icon: "⏳", detail: "A job offer in Dubai during active conflict is a long-term opportunity in a short-term crisis. If you can negotiate a deferred start (3–6 months), you get the opportunity without the immediate risk.", actions: ["Negotiate deferred start date (post-ceasefire)","Ask employer about security provisions and housing location","Verify that employment visa isn't affected by delayed entry","Use this platform to monitor for Level 3 or below before relocating family"] };
+      return { verdict: "PROCEED WITH AWARENESS", color: "#FBBC04", icon: "✓", detail: `For a solo professional, Dubai during conflict is high-risk but not irrational. ${interceptionRate} interception, ${casualties.killed} deaths in 11M population. Many expats are staying. But understand: this is an active war zone with daily shelter alerts.`, actions: ["Negotiate accommodation away from known target areas","Ensure employer has emergency protocols","Keep return ticket and exit plan ready at all times","Consider starting remote if employer allows, then transition on-ground when conditions improve"] };
+    }
+
+    return { verdict: "SEEK PROFESSIONAL ADVICE", color: "#666", icon: "ℹ️", detail: "Your situation requires personalized guidance beyond what this platform can provide.", actions: ["Consult your embassy for nationality-specific guidance","Speak with a risk management professional","Contact your insurance provider about coverage"] };
+  };
+
+  // ── AI SYSTEM PROMPT ──
+  const buildSystemPrompt = () => `You are the Gulf Confidence Analyst — an AI advisor in the GCC War Room (gcc-war-room.vercel.app). You correct cognitive biases (availability heuristic, negativity bias, probability neglect) while maintaining absolute honesty.
 
 CURRENT DATA (March 18, 2026 — Day ${conflictDay}):
-- Total Projectiles at UAE: ${missileData.total} (${missileData.ballistic} BM, ${missileData.cruise} CM, ${missileData.drones} drones)
-- UAE Casualties: ${casualties.killed} killed, ${casualties.injured} injured (${casualties.debrisInjuries} from debris)
-- Tourist Casualties: 0
-- Interception Rate: ${interceptionRate}
-- Hormuz: ${straitStatus}
-- Oil: ${oilPrice}/barrel
-- DFM Real Estate: Down ~30%
-- Hotel Bookings: Down 60%+
-- Emirates: ~60% capacity, ~110 destinations
-- Defense: THAAD, Patriot PAC-3, Cheongung-II, Barak-8, Pantsir-S1, SkyKnight + US Navy Aegis, RAF, French AF
-- Sovereign Wealth: $1.3T+
-- AED/USD: Stable 3.6725
+Projectiles at UAE: ${missileData.total} (${missileData.ballistic} BM, ${missileData.cruise} CM, ${missileData.drones} drones). Casualties: ${casualties.killed} killed, ${casualties.injured} injured (${casualties.debrisInjuries} from debris). Tourist casualties: 0. Interception: ${interceptionRate}. Hormuz: ${straitStatus}. Oil: ${oilPrice}. DFM: -30%. Hotels: -60%+. Emirates: ~60% capacity. Defense: THAAD, Patriot PAC-3, Cheongung-II, Barak-8, Pantsir-S1, SkyKnight + coalition. Wealth: $1.3T+. AED: stable 3.6725.
 
-ADVISORIES: US Level 3, UK against all but essential, Australia DO NOT TRAVEL, Canada Avoid All Travel.
+USER PROFILE: Intent=${userIntent||"general"}, From=${originCountry||"unspecified"}, Target=${targetCountry}, Resident type=${resStatus} (${myResident.label})${myAdvisory ? `, Their government says: ${myAdvisory.level}` : ""}
 
-USER: Intent=${userIntent||"general"}, From=${originCountry||"unspecified"}, Looking at=${targetCountry}
+LEVEL 4 POSTURE: Lead with risk. No new tourist encouragement esp. families. Investment = "long-term positioning."
 
-LEVEL 4 POSTURE: Lead with risk. Do NOT encourage new tourist visits especially families. Investment = "long-term positioning" not "come now."
+PRISM: 1)Perception(empathy) 2)Reality(data) 3)Context(comparisons) 4)Scenarios(3 cases) 5)Decision(framework, never directive).
 
-PRISM FRAMEWORK: 1) Perception Check (empathy) 2) Reality Anchor (data) 3) Informed Context (comparisons) 4) Scenario Map (3 cases) 5) My Decision (framework, never directive).
+PERSONALIZATION: Adjust tone for ${myResident.label}. ${resStatus === "national" ? "Acknowledge this is their home. Frame defense positively but honestly." : resStatus === "tourist" ? "Be direct about advisories. Don't encourage visits at L4." : "Balance: this is their life, not just a trip. Both staying and leaving are defensible."}
 
-HARD RULES — NEVER: "completely safe", "no risk", "media is lying", "you should go", "only N died". ALWAYS: specific numbers, compare to origin risks, acknowledge reality, end with action step, mention defense as factor not guarantee. Families at L4: "This platform does not recommend new family travel with young children." Financial: always disclaim.
+NEVER: "completely safe", "no risk", "media lying", "you should go", "only N died". ALWAYS: specific numbers, origin-country comparison when relevant, acknowledge reality first, end with action step. Families at L4: "This platform does not recommend new family travel with young children." Finance: always disclaim.
 
-Under 400 words unless complex. Respond in user's language.`;
+Under 400 words. Respond in user's language.`;
 
-  // ── CHAT HANDLERS ──
-  const handleSendMessage = async () => {
-    if (!chatInput.trim() || chatLoading) return;
-    const userMsg = chatInput.trim();
+  // ── CHAT ──
+  const sendChat = async (text) => {
+    if (!text?.trim() || chatLoading) return;
+    const msg = text.trim();
     setChatInput("");
-    const updated = [...chatMessages, { role: "user", content: userMsg }];
+    const updated = [...chatMessages, { role: "user", content: msg }];
     setChatMessages(updated);
     setChatLoading(true);
     try {
-      const res = await fetch("/api/chat", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 2048, system: buildSystemPrompt(), messages: updated.map(m => ({ role: m.role, content: m.content })) }),
-      });
-      if (!res.ok) throw new Error(`API ${res.status}`);
+      const res = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 2048, system: buildSystemPrompt(), messages: updated.map(m => ({ role: m.role, content: m.content })) }) });
+      if (!res.ok) throw new Error();
       const data = await res.json();
-      const text = data.content?.map(b => b.text || "").join("\n") || "Unable to generate response.";
-      setChatMessages(p => [...p, { role: "assistant", content: text }]);
-    } catch {
-      setChatMessages(p => [...p, { role: "assistant", content: generateOffline(userMsg) }]);
-    }
+      setChatMessages(p => [...p, { role: "assistant", content: data.content?.map(b => b.text||"").join("\n") || "Unable to respond." }]);
+    } catch { setChatMessages(p => [...p, { role: "assistant", content: offlineResponse(msg) }]); }
     setChatLoading(false);
   };
 
-  const handleQuestionClick = (q) => {
-    const updated = [...chatMessages, { role: "user", content: q }];
-    setChatMessages(updated);
-    setChatLoading(true);
-    fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 2048, system: buildSystemPrompt(), messages: updated.map(m => ({ role: m.role, content: m.content })) }) })
-      .then(r => r.ok ? r.json() : Promise.reject())
-      .then(data => { setChatMessages(p => [...p, { role: "assistant", content: data.content?.map(b => b.text||"").join("\n")||"No response." }]); setChatLoading(false); })
-      .catch(() => { setChatMessages(p => [...p, { role: "assistant", content: generateOffline(q) }]); setChatLoading(false); });
-  };
-
-  const generateOffline = (q) => {
+  const offlineResponse = (q) => {
     const ql = q.toLowerCase();
-    if (ql.includes("safe") || ql.includes("fly") || ql.includes("visit") || ql.includes("travel"))
-      return `Your concern makes complete sense — this is an active conflict.\n\nSince Feb 28, Iran has fired ${missileData.total} projectiles at the UAE. ${interceptionRate} intercepted. ${casualties.killed} killed, ${casualties.injured} injured. Zero tourist casualties. DXB struck 3 times.\n\nUS: Level 3. UK: against all but essential. Australia: DO NOT TRAVEL. If you have flexibility, monitor for 2–4 weeks.\n\n⚠️ Offline mode — connect for live AI.`;
-    if (ql.includes("kid") || ql.includes("child") || ql.includes("family"))
-      return `At Level 4, this platform does not recommend new family travel with young children to the UAE. Shelter alerts multiple times daily. Schools on distance learning.\n\nSuggestion: postpone. Airlines offering fee-free rebooking. Monitor: ceasefire, advisory downgrades, flight resumption.\n\n⚠️ Offline mode.`;
-    if (ql.includes("invest") || ql.includes("property") || ql.includes("buy") || ql.includes("stock"))
-      return `A 30% decline backed by $1.3T sovereign wealth deserves analysis.\n\nHistorical: 2008 → 50–60% decline → 300%+ by 2014. COVID → bottomed 6–9 months → ATH. No exact parallel.\n\nScenarios: Optimistic (25–30%): ceasefire 6 weeks. Base (40–45%): 2–4 months. Pessimistic (15–20%): expanded.\n\nEducational analysis, not financial advice.\n\n⚠️ Offline mode.`;
-    if (ql.includes("leave") || ql.includes("stay") || ql.includes("expat"))
-      return `Both staying and leaving are defensible.\n\n${missileData.total} projectiles, ${interceptionRate} intercepted. ${casualties.killed} killed in 18 days. Defense performing well but faces depletion.\n\nIf staying: have departure plan. Watch: airport closures 48+ hrs, interception <80%, mass casualties.\n\n⚠️ Offline mode.`;
-    return `Day ${conflictDay}. ${missileData.total} projectiles, ${interceptionRate} intercepted. ${casualties.killed} killed, ${casualties.injured} injured. Hormuz ${straitStatus}. Oil ${oilPrice}. No ceasefire.\n\n⚠️ Offline mode.`;
+    if (ql.match(/safe|fly|visit|travel/)) return `Your concern is valid — this is an active conflict.\n\n${missileData.total} projectiles at UAE over ${conflictDay} days. ${interceptionRate} intercepted. ${casualties.killed} killed, ${casualties.injured} injured. Zero tourist casualties. DXB struck 3 times.${myAdvisory ? `\n\nYour government (${originCountry}): ${myAdvisory.level}` : "\n\nAll major Western governments: high-level advisories."}\n\nAs a ${myResident.label}: ${myResident.recommendation}\n\n⚠️ Offline mode`;
+    if (ql.match(/kid|child|family/)) return `At Level 4, this platform does not recommend new family travel with young children.\n\nShelter alerts multiple times daily. Schools on distance learning. ${casualties.debrisInjuries} of ${casualties.injured} injuries from falling debris.\n\nSuggestion: postpone. Airlines offering fee-free rebooking.\n\n⚠️ Offline mode`;
+    if (ql.match(/invest|property|buy|stock/)) return `A 30% decline backed by $1.3T sovereign wealth deserves analysis.\n\nHistorical: 2008 → -50–60% → 300%+ by 2014. COVID → bottomed 6–9mo → ATH.\n\nScenarios: Optimistic (25–30%): ceasefire 6wk. Base (40–45%): 2–4mo. Pessimistic (15–20%): expanded.\n\nEducational, not financial advice.\n\n⚠️ Offline mode`;
+    if (ql.match(/leave|stay|expat/)) return `Both staying and leaving are defensible.\n\n${missileData.total} projectiles, ${interceptionRate} intercepted. ${casualties.killed} killed in ${conflictDay} days.\n\nAs a ${myResident.label}: ${myResident.recommendation}\n\nDeparture triggers: sustained airport closure 48h+, interception <80%, mass casualties.\n\n⚠️ Offline mode`;
+    return `Day ${conflictDay}. ${missileData.total} projectiles, ${interceptionRate} intercepted. ${casualties.killed} killed. Hormuz ${straitStatus}. Oil ${oilPrice}. No ceasefire.\n\nYour profile: ${myResident.label}. ${myResident.recommendation}\n\n⚠️ Offline mode`;
   };
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [chatMessages]);
 
-  // ── STYLES (inline, matching War Room pattern) ──
-  const SIG = {
-    card: { background: "#FAFBFC", borderRadius: "10px", border: "1px solid #E8EAED", padding: "20px", marginBottom: "16px" },
-    disclosure: { background: "#FFF8E1", border: "1px solid #FFD54F", borderRadius: "8px", padding: "14px 16px", fontSize: "13px", lineHeight: "1.5", color: "#5D4037", marginBottom: "16px" },
-    disclosureRed: { background: "#FFF3E0", border: "1px solid #FFB74D", borderRadius: "8px", padding: "14px 16px", fontSize: "13px", lineHeight: "1.5", color: "#BF360C", marginBottom: "16px" },
-  };
+  const scenario = investScenarios[investmentScenario];
+  const selComp = comparisonData[originCountry] || comparisonData["United States"];
+  const compEntries = Object.entries(selComp);
+  const maxComp = Math.max(...compEntries.map(([,v]) => v.home));
 
-  // ── PERSONALIZED SUMMARY ──
-  const summaries = {
-    visit: `At Level 4 — Elevated Risk, this platform does not encourage new tourist visits. ${missileData.total} projectiles over ${conflictDay} days, ${interceptionRate} intercepted. ${casualties.killed} killed. Zero tourist casualties. DXB struck 3 times. All major Western governments issued high-level advisories.`,
-    invest: `Day ${conflictDay} presents a complex investment landscape. DFM real estate down ~30%. Hotel bookings collapsed 60%+. However, $1.3T+ sovereign wealth, stable AED peg, and historical recovery patterns create potential opportunity.`,
-    move: `For residents, defense systems performing well (${interceptionRate}), daily life continues — but with shelter alerts, distance learning, and intermittent airport closures. Both staying and leaving are defensible.`,
-    understand: `Since Feb 28 (Day ${conflictDay}), Iran fired ${missileData.total} projectiles at UAE. ${interceptionRate} intercepted. ${casualties.killed} killed, ${casualties.injured} injured. Hormuz ${straitStatus}. Oil ${oilPrice}. No ceasefire.`,
-  };
-
-  const scenario = investmentData.scenarios[investmentScenario];
-  const selectedComparison = comparisonData[originCountry] || comparisonData["United States"];
-  const comparisonEntries = Object.entries(selectedComparison);
-  const maxCompVal = Math.max(...comparisonEntries.map(([,v]) => v.home));
-
-  // ── RENDER ──
   return (
-    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", color: "#1a1a1a" }}>
+    <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", color: "#1a1a1a" }}>
+      <style>{SIG_STYLES}</style>
 
-      {/* CONFIDENCE BANNER */}
-      <div style={{ background: `linear-gradient(135deg, ${currentLevel.bg}, #FFF8F0)`, border: `2px solid ${currentLevel.color}`, borderRadius: "12px", padding: "16px 20px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <span style={{ fontSize: "24px" }}>{currentLevel.icon}</span>
+      {/* ═══ CONFIDENCE BANNER ═══ */}
+      <div className="sig-pulse sig-fade" style={{ background: `linear-gradient(135deg, ${cl.bg}, #FFF8F0)`, border: `2px solid ${cl.color}`, borderRadius: "16px", padding: "20px 24px", marginBottom: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+          <span style={{ fontSize: "28px" }}>{cl.icon}</span>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "2px" }}>
-              <span style={{ background: currentLevel.color, color: "#fff", fontWeight: 700, fontSize: "12px", padding: "4px 12px", borderRadius: "20px", letterSpacing: "0.5px" }}>LEVEL {CONFIDENCE_LEVEL}</span>
-              <span style={{ fontWeight: 700, fontSize: "15px", color: currentLevel.color }}>{currentLevel.name}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
+              <span style={{ background: cl.color, color: "#fff", fontWeight: 700, fontSize: "11px", padding: "4px 14px", borderRadius: "20px", letterSpacing: "1px" }}>LEVEL {LEVEL}</span>
+              <span style={{ fontWeight: 800, fontSize: "16px", color: cl.color }}>{cl.name}</span>
             </div>
-            <div style={{ fontSize: "14px", color: "#333" }}>{currentLevel.desc}</div>
+            <div style={{ fontSize: "14px", color: "#444" }}>{cl.desc}</div>
           </div>
         </div>
-        <div style={{ fontSize: "12px", color: "#666", textAlign: "right" }}>
-          <div>Day {conflictDay} of Conflict</div>
-          <div>Updated: March 18, 2026</div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontSize: "13px", fontWeight: 600, color: "#555" }}>Day {conflictDay}</div>
+          <div style={{ fontSize: "12px", color: "#888" }}>{myResident.icon} {myResident.label}</div>
         </div>
       </div>
 
-      {/* INTENT SELECTOR */}
-      <div style={{ fontSize: "18px", fontWeight: 700, color: "#1B365D", marginBottom: "16px" }}>🎯 What brings you here?</div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginBottom: "20px" }}>
+      {/* ═══ YOUR ADVISORY (if origin selected) ═══ */}
+      {myAdvisory && (
+        <div className="sig-fade sig-fade-1" style={{ background: "#FFF", borderRadius: "12px", border: `2px solid ${myAdvisory.color}`, padding: "16px 20px", marginBottom: "20px", display: "flex", alignItems: "flex-start", gap: "14px" }}>
+          <span style={{ fontSize: "28px", flexShrink: 0 }}>{myAdvisory.icon}</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: "#888", letterSpacing: "0.5px", marginBottom: "2px" }}>YOUR GOVERNMENT'S ADVISORY</div>
+            <div style={{ fontSize: "15px", fontWeight: 700, color: myAdvisory.color }}>{myAdvisory.level}</div>
+            <div style={{ fontSize: "13px", color: "#555", marginTop: "4px" }}>{myAdvisory.detail}</div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ INTENT SELECTOR ═══ */}
+      <div style={{ fontSize: "20px", fontWeight: 800, color: "#1B365D", marginBottom: "6px" }}>🎯 What brings you here?</div>
+      <div style={{ fontSize: "13px", color: "#888", marginBottom: "16px" }}>Select your intent for personalized analysis as a {myResident.label.toLowerCase()}</div>
+      <div className="sig-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginBottom: "20px" }}>
         {[
-          { id: "visit", icon: "✈️", title: "I Want to Visit", desc: "Travel & tourism decisions" },
-          { id: "invest", icon: "📈", title: "I Want to Invest", desc: "Property, stocks & business" },
-          { id: "move", icon: "🏠", title: "Move / Stay", desc: "Relocation & expat decisions" },
-          { id: "understand", icon: "🔍", title: "Understand Risk", desc: "Data-driven analysis" },
+          { id: "visit", icon: "✈️", title: "Visit", desc: "Should I travel there?" },
+          { id: "invest", icon: "📈", title: "Invest", desc: "Is the dip an opportunity?" },
+          { id: "move", icon: "🏠", title: "Stay / Move", desc: "Stay, leave, or relocate?" },
+          { id: "understand", icon: "🔍", title: "Understand", desc: "Give me the real picture" },
         ].map(i => (
-          <div key={i.id} onClick={() => { setUserIntent(i.id); setActiveMode("risk"); }}
-            style={{ background: userIntent === i.id ? "#EBF2FF" : "#FAFBFC", borderRadius: "12px", border: userIntent === i.id ? "2px solid #1A73E8" : "2px solid #E8EAED", padding: "20px", cursor: "pointer", textAlign: "center", minHeight: "110px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", transition: "all 0.2s" }}>
-            <span style={{ fontSize: "32px" }}>{i.icon}</span>
-            <div style={{ fontWeight: 700, fontSize: "14px", color: "#1B365D" }}>{i.title}</div>
-            <div style={{ fontSize: "12px", color: "#666" }}>{i.desc}</div>
+          <div key={i.id} className={`sig-intent ${userIntent === i.id ? "active" : ""}`} onClick={() => { setUserIntent(i.id); if (!activeMode) setActiveMode("risk"); }}>
+            <span style={{ fontSize: "36px" }}>{i.icon}</span>
+            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D" }}>{i.title}</div>
+            <div style={{ fontSize: "12px", color: "#888" }}>{i.desc}</div>
           </div>
         ))}
       </div>
 
-      {/* COUNTRY SELECTORS */}
-      <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap", marginBottom: "16px" }}>
-        <label style={{ fontSize: "13px", fontWeight: 600, color: "#555" }}>I'm from:</label>
-        <select style={{ padding: "10px 14px", borderRadius: "8px", border: "1px solid #DDD", fontSize: "14px", background: "#fff", maxWidth: "260px" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}>
-          <option value="">Select country...</option>
+      {/* ═══ COUNTRY SELECTORS ═══ */}
+      <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap", marginBottom: "20px" }}>
+        <label style={{ fontSize: "13px", fontWeight: 700, color: "#555" }}>I'm from:</label>
+        <select className="sig-input" style={{ maxWidth: "240px" }} value={originCountry} onChange={e => setOriginCountry(e.target.value)}>
+          <option value="">Select nationality...</option>
           {originCountries.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
-        <label style={{ fontSize: "13px", fontWeight: 600, color: "#555", marginLeft: "8px" }}>Looking at:</label>
-        <select style={{ padding: "10px 14px", borderRadius: "8px", border: "1px solid #DDD", fontSize: "14px", background: "#fff", maxWidth: "260px" }} value={targetCountry} onChange={e => setTargetCountry(e.target.value)}>
+        <label style={{ fontSize: "13px", fontWeight: 700, color: "#555" }}>Looking at:</label>
+        <select className="sig-input" style={{ maxWidth: "200px" }} value={targetCountry} onChange={e => setTargetCountry(e.target.value)}>
           {countries.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
 
-      {/* PERSONALIZED SUMMARY */}
+      {/* ═══ PERSONALIZED SUMMARY ═══ */}
       {userIntent && (
-        <div style={{ background: "#F0F4FF", borderRadius: "10px", border: "1px solid #C2D6F7", padding: "16px 20px", marginBottom: "20px", fontSize: "14px", lineHeight: "1.7" }}>
-          {summaries[userIntent]}
+        <div className="sig-fade" style={{ background: "linear-gradient(135deg, #F0F4FF, #F8FAFF)", borderRadius: "12px", border: "1px solid #C2D6F7", padding: "18px 22px", marginBottom: "24px" }}>
+          <div style={{ fontSize: "11px", fontWeight: 700, color: "#1A73E8", letterSpacing: "0.5px", marginBottom: "6px" }}>{myResident.icon} PERSONALIZED FOR: {myResident.label.toUpperCase()}</div>
+          <div style={{ fontSize: "14px", lineHeight: "1.7", color: "#333" }}>
+            {userIntent === "visit" && `At Level 4, this platform does not encourage new tourist visits. ${missileData.total} projectiles over ${conflictDay} days, ${interceptionRate} intercepted. ${casualties.killed} killed. Zero tourist casualties. DXB struck 3 times. ${myAdvisory ? `Your government (${originCountry}): ${myAdvisory.level}.` : "All major governments issued high-level advisories."}`}
+            {userIntent === "invest" && `Day ${conflictDay} presents complex investment landscape. DFM -30%. Hotels -60%+. But: $1.3T+ sovereign wealth, stable AED, historical recovery patterns. As a ${myResident.label.toLowerCase()}, you have ${resStatus === "national" ? "deep knowledge of local fundamentals" : "unique perspective on risk vs. opportunity"}.`}
+            {userIntent === "move" && `For ${myResident.label.toLowerCase()}s: defense at ${interceptionRate}, daily life continues — but with shelter alerts, distance learning, intermittent airport closures. ${myResident.recommendation}`}
+            {userIntent === "understand" && `Since Feb 28 (Day ${conflictDay}): ${missileData.total} projectiles at UAE. ${interceptionRate} intercepted. ${casualties.killed} killed, ${casualties.injured} injured. Hormuz ${straitStatus}. Oil ${oilPrice}. No ceasefire or negotiations.`}
+          </div>
         </div>
       )}
 
-      {/* MODE NAV */}
+      {/* ═══ MODE NAVIGATION ═══ */}
       {userIntent && (
-        <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap", paddingBottom: "16px", borderBottom: "1px solid #E8EAED" }}>
-          {[{ id: "risk", label: "📊 Risk Clarity" },{ id: "perception", label: "🧠 Perception vs Reality" },{ id: "investment", label: "📈 Investment Lens" },{ id: "analyst", label: "💬 AI Analyst" }].map(m => (
-            <button key={m.id} onClick={() => setActiveMode(m.id)}
-              style={{ padding: "8px 18px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", border: "none", background: activeMode === m.id ? "#1A73E8" : "#F1F3F4", color: activeMode === m.id ? "#fff" : "#333", transition: "all 0.2s", whiteSpace: "nowrap" }}>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "24px", flexWrap: "wrap", paddingBottom: "16px", borderBottom: "2px solid #F1F3F4" }}>
+          {[
+            { id: "risk", label: "📊 Risk Clarity" },
+            { id: "advisor", label: "🧭 Should I Visit/Stay?" },
+            { id: "perception", label: "🧠 Perception vs Reality" },
+            { id: "investment", label: "📈 Investment Lens" },
+            { id: "analyst", label: "💬 AI Analyst" },
+          ].map(m => (
+            <button key={m.id} className="sig-pill" onClick={() => setActiveMode(m.id)}
+              style={{ background: activeMode === m.id ? "#1A73E8" : "#F1F3F4", color: activeMode === m.id ? "#fff" : "#444" }}>
               {m.label}
             </button>
           ))}
         </div>
       )}
 
-      {/* ═══ MODE 1: RISK CLARITY ═══ */}
-      {activeMode === "risk" && (
-        <div>
-          <div style={{ fontSize: "18px", fontWeight: 700, color: "#1B365D", marginBottom: "16px" }}>📊 Risk Clarity Engine</div>
+      {/* ═══ MODE: RISK CLARITY ═══ */}
+      {activeMode === "risk" && (<div>
+        <div className="sig-fade" style={{ fontSize: "20px", fontWeight: 800, color: "#1B365D", marginBottom: "20px" }}>📊 Risk Clarity Engine</div>
+        <div className="sig-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginBottom: "20px" }}>
+          {[
+            { v: missileData.total.toLocaleString(), l: "Total Projectiles", s: `${missileData.ballistic} BM · ${missileData.cruise} CM · ${missileData.drones} Drones`, c: "#E8710A" },
+            { v: interceptionRate, l: "Interception Rate", s: "THAAD + Patriot + Coalition", c: "#34A853" },
+            { v: String(casualties.killed), l: "UAE Killed", s: `${casualties.injured} injured (${casualties.debrisInjuries} debris)`, c: "#EA4335" },
+            { v: "0", l: "Tourist Casualties", s: "Zero tourists killed or injured", c: "#34A853" },
+          ].map((s, i) => (
+            <div key={i} className={`sig-stat sig-fade sig-fade-${i+1}`}>
+              <div style={{ fontSize: "32px", fontWeight: 800, color: s.c }}>{s.v}</div>
+              <div style={{ fontSize: "12px", color: "#555", marginTop: "6px", fontWeight: 700 }}>{s.l}</div>
+              <div style={{ fontSize: "11px", color: "#999", marginTop: "2px" }}>{s.s}</div>
+            </div>
+          ))}
+        </div>
 
-          {/* Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginBottom: "20px" }}>
-            {[
-              { value: missileData.total.toLocaleString(), label: "Total Projectiles", sub: `${missileData.ballistic} BM | ${missileData.cruise} CM | ${missileData.drones} Drones` },
-              { value: interceptionRate, label: "Interception Rate", sub: "THAAD + Patriot + Coalition" },
-              { value: String(casualties.killed), label: "UAE Killed", sub: `${casualties.injured} injured (${casualties.debrisInjuries} debris)` },
-              { value: "0", label: "Tourist Casualties", sub: "Zero tourists killed or injured" },
-            ].map((s, i) => (
-              <div key={i} style={{ textAlign: "center", padding: "16px", background: "#fff", borderRadius: "8px", border: "1px solid #E8EAED" }}>
-                <div style={{ fontSize: "28px", fontWeight: 700, color: "#1B365D" }}>{s.value}</div>
-                <div style={{ fontSize: "12px", color: "#666", marginTop: "4px", fontWeight: 600 }}>{s.label}</div>
-                <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>{s.sub}</div>
+        {/* Defense bar */}
+        <div className="sig-card sig-fade sig-fade-2">
+          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🛡️ Air Defense Performance</div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+            <span style={{ fontSize: "13px", fontWeight: 600 }}>Overall Interception Rate</span>
+            <span style={{ fontSize: "14px", fontWeight: 800, color: "#34A853" }}>{interceptionRate}</span>
+          </div>
+          <div style={{ height: "14px", background: "#F1F3F4", borderRadius: "7px", overflow: "hidden", marginBottom: "14px" }}>
+            <div style={{ width: "92%", height: "100%", background: "linear-gradient(90deg, #34A853, #2E7D32)", borderRadius: "7px", transition: "width 1s ease" }} />
+          </div>
+          <div style={{ fontSize: "12px", color: "#BF360C", fontWeight: 600, lineHeight: "1.5" }}>⚠️ Performance is a track record, not a guarantee. Interceptor depletion is a growing concern as the conflict continues.</div>
+        </div>
+
+        {/* Economic + Advisories grid */}
+        <div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px", marginBottom: "20px" }}>
+          <div className="sig-card sig-fade sig-fade-3">
+            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🛢️ Economic Impact</div>
+            {[["Strait of Hormuz",straitStatus,"#EA4335"],["Oil Price",`${oilPrice}/bbl (pre: $67)`,"#E8710A"],["DFM Real Estate","Down ~30%","#EA4335"],["Hotel Bookings","Down 60%+","#EA4335"],["Emirates Capacity","~60%, ~110 dest.","#E8710A"],["AED/USD Peg","Stable 3.6725","#34A853"],["Sovereign Wealth","$1.3T+","#34A853"]].map(([l,v,c],i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: i < 6 ? "1px solid #F1F3F4" : "none", fontSize: "13px" }}>
+                <span style={{ color: "#666" }}>{l}</span><span style={{ fontWeight: 700, color: c }}>{v}</span>
               </div>
             ))}
           </div>
-
-          {/* Defense */}
-          <div style={SIG.card}>
-            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>🛡️ Air Defense Performance</div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-              <span style={{ fontSize: "13px", fontWeight: 600 }}>Overall Interception Rate</span>
-              <span style={{ fontSize: "13px", fontWeight: 700, color: "#34A853" }}>{interceptionRate}</span>
-            </div>
-            <div style={{ height: "12px", background: "#F1F3F4", borderRadius: "6px", overflow: "hidden", marginBottom: "12px" }}>
-              <div style={{ width: "92%", height: "100%", background: "linear-gradient(90deg, #34A853, #2E7D32)", borderRadius: "6px" }} />
-            </div>
-            <div style={{ fontSize: "12px", color: "#BF360C", fontWeight: 600 }}>⚠️ Interception performance is a track record, not a guarantee. Interceptor depletion is a growing concern.</div>
-          </div>
-
-          {/* Economic + Advisories */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px", marginBottom: "20px" }}>
-            <div style={SIG.card}>
-              <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>🛢️ Economic Impact</div>
-              {[["Strait of Hormuz", straitStatus, "#EA4335"],["Oil Price", `${oilPrice}/barrel (pre: $67)`, "#E8710A"],["DFM Real Estate", "Down ~30%", "#EA4335"],["Hotel Bookings", "Down 60%+", "#EA4335"],["Emirates", "~60% capacity", "#E8710A"],["AED/USD Peg", "Stable 3.6725", "#34A853"],["Sovereign Wealth", "$1.3T+", "#34A853"]].map(([label, val, color], i) => (
-                <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid #F1F3F4", fontSize: "13px" }}>
-                  <span style={{ color: "#555" }}>{label}</span>
-                  <span style={{ fontWeight: 600, color }}>{val}</span>
-                </div>
-              ))}
-            </div>
-            <div style={SIG.card}>
-              <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>🚨 Government Travel Advisories</div>
-              <div style={{ fontSize: "12px", color: "#BF360C", marginBottom: "8px", fontWeight: 600 }}>These advisories should factor heavily into your decision.</div>
-              {Object.values(advisories).map((a, i) => (
-                <div key={i} style={{ padding: "10px 14px", borderRadius: "8px", borderLeft: `4px solid ${a.color}`, marginBottom: "8px", background: "#FAFBFC" }}>
-                  <div style={{ fontWeight: 700, fontSize: "13px" }}>{a.country}</div>
-                  <div style={{ fontSize: "13px", color: a.color, fontWeight: 600, margin: "2px 0" }}>{a.level}</div>
-                  <div style={{ fontSize: "12px", color: "#666" }}>{a.detail}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Timeline */}
-          <div style={SIG.card}>
-            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>📅 Conflict Timeline</div>
-            <div style={{ paddingLeft: "24px", position: "relative" }}>
-              {[{ d: "Feb 28", t: "Operation Epic Fury begins. Khamenei killed." },{ d: "Mar 1", t: "Iran retaliates — all 6 GCC states struck. Palm Jumeirah hit." },{ d: "Mar 2", t: "Strait of Hormuz declared closed." },{ d: "Mar 7", t: "DXB Airport struck by drones." },{ d: "Mar 14", t: "Iran names Jebel Ali as \"legitimate target.\"" },{ d: "Mar 18", t: "Day 18. Active conflict. No ceasefire." }].map((e, i, arr) => (
-                <div key={i} style={{ marginBottom: "12px", position: "relative" }}>
-                  <div style={{ position: "absolute", left: "-24px", top: "2px", width: "10px", height: "10px", borderRadius: "50%", background: i === arr.length - 1 ? "#EA4335" : "#1A73E8" }} />
-                  {i < arr.length - 1 && <div style={{ position: "absolute", left: "-20px", top: "14px", width: "2px", height: "100%", background: "#E8EAED" }} />}
-                  <span style={{ fontSize: "12px", fontWeight: 700, color: "#1B365D" }}>{e.d}</span>
-                  <span style={{ fontSize: "13px", color: "#333", marginLeft: "8px" }}>{e.t}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {userIntent === "visit" && <div style={SIG.disclosureRed}><strong>⚠️ Level 4 Notice: </strong>This platform does not encourage new tourist visits at Elevated Risk, especially for families.</div>}
-        </div>
-      )}
-
-      {/* ═══ MODE 2: PERCEPTION VS REALITY ═══ */}
-      {activeMode === "perception" && (
-        <div>
-          <div style={{ fontSize: "18px", fontWeight: 700, color: "#1B365D", marginBottom: "16px" }}>🧠 Perception vs. Reality</div>
-          <div style={SIG.disclosure}>
-            <strong>📋 What This Does and Doesn't Do</strong>
-            <p style={{ margin: "8px 0 0" }}>Every death is a tragedy. These comparisons exist because the brain overestimates unfamiliar, dramatic risks (missiles) and underestimates familiar ones (traffic). Purpose: calibrate magnitude, not argue war is safe.</p>
-          </div>
-          <div style={{ marginBottom: "16px", display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{ fontSize: "14px", fontWeight: 600 }}>Compare with:</span>
-            <select style={{ padding: "10px 14px", borderRadius: "8px", border: "1px solid #DDD", fontSize: "14px", background: "#fff" }} value={originCountry || "United States"} onChange={e => setOriginCountry(e.target.value)}>
-              {Object.keys(comparisonData).map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
-          </div>
-          <div style={SIG.card}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px", fontSize: "13px", fontWeight: 700 }}>
-              <span style={{ color: "#666" }}>{originCountry || "United States"} — {conflictDay}-day equivalent</span>
-              <span style={{ color: "#E8710A" }}>UAE Conflict — {conflictDay} days</span>
-            </div>
-            {comparisonEntries.map(([key, data]) => (
-              <div key={key} style={{ marginBottom: "16px" }}>
-                <div style={{ fontSize: "13px", fontWeight: 600, color: "#333", marginBottom: "6px" }}>{data.label}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                  <div style={{ width: "50px", fontSize: "11px", color: "#888", textAlign: "right" }}>{(originCountry || "US").substring(0, 5)}</div>
-                  <div style={{ flex: 1, height: "18px", background: "#F1F3F4", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${Math.max((data.home / maxCompVal) * 100, 5)}%`, height: "100%", background: "#9E9E9E", borderRadius: "4px", transition: "width 0.5s" }} />
-                  </div>
-                  <span style={{ fontSize: "13px", fontWeight: 700, width: "65px", color: "#333" }}>{data.home.toLocaleString()}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <div style={{ width: "50px", fontSize: "11px", color: "#888", textAlign: "right" }}>UAE</div>
-                  <div style={{ flex: 1, height: "18px", background: "#F1F3F4", borderRadius: "4px", overflow: "hidden" }}>
-                    <div style={{ width: `${Math.max((casualties.killed / maxCompVal) * 100, 2)}%`, height: "100%", background: "#E8710A", borderRadius: "4px", minWidth: "4px" }} />
-                  </div>
-                  <span style={{ fontSize: "13px", fontWeight: 700, width: "65px", color: "#E8710A" }}>{casualties.killed} deaths</span>
-                </div>
+          <div className="sig-card sig-fade sig-fade-4">
+            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🚨 Government Advisories</div>
+            <div style={{ fontSize: "12px", color: "#BF360C", marginBottom: "10px", fontWeight: 700 }}>These should factor heavily into your decision.</div>
+            {Object.entries(govAdvisories).slice(0,4).map(([country, a], i) => (
+              <div key={i} style={{ padding: "10px 14px", borderRadius: "10px", borderLeft: `4px solid ${a.color}`, marginBottom: "8px", background: "#FAFBFC" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}><span>{a.icon}</span><span style={{ fontWeight: 700, fontSize: "13px" }}>{country}</span></div>
+                <div style={{ fontSize: "13px", color: a.color, fontWeight: 700, margin: "3px 0" }}>{a.level}</div>
+                <div style={{ fontSize: "11px", color: "#888" }}>{a.detail}</div>
               </div>
             ))}
           </div>
-          <div style={SIG.disclosureRed}><strong>⚠️ Limits: </strong>Car accidents are involuntary, distributed risks. Entering a conflict zone is voluntary, concentrated. Defense may degrade. Use as one input, not permission.</div>
-          <button onClick={() => setShowMethodology(!showMethodology)} style={{ background: "transparent", color: "#1A73E8", border: "2px solid #1A73E8", borderRadius: "8px", padding: "8px 16px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>{showMethodology ? "Hide Methodology ▲" : "Show Methodology ▼"}</button>
-          {showMethodology && <div style={{ ...SIG.card, marginTop: "12px", fontSize: "13px", lineHeight: "1.6", color: "#555" }}><strong>Sources:</strong> WHO Global Health Observatory, US NHTSA, CDC, national statistics agencies. UAE data: NCEMA, ACLED. Home-country stats annualized ÷ 365 × {conflictDay}. Behavioral basis: availability heuristic (Tversky & Kahneman, 1973), probability neglect (Sunstein, 2002).</div>}
         </div>
-      )}
 
-      {/* ═══ MODE 3: INVESTMENT LENS ═══ */}
-      {activeMode === "investment" && (
-        <div>
-          <div style={{ fontSize: "18px", fontWeight: 700, color: "#1B365D", marginBottom: "16px" }}>📈 Investment Lens</div>
-          <div style={SIG.disclosure}><strong>⚠️ </strong>Educational analysis, not financial advice. Past performance ≠ future results. Consult a licensed advisor.</div>
-
-          {/* Historical Table */}
-          <div style={{ ...SIG.card, overflowX: "auto" }}>
-            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>📊 Historical Crisis & Recovery</div>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
-              <thead><tr style={{ borderBottom: "2px solid #1B365D" }}>
-                {["Year","Event","Decline","Recovery","Entry Return"].map(h => <th key={h} style={{ padding: "8px 10px", textAlign: "left", color: "#1B365D", fontWeight: 700 }}>{h}</th>)}
-              </tr></thead>
-              <tbody>{investmentData.historical.map((r, i) => (
-                <tr key={i} style={{ borderBottom: "1px solid #E8EAED", background: i === investmentData.historical.length - 1 ? "#FFF3E0" : "transparent" }}>
-                  <td style={{ padding: "8px 10px", fontWeight: 600 }}>{r.year}</td>
-                  <td style={{ padding: "8px 10px" }}>{r.event}</td>
-                  <td style={{ padding: "8px 10px", color: "#EA4335", fontWeight: 600 }}>{r.decline}</td>
-                  <td style={{ padding: "8px 10px", color: "#34A853", fontWeight: 600 }}>{r.recovery}</td>
-                  <td style={{ padding: "8px 10px", fontWeight: 600 }}>{r.entryReturn}</td>
-                </tr>
-              ))}</tbody>
-            </table>
+        {/* Timeline */}
+        <div className="sig-card">
+          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>📅 Conflict Timeline</div>
+          <div style={{ paddingLeft: "28px", position: "relative" }}>
+            {[{d:"Feb 28",t:"Operation Epic Fury. Khamenei killed.",c:true},{d:"Mar 1",t:"Iran retaliates — all 6 GCC struck. Palm Jumeirah hit.",c:true},{d:"Mar 2",t:"Strait of Hormuz declared closed.",c:true},{d:"Mar 7",t:"DXB Airport struck by drones (1st of 3).",c:true},{d:"Mar 14",t:"Iran names Jebel Ali as \"legitimate target.\"",c:true},{d:"Mar 16",t:"DXB fuel tank fire. Fujairah struck 4th time.",c:true},{d:"Mar 18",t:"Day 18. Active conflict. No ceasefire. No negotiations.",c:false}].map((e,i,a) => (
+              <div key={i} style={{ marginBottom: "14px", position: "relative" }}>
+                <div style={{ position: "absolute", left: "-28px", top: "3px", width: "12px", height: "12px", borderRadius: "50%", background: !e.c ? "#EA4335" : "#1A73E8", border: !e.c ? "3px solid #FDECEA" : "none" }} />
+                {i < a.length-1 && <div style={{ position: "absolute", left: "-23px", top: "17px", width: "2px", height: "calc(100% + 2px)", background: "#E8EAED" }} />}
+                <span style={{ fontSize: "12px", fontWeight: 800, color: "#1B365D" }}>{e.d}</span>
+                <span style={{ fontSize: "13px", color: !e.c ? "#EA4335" : "#444", fontWeight: !e.c ? 700 : 400, marginLeft: "10px" }}>{e.t}</span>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Scenario Modeler */}
-          <div style={SIG.card}>
-            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>🎯 Scenario Modeler — $500K Investment</div>
-            <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
-              {Object.entries(investmentData.scenarios).map(([key, s]) => (
-                <button key={key} onClick={() => setInvestmentScenario(key)} style={{ padding: "8px 18px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", border: "none", background: investmentScenario === key ? s.color : "#F1F3F4", color: investmentScenario === key ? "#fff" : "#333" }}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)} ({s.probability})
-                </button>
+        {userIntent === "visit" && <div style={{ background: "#FFF3E0", border: "1px solid #FFB74D", borderRadius: "12px", padding: "16px 20px", fontSize: "13px", color: "#BF360C", lineHeight: "1.5" }}><strong>⚠️ Level 4 Notice: </strong>This platform does not encourage new tourist visits at Elevated Risk, especially for families with children. Data is for informed decision-making — not encouragement.</div>}
+      </div>)}
+
+      {/* ═══ MODE: VISIT/STAY ADVISOR ═══ */}
+      {activeMode === "advisor" && (<div>
+        <div className="sig-fade" style={{ fontSize: "20px", fontWeight: 800, color: "#1B365D", marginBottom: "8px" }}>🧭 Should I Visit / Stay?</div>
+        <div style={{ fontSize: "13px", color: "#888", marginBottom: "20px" }}>Personalized decision framework • {myResident.icon} {myResident.label}</div>
+
+        {advisorStep < advisorSteps.length ? (
+          <div className="sig-fade">
+            {/* Progress */}
+            <div style={{ display: "flex", gap: "6px", marginBottom: "24px" }}>
+              {advisorSteps.map((_, i) => (
+                <div key={i} style={{ flex: 1, height: "4px", borderRadius: "2px", background: i <= advisorStep ? "#1A73E8" : "#E8EAED", transition: "background 0.3s" }} />
               ))}
             </div>
-            <div style={{ padding: "16px", background: "#fff", borderRadius: "8px", border: `2px solid ${scenario.color}` }}>
-              <div style={{ fontSize: "14px", fontWeight: 700, color: scenario.color, marginBottom: "12px" }}>{investmentScenario.charAt(0).toUpperCase() + investmentScenario.slice(1)} — {scenario.probability}</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-                <div><div style={{ fontSize: "11px", color: "#888" }}>Timeline</div><div style={{ fontSize: "13px", fontWeight: 600 }}>{scenario.timeline}</div></div>
-                <div><div style={{ fontSize: "11px", color: "#888" }}>Property</div><div style={{ fontSize: "13px", fontWeight: 600 }}>{scenario.propertyTrajectory}</div></div>
-                <div><div style={{ fontSize: "11px", color: "#888" }}>3-Year Return</div><div style={{ fontSize: "20px", fontWeight: 700, color: scenario.color }}>{scenario.return3yr}</div></div>
-                <div><div style={{ fontSize: "11px", color: "#888" }}>Weighted Expected</div><div style={{ fontSize: "20px", fontWeight: 700, color: "#1B365D" }}>25–55%</div></div>
-              </div>
+            <div style={{ fontSize: "18px", fontWeight: 700, color: "#1B365D", marginBottom: "16px" }}>{advisorSteps[advisorStep].q}</div>
+            <div style={{ display: "grid", gridTemplateColumns: advisorSteps[advisorStep].opts.length <= 3 ? "repeat(auto-fit, minmax(200px, 1fr))" : "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
+              {advisorSteps[advisorStep].opts.map(opt => (
+                <div key={opt.value} className={`sig-advisor-card ${advisorAnswers[["situation","companions","flexibility"][advisorStep]] === opt.value ? "selected" : ""}`}
+                  onClick={() => {
+                    const key = ["situation","companions","flexibility"][advisorStep];
+                    setAdvisorAnswers(p => ({...p, [key]: opt.value}));
+                    setTimeout(() => setAdvisorStep(s => s + 1), 300);
+                  }}>
+                  <div style={{ fontSize: "28px", marginBottom: "8px" }}>{opt.icon}</div>
+                  <div style={{ fontSize: "14px", fontWeight: 600, color: "#333" }}>{opt.label}</div>
+                </div>
+              ))}
             </div>
+            {advisorStep > 0 && <button onClick={() => setAdvisorStep(s => s - 1)} style={{ marginTop: "16px", background: "none", border: "none", color: "#1A73E8", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>← Back</button>}
           </div>
-          <div style={SIG.disclosureRed}><strong>⚠️ </strong>Past performance ≠ future results. No exact historical parallel. Further decline possible. Liquidity risk during conflict. Educational analysis only.</div>
-        </div>
-      )}
-
-      {/* ═══ MODE 4: AI ANALYST ═══ */}
-      {activeMode === "analyst" && (
-        <div>
-          <div style={{ fontSize: "18px", fontWeight: 700, color: "#1B365D", marginBottom: "16px" }}>💬 AI Confidence Analyst</div>
-          <div style={{ fontSize: "13px", color: "#666", marginBottom: "12px" }}>PRISM framework: Perception → Reality → Context → Scenario → Decision</div>
-
-          {chatMessages.length === 0 && (
-            <div style={{ marginBottom: "16px" }}>
-              <div style={{ fontSize: "13px", fontWeight: 600, color: "#555", marginBottom: "8px" }}>Suggested questions:</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {(suggestedQuestions[userIntent] || suggestedQuestions.understand).map((q, i) => (
-                  <button key={i} onClick={() => handleQuestionClick(q)} style={{ background: "#F1F3F4", color: "#333", border: "1px solid #DDD", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", cursor: "pointer", textAlign: "left", lineHeight: "1.4" }}>{q}</button>
+        ) : (
+          <div className="sig-fade">
+            {(() => { const r = getAdvisorResult(); return (<>
+              <div className="sig-card" style={{ borderColor: r.color, borderWidth: "2px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+                  <span style={{ fontSize: "32px" }}>{r.icon}</span>
+                  <div>
+                    <div style={{ fontSize: "11px", fontWeight: 700, color: "#888", letterSpacing: "0.5px" }}>ASSESSMENT</div>
+                    <div style={{ fontSize: "18px", fontWeight: 800, color: r.color }}>{r.verdict}</div>
+                  </div>
+                </div>
+                <div style={{ fontSize: "14px", lineHeight: "1.7", color: "#444", marginBottom: "20px", padding: "16px", background: "#F8F9FA", borderRadius: "10px" }}>{r.detail}</div>
+                <div style={{ fontSize: "13px", fontWeight: 700, color: "#1B365D", marginBottom: "10px" }}>📋 Recommended Actions</div>
+                {r.actions.map((a, i) => (
+                  <div key={i} style={{ display: "flex", gap: "10px", padding: "10px 0", borderBottom: i < r.actions.length - 1 ? "1px solid #F1F3F4" : "none", fontSize: "13px", color: "#444" }}>
+                    <span style={{ fontWeight: 800, color: "#1A73E8", flexShrink: 0 }}>{i+1}.</span>
+                    <span>{a}</span>
+                  </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Chat */}
-          <div style={{ background: "#fff", borderRadius: "10px", border: "1px solid #E8EAED", overflow: "hidden" }}>
-            <div style={{ maxHeight: "400px", overflowY: "auto", padding: "16px" }}>
-              {chatMessages.length === 0 && (
-                <div style={{ textAlign: "center", padding: "40px 20px", color: "#888" }}>
-                  <div style={{ fontSize: "36px", marginBottom: "8px" }}>🔍</div>
-                  <div style={{ fontSize: "14px", fontWeight: 600 }}>Gulf Confidence Analyst</div>
-                  <div style={{ fontSize: "13px", marginTop: "4px" }}>Ask any question about travel, investment, relocation, or safety.</div>
-                </div>
-              )}
-              {chatMessages.map((msg, i) => (
-                <div key={i} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start", marginBottom: "12px" }}>
-                  <div style={msg.role === "user"
-                    ? { background: "#1A73E8", color: "#fff", borderRadius: "16px 16px 4px 16px", padding: "10px 16px", maxWidth: "80%", fontSize: "14px", lineHeight: "1.5" }
-                    : { background: "#F1F3F4", color: "#1a1a1a", borderRadius: "16px 16px 16px 4px", padding: "12px 16px", maxWidth: "85%", fontSize: "14px", lineHeight: "1.6", whiteSpace: "pre-wrap" }
-                  }>{msg.content}</div>
-                </div>
-              ))}
-              {chatLoading && <div style={{ display: "flex" }}><div style={{ background: "#F1F3F4", borderRadius: "16px 16px 16px 4px", padding: "12px 16px", fontSize: "14px", color: "#888" }}>● ● ● Analyzing with PRISM framework...</div></div>}
-              <div ref={chatEndRef} />
-            </div>
-            <div style={{ display: "flex", gap: "8px", padding: "12px 16px", borderTop: "1px solid #E8EAED", background: "#FAFBFC" }}>
-              <input style={{ flex: 1, padding: "10px 14px", borderRadius: "8px", border: "1px solid #DDD", fontSize: "14px", outline: "none" }}
-                value={chatInput} onChange={e => setChatInput(e.target.value)}
-                onKeyDown={e => e.key === "Enter" && handleSendMessage()}
-                placeholder="Ask about the Gulf — travel, investment, safety..." />
-              <button style={{ background: "#1A73E8", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontSize: "14px", fontWeight: 600, cursor: "pointer", opacity: chatLoading ? 0.6 : 1 }}
-                onClick={handleSendMessage} disabled={chatLoading}>Send</button>
-            </div>
+              <button onClick={() => { setAdvisorStep(0); setAdvisorAnswers({}); }} style={{ marginTop: "12px", background: "none", border: "2px solid #1A73E8", color: "#1A73E8", borderRadius: "10px", padding: "10px 20px", fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>↺ Start Over</button>
+            </>); })()}
           </div>
+        )}
 
-          {/* PRISM Explainer */}
-          <div style={{ ...SIG.card, marginTop: "16px" }}>
-            <div style={{ fontWeight: 700, fontSize: "14px", color: "#1B365D", marginBottom: "8px" }}>🔷 PRISM Response Framework</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "8px" }}>
-              {[["P","Perception Check","Validate concern"],["R","Reality Anchor","Sourced data"],["I","Informed Context","Comparisons"],["S","Scenario Map","3 scenarios"],["M","My Decision","Your framework"]].map(([l, title, desc], i) => (
-                <div key={i} style={{ textAlign: "center", padding: "10px", background: "#F8F9FA", borderRadius: "8px" }}>
-                  <div style={{ fontSize: "20px", fontWeight: 700, color: "#1A73E8" }}>{l}</div>
-                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#333" }}>{title}</div>
-                  <div style={{ fontSize: "11px", color: "#888" }}>{desc}</div>
+        {/* Advisor disclaimer */}
+        <div style={{ background: "#FFF8E1", border: "1px solid #FFD54F", borderRadius: "10px", padding: "14px 18px", fontSize: "12px", color: "#5D4037", lineHeight: "1.5", marginTop: "20px" }}>
+          <strong>📋 </strong>This advisor provides a structured decision framework based on your profile. It does not make decisions for you. Conditions change rapidly. Always consult official government advisories for your nationality.
+        </div>
+      </div>)}
+
+      {/* ═══ MODE: PERCEPTION VS REALITY ═══ */}
+      {activeMode === "perception" && (<div>
+        <div className="sig-fade" style={{ fontSize: "20px", fontWeight: 800, color: "#1B365D", marginBottom: "16px" }}>🧠 Perception vs. Reality</div>
+        <div className="sig-card" style={{ background: "#FFF8E1", borderColor: "#FFD54F" }}>
+          <strong>📋 What This Does and Doesn't Do</strong>
+          <p style={{ margin: "8px 0 0", fontSize: "13px", lineHeight: "1.6" }}>Every death is a tragedy. These comparisons exist because the brain overestimates unfamiliar, dramatic risks (missiles) and underestimates familiar ones (traffic). This is the <em>availability heuristic</em>. Purpose: calibrate magnitude — not argue war is safe.</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+          <span style={{ fontSize: "14px", fontWeight: 700 }}>Compare with:</span>
+          <select className="sig-input" value={originCountry || "United States"} onChange={e => setOriginCountry(e.target.value)}>
+            {Object.keys(comparisonData).map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+        <div className="sig-card">
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", fontSize: "12px", fontWeight: 800, letterSpacing: "0.5px" }}>
+            <span style={{ color: "#888" }}>{(originCountry||"United States").toUpperCase()} — {conflictDay}-DAY EQUIVALENT</span>
+            <span style={{ color: "#E8710A" }}>UAE CONFLICT — {conflictDay} DAYS</span>
+          </div>
+          {compEntries.map(([key, data]) => (
+            <div key={key} style={{ marginBottom: "20px" }}>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: "#333", marginBottom: "8px" }}>{data.label}</div>
+              {[{ label: (originCountry||"US").substring(0,6), val: data.home, pct: Math.max((data.home/maxComp)*100,5), color: "#78909C" },
+                { label: "UAE", val: `${casualties.killed}`, pct: Math.max((casualties.killed/maxComp)*100,1.5), color: "#E8710A" }].map((bar,i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "5px" }}>
+                  <div style={{ width: "55px", fontSize: "11px", color: "#999", textAlign: "right", fontWeight: 600 }}>{bar.label}</div>
+                  <div style={{ flex: 1, height: "22px", background: "#F5F5F5", borderRadius: "6px", overflow: "hidden" }}>
+                    <div style={{ width: `${bar.pct}%`, height: "100%", background: bar.color, borderRadius: "6px", transition: "width 0.8s ease", minWidth: "4px" }} />
+                  </div>
+                  <span style={{ fontSize: "13px", fontWeight: 800, width: "70px", color: bar.color }}>{typeof bar.val === "number" ? bar.val.toLocaleString() : bar.val}</span>
                 </div>
               ))}
+            </div>
+          ))}
+        </div>
+        <div className="sig-card" style={{ background: "#FFF3E0", borderColor: "#FFB74D" }}>
+          <strong style={{ color: "#BF360C" }}>⚠️ This Comparison Has Limits</strong>
+          <p style={{ margin: "8px 0 0", fontSize: "13px", color: "#BF360C", lineHeight: "1.6" }}>Car accidents are involuntary, distributed risks. Entering a conflict zone is voluntary, concentrated. Missile strikes are catastrophic and unpredictable. Defense may degrade over time. Use as <strong>one input</strong>, not as permission.</p>
+        </div>
+        <button className="sig-pill" onClick={() => setShowMethodology(!showMethodology)} style={{ background: "#F1F3F4", color: "#1A73E8", marginTop: "4px" }}>{showMethodology ? "Hide Methodology ▲" : "Show Methodology ▼"}</button>
+        {showMethodology && <div className="sig-card sig-fade" style={{ marginTop: "12px" }}><strong>Sources:</strong> WHO, NHTSA, CDC, national stats agencies. UAE: NCEMA, ACLED. Calculation: annualized ÷ 365 × {conflictDay}. Basis: availability heuristic (Tversky & Kahneman 1973), probability neglect (Sunstein 2002).</div>}
+      </div>)}
+
+      {/* ═══ MODE: INVESTMENT LENS ═══ */}
+      {activeMode === "investment" && (<div>
+        <div className="sig-fade" style={{ fontSize: "20px", fontWeight: 800, color: "#1B365D", marginBottom: "16px" }}>📈 Investment Lens</div>
+        <div className="sig-card" style={{ background: "#FFF8E1", borderColor: "#FFD54F" }}><strong>⚠️</strong> Educational analysis, not financial advice. Past performance ≠ future results.</div>
+        <div className="sig-card sig-fade" style={{ overflowX: "auto" }}>
+          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>📊 Historical Crisis & Recovery</div>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+            <thead><tr style={{ borderBottom: "2px solid #1B365D" }}>{["Year","Event","Decline","Recovery","Entry Return"].map(h => <th key={h} style={{ padding: "10px", textAlign: "left", color: "#1B365D", fontWeight: 800, fontSize: "11px", letterSpacing: "0.5px" }}>{h.toUpperCase()}</th>)}</tr></thead>
+            <tbody>
+              {[["2008–09","Global Financial Crisis","50–60%","300%+ by 2014","3–4x / 5yr"],["2014–15","Oil Price Crash","15–20%","2 years","40–60%"],["2019","Abqaiq Attack","Minimal","Weeks","N/A"],["2020","COVID","15–25%","ATH by 2024","2–3x / 4yr"],["2022","Houthi Attacks","5–10%","Months","20–30%"],["2026","Current Conflict","~30%","TBD","See below"]].map((r,i) => (
+                <tr key={i} style={{ borderBottom: "1px solid #F1F3F4", background: i === 5 ? "#FFF3E0" : "transparent" }}>
+                  {r.map((c,j) => <td key={j} style={{ padding: "10px", fontWeight: j===0||j===2||j===4 ? 700 : 400, color: j===2 ? "#EA4335" : j===3 ? "#34A853" : "#333" }}>{c}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="sig-card sig-fade sig-fade-1">
+          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1B365D", marginBottom: "14px" }}>🎯 Scenario Modeler</div>
+          <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
+            {Object.entries(investScenarios).map(([k,s]) => (
+              <button key={k} className="sig-pill" onClick={() => setInvestmentScenario(k)} style={{ background: investmentScenario===k ? s.color : "#F1F3F4", color: investmentScenario===k ? "#fff" : "#444" }}>{k.charAt(0).toUpperCase()+k.slice(1)} ({s.probability})</button>
+            ))}
+          </div>
+          <div style={{ padding: "20px", background: "#FAFBFC", borderRadius: "12px", border: `2px solid ${scenario.color}` }}>
+            <div style={{ fontSize: "16px", fontWeight: 800, color: scenario.color, marginBottom: "16px" }}>{investmentScenario.charAt(0).toUpperCase()+investmentScenario.slice(1)} Scenario</div>
+            <div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div><div style={{ fontSize: "11px", color: "#999", fontWeight: 600 }}>TIMELINE</div><div style={{ fontSize: "14px", fontWeight: 600, marginTop: "4px" }}>{scenario.timeline}</div></div>
+              <div><div style={{ fontSize: "11px", color: "#999", fontWeight: 600 }}>PROPERTY TRAJECTORY</div><div style={{ fontSize: "14px", fontWeight: 600, marginTop: "4px" }}>{scenario.property}</div></div>
+              <div><div style={{ fontSize: "11px", color: "#999", fontWeight: 600 }}>3-YEAR PROJECTED RETURN</div><div style={{ fontSize: "28px", fontWeight: 800, color: scenario.color, marginTop: "4px" }}>{scenario.return3yr}</div></div>
+              <div><div style={{ fontSize: "11px", color: "#999", fontWeight: 600 }}>PROBABILITY</div><div style={{ fontSize: "28px", fontWeight: 800, color: "#1B365D", marginTop: "4px" }}>{scenario.probability}</div></div>
             </div>
           </div>
         </div>
-      )}
+        <div className="sig-card" style={{ background: "#FFF3E0", borderColor: "#FFB74D" }}><strong style={{ color: "#BF360C" }}>⚠️</strong><span style={{ color: "#BF360C" }}> No exact parallel. Further decline possible. Liquidity risk during conflict. Educational only.</span></div>
+      </div>)}
+
+      {/* ═══ MODE: AI ANALYST ═══ */}
+      {activeMode === "analyst" && (<div>
+        <div className="sig-fade" style={{ fontSize: "20px", fontWeight: 800, color: "#1B365D", marginBottom: "8px" }}>💬 AI Confidence Analyst</div>
+        <div style={{ fontSize: "13px", color: "#888", marginBottom: "16px" }}>PRISM framework · Personalized for {myResident.label}{originCountry ? ` from ${originCountry}` : ""}</div>
+
+        {chatMessages.length === 0 && (
+          <div className="sig-fade" style={{ marginBottom: "16px" }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: "#555", marginBottom: "10px" }}>Suggested questions:</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+              {(suggestedQ[userIntent]||suggestedQ.understand).map((q,i) => (
+                <button key={i} className="sig-pill" onClick={() => sendChat(q)} style={{ background: "#F1F3F4", color: "#444", fontSize: "12px", padding: "8px 16px" }}>{q}</button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div style={{ background: "#fff", borderRadius: "14px", border: "1px solid #E8EAED", overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
+          <div style={{ maxHeight: "450px", overflowY: "auto", padding: "20px" }}>
+            {chatMessages.length === 0 && (
+              <div style={{ textAlign: "center", padding: "40px 20px", color: "#AAA" }}>
+                <div style={{ fontSize: "40px", marginBottom: "10px" }}>🔍</div>
+                <div style={{ fontSize: "16px", fontWeight: 700, color: "#555" }}>Gulf Confidence Analyst</div>
+                <div style={{ fontSize: "13px", marginTop: "6px" }}>Ask about travel, investment, relocation, or safety</div>
+              </div>
+            )}
+            {chatMessages.map((m,i) => (
+              <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "14px" }}>
+                <div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.content}</div>
+              </div>
+            ))}
+            {chatLoading && <div style={{ display: "flex" }}><div className="sig-chat-ai" style={{ color: "#AAA" }}>● ● ● Analyzing with PRISM framework...</div></div>}
+            <div ref={chatEndRef} />
+          </div>
+          <div style={{ display: "flex", gap: "10px", padding: "14px 18px", borderTop: "1px solid #E8EAED", background: "#FAFBFC" }}>
+            <input className="sig-input" style={{ flex: 1 }} value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat(chatInput)} placeholder="Ask about the Gulf..." />
+            <button className="sig-btn" onClick={() => sendChat(chatInput)} disabled={chatLoading}>Send</button>
+          </div>
+        </div>
+
+        <div className="sig-card sig-fade" style={{ marginTop: "16px" }}>
+          <div style={{ fontWeight: 700, fontSize: "14px", color: "#1B365D", marginBottom: "10px" }}>🔷 PRISM Response Framework</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "8px" }}>
+            {[["P","Perception","Empathy first"],["R","Reality","Sourced data"],["I","Context","Comparisons"],["S","Scenarios","3 cases"],["M","Decision","Your framework"]].map(([l,t,d],i) => (
+              <div key={i} style={{ textAlign: "center", padding: "12px 6px", background: "#F8F9FA", borderRadius: "10px" }}>
+                <div style={{ fontSize: "22px", fontWeight: 800, color: "#1A73E8" }}>{l}</div>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: "#333", marginTop: "2px" }}>{t}</div>
+                <div style={{ fontSize: "10px", color: "#AAA" }}>{d}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>)}
 
       {/* ═══ TRUST FOOTER ═══ */}
       {userIntent && (
-        <div style={{ background: "#F8F9FA", borderRadius: "10px", padding: "20px", marginTop: "24px", fontSize: "12px", color: "#666", lineHeight: "1.6" }}>
-          <div style={{ fontWeight: 700, fontSize: "14px", color: "#1B365D", marginBottom: "8px" }}>🔒 Trust & Transparency</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
-            <div><strong>Sources</strong><p style={{ margin: "4px 0" }}>NCEMA, ACLED, CSIS, Atlantic Council, WHO, government advisories.</p></div>
-            <div><strong>Methodology</strong><p style={{ margin: "4px 0" }}>PRISM Framework. Override Protocol. Level 4 — Elevated Risk.</p></div>
-            <div><strong>Commitment</strong><p style={{ margin: "4px 0" }}>Every data point sourced. Advisories displayed. Will say "don't go" when warranted.</p></div>
+        <div className="sig-fade" style={{ background: "#F8F9FA", borderRadius: "14px", padding: "24px", marginTop: "28px", fontSize: "12px", color: "#666", lineHeight: "1.7" }}>
+          <div style={{ fontWeight: 800, fontSize: "15px", color: "#1B365D", marginBottom: "12px" }}>🔒 Trust & Transparency</div>
+          <div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
+            <div><strong>Sources</strong><p style={{ margin: "4px 0" }}>NCEMA, ACLED, CSIS, Atlantic Council, WHO, CDC, national statistics agencies, government travel advisories.</p></div>
+            <div><strong>Methodology</strong><p style={{ margin: "4px 0" }}>PRISM Framework. Override Protocol. Level 4 — Elevated Risk. Personalized per resident type and origin country.</p></div>
+            <div><strong>Commitment</strong><p style={{ margin: "4px 0" }}>Every data point sourced. Advisories displayed unedited. Will say "don't go" when warranted. Will never claim safety where it doesn't exist.</p></div>
           </div>
-          <div style={{ marginTop: "12px", padding: "12px", background: "#fff", borderRadius: "8px", fontSize: "11px", color: "#888" }}>
-            <strong>Disclaimer: </strong>Informational analysis for educational purposes. Not safety guarantees, travel recommendations, or financial advice. Consult official advisories. GCC War Room — gcc-war-room.vercel.app
+          <div style={{ marginTop: "14px", padding: "14px", background: "#fff", borderRadius: "10px", fontSize: "11px", color: "#AAA" }}>
+            <strong>Disclaimer: </strong>Informational analysis for educational purposes. Not safety guarantees, travel recommendations, or financial advice. Conditions change rapidly. Always consult official government advisories. Travel insurance may not cover conflict-affected destinations. <strong>gcc-war-room.vercel.app</strong>
           </div>
         </div>
       )}
@@ -3213,7 +3320,7 @@ export default function App() {
           {tab === "ai" && <AIAnalystTab />}
           {tab === "intel" && <LiveIntelTab />}
           {tab === "tweets" && <LiveTweetsTab />}
-          {tab === "shouldigo" && <ShouldIGoTab conflictDay={CONFLICT_DAY} casualties={{ killed: 8, injured: 145, debrisInjuries: 131 }} missileData={{ ballistic: 298, cruise: 15, drones: 1606, total: 1919 }} interceptionRate="90–94%" straitStatus="-94% traffic" oilPrice="$104+" selectedLanguage={lang} userCountry={selCountry} />}
+          {tab === "shouldigo" && <ShouldIGoTab conflictDay={CONFLICT_DAY} casualties={{ killed: 8, injured: 145, debrisInjuries: 131 }} missileData={{ ballistic: 298, cruise: 15, drones: 1606, total: 1919 }} interceptionRate="90–94%" straitStatus="-94% traffic" oilPrice="$104+" selectedLanguage={lang} userCountry={selCountry} resStatus={resStatus} />}
           {tab === "emergency" && <EmergencyTab />}
         </main>
       </div>
