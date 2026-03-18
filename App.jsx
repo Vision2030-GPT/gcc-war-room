@@ -1587,7 +1587,7 @@ const FormattedMessage = ({ text }) => {
     }
 
     // Info/stat box (lines starting with 📊 📈 🛡️ 🏨 ✈️ 🏫 etc followed by colon)
-    if (line.trim().match(/^[\p{Emoji}].+:/u) && line.includes(":")) {
+    if (line.trim().match(/^[^\w\s\d#*].+:/) && line.includes(":") && !line.startsWith("http")) {
       const [label, ...valueParts] = line.trim().split(":");
       const value = valueParts.join(":").trim();
       return (
@@ -3475,4 +3475,420 @@ CRITICAL TONE RULES:
           <div className="sig-section-title">📈 Forecast</div>
           {renderForecast()}
           <div className="sig-section-title">🧠 Risk in Context</div>
-          {renderPerception()
+          {renderPerception()}
+          <div className="sig-section-title">🌍 Government Advisories</div>
+          {renderAdvisories()}
+          {renderAIInsight()}
+          {renderFooter()}
+          </>)}
+        </div>)}
+      </div>)}
+
+
+
+      {/* FLOATING AI CHAT */}
+      {!aiPanelOpen && (
+        <div onClick={() => setAiPanelOpen(true)} style={{ position: "fixed", bottom: "28px", right: "20px", zIndex: 50, cursor: "pointer" }}>
+          <div className="ai-fab" style={{ width: "56px", height: "56px", borderRadius: "18px", background: "#1C1C1E", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(0,0,0,0.3)", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)", position: "relative" }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08) translateY(-2px)"; e.currentTarget.style.borderRadius = "22px"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.borderRadius = "18px"; }}>
+            <span style={{ fontSize: "24px", lineHeight: 1 }}>✨</span>
+            <div style={{ position: "absolute", top: "-3px", right: "-3px", width: "12px", height: "12px", borderRadius: "50%", background: "#34A853", border: "2.5px solid #1C1C1E" }} />
+          </div>
+        </div>
+      )}
+      {aiPanelOpen && (
+        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50, maxHeight: "75vh", background: "#fff", borderRadius: "24px 24px 0 0", boxShadow: "0 -8px 32px rgba(60,64,67,0.25)", display: "flex", flexDirection: "column", animation: "gw-slide-up 0.3s ease-out" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #E8E8E8", flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}><span style={{ fontSize: "20px" }}>🤖</span><div><div style={{ fontFamily: "'Google Sans'", fontSize: "15px", fontWeight: 500, color: "#1C1C1E" }}>AI Analyst</div><div style={{ fontSize: "11px", color: "#8E8E93" }}>Powered by Claude · Level {L}</div></div></div>
+            <button onClick={() => setAiPanelOpen(false)} style={{ padding: "8px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#F5F5F5", cursor: "pointer", fontSize: "13px", fontWeight: 500, color: "#666" }}>Close</button>
+          </div>
+          {chatMessages.length === 0 && (<div style={{ display: "flex", flexWrap: "wrap", gap: "8px", padding: "14px 20px", borderBottom: "1px solid #E8E8E8" }}>{["🛡️ How strong is the defense?", "✈️ Are flights operating?", "👨‍👩‍👧 Is it safe for families?", "🏨 Best hotel deals now?", "🏫 Are schools still open?", "📋 What precautions should I take?"].map((q, qi) => (<button key={qi} onClick={() => sendChat(q)} style={{ padding: "8px 14px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "12px", fontWeight: 500, color: "var(--gw-blue)", cursor: "pointer", fontFamily: "'Google Sans Text'" }}>{q}</button>))}</div>)}
+          <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px", minHeight: "120px" }}>
+            {chatMessages.length === 0 && <div style={{ textAlign: "center", padding: "30px", color: "#8E8E93" }}><div style={{ fontSize: "32px", marginBottom: "8px" }}>💬</div><div style={{ fontSize: "13px", fontWeight: 500 }}>Ask anything about the Gulf region</div></div>}
+            {chatMessages.map((m, mi) => (<div key={mi} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start", marginBottom: "12px" }}><div className={m.role === "user" ? "sig-chat-user" : "sig-chat-ai"}>{m.role === "user" ? m.content : <FormattedMessage text={m.content} />}</div></div>))}
+            {chatLoading && <div><div className="sig-chat-ai" style={{ color: "#8E8E93" }}>● ● ● Analyzing...</div></div>}
+            <div ref={chatEndRef} />
+          </div>
+          <div style={{ display: "flex", gap: "8px", padding: "12px 20px", borderTop: "1px solid #E8E8E8", background: "#F5F5F5", flexShrink: 0 }}>
+            <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat(chatInput)} placeholder="Ask anything..." style={{ flex: 1, padding: "10px 16px", borderRadius: "100px", border: "1px solid #DADADA", background: "#fff", fontSize: "14px", fontFamily: "'Google Sans Text'", outline: "none" }} />
+            <button onClick={() => sendChat(chatInput)} disabled={chatLoading} style={{ padding: "10px 20px", borderRadius: "100px", background: "var(--gw-blue)", border: "none", color: "#fff", fontSize: "13px", fontWeight: 500, fontFamily: "'Google Sans'", cursor: chatLoading ? "not-allowed" : "pointer", opacity: chatLoading ? 0.5 : 1 }}>Send</button>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+};
+
+
+// ─── MAIN APP ───────────────────────────────────────────────────────────────
+
+const TAB_KEYS = [
+  { key: "shouldigo", emoji: "🎯", shortLabel: "Should I Go?" },
+  { key: "dashboard", emoji: "📊", shortLabel: "Data" },
+  { key: "analysis", emoji: "📋", shortLabel: "Analysis" },
+  { key: "ai", emoji: "🤖", shortLabel: "AI" },
+  { key: "intel", emoji: "📡", shortLabel: "Intel" },
+  { key: "emergency", emoji: "🚨", shortLabel: "SOS" },
+];
+
+export default function App() {
+  const [tab, setTab] = useState("shouldigo");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [now, setNow] = useState(Date.now());
+  const [lang, setLang] = useState("en");
+  const [showLangMenu, setShowLangMenu] = useState(false);
+  const [selCountry, setSelCountry] = useState("UAE");
+  const [selCity, setSelCity] = useState("Dubai");
+  const [resStatus, setResStatus] = useState("expat_family");
+  const [darkMode, setDarkMode] = useState(false);
+  const [showSplash, setShowSplash] = useState(() => { try { return !localStorage.getItem("gcc_visited"); } catch { return true; } });
+  const [liveData, setLiveData] = useState(null);
+  const [dataStatus, setDataStatus] = useState("connecting");
+  const [pushSupported, setPushSupported] = useState(false);
+  const [pushSubscribed, setPushSubscribed] = useState(false);
+  const [demoLevel, setDemoLevel] = useState(null);
+
+  useEffect(() => { const i = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(i); }, []);
+
+  // URL state persistence
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("c")) setSelCountry(params.get("c"));
+    if (params.get("city")) setSelCity(params.get("city"));
+    if (params.get("r")) setResStatus(params.get("r"));
+    if (params.get("tab")) setTab(params.get("tab"));
+    if (params.get("dark") === "1") setDarkMode(true);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selCountry !== "UAE") params.set("c", selCountry);
+    if (selCity !== "Dubai") params.set("city", selCity);
+    if (resStatus !== "expat_family") params.set("r", resStatus);
+    if (tab !== "shouldigo") params.set("tab", tab);
+    if (darkMode) params.set("dark", "1");
+    const qs = params.toString();
+    window.history.replaceState({}, "", qs ? `?${qs}` : window.location.pathname);
+  }, [selCountry, selCity, resStatus, tab, darkMode]);
+
+
+
+  // Push notification registration
+  useEffect(() => {
+    if ("serviceWorker" in navigator && "PushManager" in window) {
+      setPushSupported(true);
+      navigator.serviceWorker.register("/sw.js").then(reg => {
+        reg.pushManager.getSubscription().then(sub => {
+          if (sub) setPushSubscribed(true);
+        });
+      }).catch(() => {});
+    }
+  }, []);
+
+  const subscribePush = async () => {
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: null });
+      setPushSubscribed(true);
+      // In production: send sub to your server for push delivery
+      console.log("Push subscribed:", JSON.stringify(sub));
+    } catch (err) {
+      // Notification permission denied or not supported
+      if (Notification.permission !== "granted") {
+        const perm = await Notification.requestPermission();
+        if (perm === "granted") subscribePush();
+      }
+    }
+  };
+
+  // Live data auto-refresh
+  useEffect(() => {
+    const fetchLive = async () => {
+      try {
+        const res = await fetch("/api/data");
+        if (res.ok) {
+          const data = await res.json();
+          setLiveData(data);
+          setDataStatus(data.status === "live" ? "live" : "fallback");
+        }
+      } catch { setDataStatus("offline"); }
+    };
+    fetchLive();
+    const interval = setInterval(fetchLive, 300000); // 5 min
+    return () => clearInterval(interval);
+  }, []);
+
+  const shareUrl = () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({ title: "GCC War Room", text: `Day ${CONFLICT_DATA.day} — ${selCity}, ${selCountry} — Risk Analysis`, url });
+    } else {
+      navigator.clipboard?.writeText(url);
+      alert("Link copied to clipboard!");
+    }
+  };
+
+
+  const countryData = GCC_DATA[selCountry];
+  const cityData = countryData?.cities?.[selCity];
+  const baseRisk = cityData?.risk || countryData?.riskScore || 5;
+  const resTypeData = RESIDENT_TYPES[resStatus];
+  const cityRisk = Math.max(1, Math.min(5, baseRisk + (resTypeData?.riskAdjust || 0)));
+  const riskColor = cityRisk >= 5 ? "#DC2626" : cityRisk >= 4 ? "#D97706" : cityRisk >= 3 ? "#2563EB" : cityRisk >= 2 ? "#0891B2" : "#059669";
+  const riskLabel = cityRisk >= 5 ? "CRITICAL" : cityRisk >= 4 ? "HIGH" : cityRisk >= 3 ? "ELEVATED" : cityRisk >= 2 ? "MODERATE" : "LOW";
+  const alertConfig = getAlertConfig(cityRisk, resStatus, countryData);
+  const isRTL = ["ar", "ur", "fa"].includes(lang);
+
+  const keySignals = [
+    "DXB fuel tank fire from drone — 3rd airport hit (TODAY)",
+    "Iran declared Jebel Ali 'legitimate target' — 25 km from JBR",
+    "Interceptor depletion accelerating — defense shield degrading",
+  ];
+
+  return (
+    <div className={`min-h-screen ${darkMode ? "bg-gray-900 text-gray-100" : "bg-[#F8F9FA]"}`} style={{ fontFamily: "'Google Sans Text', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif" }} dir={isRTL ? "rtl" : "ltr"}>
+
+      {/* ONBOARDING SPLASH */}
+      {showSplash && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "linear-gradient(135deg, #1C1C1E, #2C2C2E)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff", padding: "40px", textAlign: "center" }}
+          onClick={() => { setShowSplash(false); try { localStorage.setItem("gcc_visited", "1"); } catch {} }}>
+          <div style={{ width: "72px", height: "72px", borderRadius: "20px", background: "var(--gw-blue)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "32px", fontWeight: 700, marginBottom: "24px", fontFamily: "'Google Sans Display'" }}>W</div>
+          <div style={{ fontFamily: "'Google Sans Display'", fontSize: "28px", fontWeight: 700, marginBottom: "8px" }}>GCC War Room</div>
+          <div style={{ fontSize: "15px", opacity: 0.6, marginBottom: "32px", maxWidth: "300px", lineHeight: 1.6 }}>Real-time crisis intelligence for the Gulf region. Personalized for your situation.</div>
+          <div style={{ display: "flex", gap: "24px", marginBottom: "40px", opacity: 0.4 }}>
+            {["🛡️ Defense", "📊 Data", "🤖 AI", "🌍 Global"].map(t => (
+              <span key={t} style={{ fontSize: "12px", fontWeight: 500 }}>{t}</span>
+            ))}
+          </div>
+          <div style={{ padding: "12px 32px", borderRadius: "100px", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", fontSize: "14px", fontWeight: 500, cursor: "pointer" }}>Tap to continue →</div>
+        </div>
+      )}
+
+      {/* All styles inline — index.css only has @tailwind directives */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&display=swap');
+
+        :root {
+          --gw-bg: #FFFFFF;
+          --gw-surface: #F8F9FA;
+          --gw-surface-variant: #F1F3F4;
+          --gw-border: #E8EAED;
+          --gw-border-strong: #DADCE0;
+          --gw-text-primary: #202124;
+          --gw-text-secondary: #5F6368;
+          --gw-text-tertiary: #80868B;
+          --gw-text-disabled: #BDC1C6;
+          --gw-blue: #1A73E8;
+          --gw-blue-hover: #1557B0;
+          --gw-blue-surface: #E8F0FE;
+          --gw-blue-text: #174EA6;
+          --gw-red: #D93025;
+          --gw-red-surface: #FCE8E6;
+          --gw-red-text: #A50E0E;
+          --gw-orange: #E37400;
+          --gw-orange-surface: #FEF7E0;
+          --gw-orange-text: #A06207;
+          --gw-green: #188038;
+          --gw-green-surface: #E6F4EA;
+          --gw-green-text: #0D652D;
+          --gw-shadow-1: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+          --gw-shadow-2: 0 1px 3px rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+          --gw-shadow-3: 0 4px 8px rgba(60,64,67,0.3), 0 8px 16px 6px rgba(60,64,67,0.15);
+          --gw-radius-sm: 8px;
+          --gw-radius-md: 12px;
+          --gw-radius-lg: 16px;
+          --gw-radius-xl: 24px;
+          --gw-radius-full: 100px;
+        }
+
+        body { margin:0; font-family:'Google Sans Text','Google Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; background:var(--gw-surface); color:var(--gw-text-primary); }
+        *{scrollbar-width:thin;scrollbar-color:var(--gw-border-strong) transparent; box-sizing:border-box;}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:transparent}
+        ::-webkit-scrollbar-thumb{background:var(--gw-border-strong);border-radius:3px}
+        input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gw-blue);cursor:pointer;border:2px solid white;box-shadow:var(--gw-shadow-1)}
+        @keyframes heartbeat{0%{transform:scale(1)}14%{transform:scale(1.12)}28%{transform:scale(1)}42%{transform:scale(1.08)}56%{transform:scale(1)}100%{transform:scale(1)}}
+        .heartbeat{animation:heartbeat 1.5s ease-in-out infinite;transform-origin:center}
+        @keyframes soft-pulse{0%,100%{box-shadow:0 0 0 0 rgba(26,115,232,0.35)}50%{box-shadow:0 0 0 6px rgba(26,115,232,0)}}
+        .soft-pulse{animation:soft-pulse 2.5s ease-in-out infinite}
+        @keyframes gw-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes gw-slide-up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+        @keyframes t-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+        @keyframes ai-ring{0%{box-shadow:0 0 0 0 rgba(26,115,232,0.4)}70%{box-shadow:0 0 0 12px rgba(26,115,232,0)}100%{box-shadow:0 0 0 0 rgba(26,115,232,0)}}
+        .ai-fab{animation:ai-ring 2.5s ease-out infinite}
+        .ai-fab:hover{animation:none}
+        .t-typing::after{content:'▋';animation:t-pulse 0.8s infinite;color:var(--gw-blue)}
+        .t-label{font-size:11px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:#8E8E93;margin-bottom:6px}
+        .t-bar{height:8px;border-radius:4px;overflow:hidden;display:flex}
+        .t-bar-fill{height:100%;transition:width 0.6s ease-out}
+
+        .gw-fade{animation:gw-fade-in 0.35s ease-out both}
+        .gw-fade-1{animation-delay:0.04s}.gw-fade-2{animation-delay:0.08s}.gw-fade-3{animation-delay:0.12s}.gw-fade-4{animation-delay:0.16s}.gw-fade-5{animation-delay:0.2s}
+        .gw-card{background:#EBEBEB;border-radius:16px;border:none;transition:transform 0.15s}
+        .gw-card:hover{transform:translateY(-1px)}
+        
+        .gw-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--gw-radius-sm);border:1px solid var(--gw-border-strong);background:var(--gw-bg);font-size:13px;font-weight:500;color:var(--gw-text-primary);cursor:pointer;transition:all 0.15s;font-family:'Google Sans Text',sans-serif}
+        .gw-chip:hover{border-color:var(--gw-blue);background:var(--gw-blue-surface)}
+        .gw-chip.active{border-color:var(--gw-blue);background:var(--gw-blue-surface);color:var(--gw-blue-text)}
+        .gw-section-title{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:500;color:var(--gw-text-primary);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+        .gw-overline{font-size:10px;font-weight:500;letter-spacing:0.8px;text-transform:uppercase;color:var(--gw-text-tertiary)}
+        .gw-display{font-family:'Google Sans Display',sans-serif}
+        select.gw-select{font-family:'Google Sans Text',sans-serif;padding:10px 36px 10px 14px;border-radius:var(--gw-radius-sm);border:1px solid var(--gw-border-strong);background:var(--gw-bg);font-size:13px;font-weight:500;color:var(--gw-text-primary);cursor:pointer;transition:all 0.15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2380868B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+        select.gw-select:hover{border-color:var(--gw-blue)}
+        select.gw-select:focus{outline:none;border-color:var(--gw-blue);box-shadow:0 0 0 2px var(--gw-blue-surface)}
+      `}</style>
+
+      {/* HEADER — Google Workspace Style */}
+      <header className="bg-white border-b sticky top-0 z-40" style={{ borderColor: 'var(--gw-border)' }}>
+        <div className="flex items-center gap-3 px-4 py-2.5">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 rounded-full hover:bg-[#F1F3F4] transition-colors">
+            <Menu className="w-5 h-5" style={{ color: 'var(--gw-text-secondary)' }} />
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--gw-blue)', fontFamily: "'Google Sans Display', sans-serif" }}>W</div>
+            <div>
+              <span className="hidden sm:inline text-[15px] font-medium" style={{ color: 'var(--gw-text-primary)', fontFamily: "'Google Sans', sans-serif" }}>GCC War Room</span>
+              <span className="sm:hidden text-[15px] font-medium" style={{ color: 'var(--gw-text-primary)', fontFamily: "'Google Sans', sans-serif" }}>GCC War Room</span>
+              <div className="hidden sm:flex items-center gap-2 ml-2">
+              <span className="flex items-center gap-1.5" style={{ fontSize: '11px', color: 'var(--gw-text-tertiary)' }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: dataStatus === 'live' ? '#34A853' : dataStatus === 'fallback' ? '#FBBC04' : '#EA4335', display: 'inline-block' }} className={dataStatus === 'live' ? 'heartbeat' : ''} />
+                {dataStatus === 'live' ? 'Live' : dataStatus === 'fallback' ? 'Cached' : 'Offline'} · Day {liveData?.conflictDay || CONFLICT_DAY}
+              </span>
+            </div>
+            </div>
+          </div>
+
+
+
+          <div className="ml-auto flex items-center gap-1.5">
+            {/* Language */}
+            <div className="relative">
+              <button onClick={() => setShowLangMenu(!showLangMenu)}
+                className="flex items-center gap-1.5 px-2.5 py-2 rounded-full text-[13px] font-medium transition-colors hover:bg-[#F1F3F4]"
+                style={{ color: 'var(--gw-text-secondary)' }}>
+                <span>{LANGUAGES.find(l => l.code === lang)?.flag}</span>
+                <ChevronDown className="w-3 h-3" style={{ color: 'var(--gw-text-disabled)' }} />
+              </button>
+              {showLangMenu && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowLangMenu(false)} />
+                  <div className="absolute right-0 top-full mt-1 w-48 bg-white z-50 py-1 max-h-80 overflow-y-auto" style={{ borderRadius: 'var(--gw-radius-md)', border: '1px solid var(--gw-border)', boxShadow: 'var(--gw-shadow-2)' }}>
+                    {LANGUAGES.map(l => (
+                      <button key={l.code} onClick={() => { setLang(l.code); setShowLangMenu(false); }}
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left text-[13px] transition-colors"
+                        style={{ fontFamily: "'Google Sans Text', sans-serif", background: lang === l.code ? 'var(--gw-blue-surface)' : 'transparent', color: lang === l.code ? 'var(--gw-blue-text)' : 'var(--gw-text-primary)', fontWeight: lang === l.code ? 500 : 400 }}>
+                        <span className="text-base">{l.flag}</span>
+                        <span>{l.label}</span>
+                        {lang === l.code && <Check className="w-3.5 h-3.5 ml-auto" style={{ color: 'var(--gw-blue)' }} />}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+            {pushSupported && (
+              <button onClick={subscribePush} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors relative" title={pushSubscribed ? "Notifications on" : "Enable notifications"}>
+                <span style={{ fontSize: "16px" }}>{pushSubscribed ? "🔔" : "🔕"}</span>
+                {!pushSubscribed && <span style={{ position: "absolute", top: "6px", right: "6px", width: "8px", height: "8px", borderRadius: "50%", background: "#EA4335", border: "1.5px solid #fff" }} />}
+              </button>
+            )}
+            <button onClick={shareUrl} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors" title="Share">
+              <ExternalLink className="w-4 h-4" style={{ color: 'var(--gw-text-secondary)' }} />
+            </button>
+            <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors" title="Toggle theme">
+              <span className="text-base">{darkMode ? "☀️" : "🌙"}</span>
+            </button>
+            <div className="hidden sm:flex items-center gap-1.5 ml-1 px-3 py-1.5 rounded-full" style={{ background: 'var(--gw-surface-variant)' }}>
+              <span className="w-2 h-2 rounded-full heartbeat" style={{ background: riskColor }} />
+              <span className="text-[11px] font-medium" style={{ color: riskColor }}>L{cityRisk}</span>
+            </div>
+          </div>
+        </div>
+
+
+
+      </header>
+
+        {/* SIDEBAR — Navigation Drawer */}
+        <aside className={`fixed top-0 left-0 z-50 h-full w-72 bg-white overflow-y-auto transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`} style={{ borderRight: '1px solid var(--gw-border)', boxShadow: sidebarOpen ? 'var(--gw-shadow-3)' : 'none' }}>
+          <div className="p-4">
+            {/* Close + Logo */}
+            <div className="flex items-center gap-3 mb-6">
+              <button onClick={() => setSidebarOpen(false)} className="p-2 rounded-full hover:bg-[#F1F3F4] transition-colors">
+                <X className="w-5 h-5" style={{ color: 'var(--gw-text-secondary)' }} />
+              </button>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ background: 'var(--gw-blue)' }}>W</div>
+                <span style={{ fontFamily: "'Google Sans', sans-serif", fontSize: "15px", fontWeight: 500, color: 'var(--gw-text-primary)' }}>GCC War Room</span>
+              </div>
+            </div>
+
+            {/* Navigation Items */}
+            <div style={{ marginBottom: '24px' }}>
+              <p className="gw-overline" style={{ padding: '0 12px', marginBottom: '8px' }}>NAVIGATE</p>
+              {TAB_KEYS.map(tk => (
+                <button key={tk.key} onClick={() => { setTab(tk.key); setSidebarOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-full text-[14px] transition-all mb-1"
+                  style={{
+                    fontFamily: "'Google Sans', sans-serif", fontWeight: 500,
+                    background: tab === tk.key ? 'var(--gw-blue-surface)' : 'transparent',
+                    color: tab === tk.key ? 'var(--gw-blue-text)' : 'var(--gw-text-secondary)',
+                  }}>
+                  <span className="text-lg">{tk.emoji}</span>{tk.shortLabel}
+                </button>
+              ))}
+            </div>
+
+            {/* Demo Mode */}
+            <div style={{ marginBottom: '24px' }}>
+              <p className="gw-overline" style={{ padding: '0 12px', marginBottom: '8px' }}>DEMO MODE</p>
+              <div style={{ padding: '12px', background: 'var(--gw-surface)', borderRadius: 'var(--gw-radius-md)', border: '1px solid var(--gw-border)' }}>
+                <p style={{ fontSize: '12px', color: 'var(--gw-text-tertiary)', marginBottom: '10px' }}>Simulate different risk levels for presentations</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {[
+                    { lv: null, label: "Live", color: "#5F6368", bg: "#F1F3F4" },
+                    { lv: 1, label: "L1", color: "#fff", bg: "#188038" },
+                    { lv: 2, label: "L2", color: "#fff", bg: "#34A853" },
+                    { lv: 3, label: "L3", color: "#fff", bg: "#FBBC04" },
+                    { lv: 4, label: "L4", color: "#fff", bg: "#E37400" },
+                    { lv: 5, label: "L5", color: "#fff", bg: "#D93025" },
+                  ].map(d => (
+                    <button key={d.label} onClick={() => { setDemoLevel(d.lv); setSidebarOpen(false); }}
+                      style={{ padding: '6px 14px', borderRadius: 'var(--gw-radius-full)', fontSize: '12px', fontWeight: 500, cursor: 'pointer', border: demoLevel === d.lv ? '2px solid var(--gw-text-primary)' : '2px solid transparent', background: d.bg, color: d.color, fontFamily: "'Google Sans', sans-serif" }}>
+                      {d.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Emergency Contacts */}
+            {countryData?.civilDefense && (
+              <div style={{ padding: '12px', background: 'var(--gw-red-surface)', borderRadius: 'var(--gw-radius-md)', border: '1px solid #F5C6C2' }}>
+                <p className="gw-overline" style={{ marginBottom: '6px', color: 'var(--gw-red-text)' }}>EMERGENCY</p>
+                <p style={{ fontSize: '13px', fontWeight: 500 }}>📞 {countryData.emergency}</p>
+                <p style={{ fontSize: '12px', color: 'var(--gw-text-secondary)', marginTop: '4px' }}>Follow {countryData.civilDefense}</p>
+              </div>
+            )}
+          </div>
+        </aside>
+
+        {sidebarOpen && <div className="fixed inset-0 bg-black/20 z-40" onClick={() => setSidebarOpen(false)} />}
+
+        <main className="flex-1 min-w-0 p-4 sm:p-6 max-w-4xl mx-auto">
+          {tab === "dashboard" && <DashboardTab country={selCountry} city={selCity} lang={lang} resStatus={resStatus} />}
+          {tab === "analysis" && <FullAnalysisTab />}
+          {tab === "ai" && <AIAnalystTab country={selCountry} city={selCity} resStatus={resStatus} />}
+          {tab === "intel" && (<div className="space-y-6"><LiveIntelTab /><div className="border-t-2 border-gray-200 pt-6"><div className="flex items-center gap-2 mb-4"><span className="text-lg">𝕏</span><span className="text-sm font-bold text-gray-800">Live Feeds from X</span></div><LiveTweetsTab /></div></div>)}
+          {tab === "shouldigo" && <ShouldIGoTab conflictDay={CONFLICT_DAY} casualties={{ killed: 8, injured: 145, debrisInjuries: 131 }} missileData={{ ballistic: 298, cruise: 15, drones: 1606, total: 1919 }} interceptionRate="90–94%" straitStatus="-94% traffic" oilPrice="$104+" selectedLanguage={lang} userCountry={selCountry} resStatus={resStatus} confidenceLevel={demoLevel || 4} />}
+          {tab === "emergency" && <EmergencyTab />}
+        </main>
+
+
+    </div>
+  );
+}
