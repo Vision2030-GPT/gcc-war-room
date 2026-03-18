@@ -2898,6 +2898,10 @@ CRITICAL TONE RULES:
         </div>
 
 
+        {/* ═══ VISIT PAGE ═══ */}
+        {userIntent === "visit" && (<div className="space-y-4">
+          <div className="sig-section-title">🧭 Your Assessment</div>
+          {renderAdvisor()}
         {/* T212 Hero Card — dynamic per country */}
         {(() => {
           const cd = GCC_DATA[targetCountry] || GCC_DATA["UAE"];
@@ -2920,13 +2924,9 @@ CRITICAL TONE RULES:
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}><span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span><span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span></div>
         </div>
 
-        {/* ═══ VISIT PAGE ═══ */}
-        {userIntent === "visit" && (<div className="space-y-4">
-          <div className="sig-section-title">🧭 Your Assessment</div>
-          {renderAdvisor()}
-          <div className="sig-section-title">📊 Key Numbers</div>
-          {renderStats([0,1,2,3])}
-          {renderDefense()}
+
+          <div className="sig-section-title">📊 More Data</div>
+          {renderStats([4,5,6,7])}
           <div className="sig-section-title">🧠 Risk in Context</div>
           {renderPerception()}
           <div className="sig-section-title">🌍 Government Advisories</div>
@@ -2937,10 +2937,33 @@ CRITICAL TONE RULES:
 
         {/* ═══ INVEST PAGE ═══ */}
         {userIntent === "invest" && (<div className="space-y-4">
+        {/* T212 Hero Card — dynamic per country */}
+        {(() => {
+          const cd = GCC_DATA[targetCountry] || GCC_DATA["UAE"];
+          const heroGrad = userIntent === "invest" ? "linear-gradient(135deg, #0D9488, #14B8A6)" : L <= 2 ? "linear-gradient(135deg, #059669, #10B981)" : L <= 3 ? "linear-gradient(135deg, #0891B2, #06B6D4)" : L <= 4 ? "linear-gradient(135deg, #0891B2, #22D3EE)" : "linear-gradient(135deg, #D97706, #F59E0B)";
+          return (
+            <div className="sig-fade" style={{ background: heroGrad, borderRadius: "20px", padding: "24px", color: "#fff", position: "relative", overflow: "hidden", marginBottom: "16px" }}>
+              <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", position: "relative" }}>
+                {userIntent === "invest" ? (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>OIL</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{oilPrice}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>per barrel</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{CONFLICT_DATA.dfm}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>market impact</div></div></>) : (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DEFENSE</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{interceptionRate}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>Intercepted</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>Day {conflictDay}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>{missileData.total.toLocaleString()} projectiles</div></div></>)}
+              </div>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {userIntent === "invest" ? (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>AED/USD: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.aedPeg} ✓</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Sovereign: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.sovereignWealth}</span></div></>) : (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Risk: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.riskScore}/5</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Tourist: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>0 casualties</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Emergency: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.emergency}</span></div></>)}
+              </div>
+            </div>
+          );
+        })()}
+        <div className="sig-fade sig-fade-1" style={{ background: "#EBEBEB", borderRadius: "16px", padding: "16px 20px", marginBottom: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}><div><span style={{ fontSize: "13px", fontWeight: 700, color: "#0891B2" }}>92%</span><span style={{ fontSize: "11px", color: "#8E8E93", marginLeft: "6px" }}>DEFENDED</span></div><div><span style={{ fontSize: "11px", color: "#8E8E93", marginRight: "6px" }}>THREAT</span><span style={{ fontSize: "13px", fontWeight: 700, color: "#EF4444" }}>8%</span></div></div>
+          <div className="t-bar"><div className="t-bar-fill" style={{ width: "92%", background: "linear-gradient(90deg, #0891B2, #06B6D4)", borderRadius: "4px 0 0 4px" }} /><div className="t-bar-fill" style={{ width: "8%", background: "#EF4444", borderRadius: "0 4px 4px 0" }} /></div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}><span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span><span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span></div>
+        </div>
+
+
           <div className="sig-section-title">📈 Crisis Opportunity Analysis</div>
           {renderInvestment()}
           <div className="sig-section-title">🛢️ Economic Snapshot</div>
-          {renderStats([4,5,6,7])}
+          {renderStats([4,7])}
           <div className="sig-card sig-fade"><div className="sig-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>{[["AED/USD Peg",CONFLICT_DATA.aedPeg,"#34A853","Stable"],["Sovereign Wealth",CONFLICT_DATA.sovereignWealth,"#34A853","Backing"],["Emirates",CONFLICT_DATA.emirates.capacity,"#E8710A","Capacity"],["Status",CONFLICT_DATA.status.split(",")[0],"#EA4335","Ongoing"]].map(([l,v,c,s],i) => (<div key={i} style={{ padding: "12px", background: "#FAFBFC", borderRadius: "8px" }}><div style={{ fontSize: "10px", color: "#999", fontWeight: 600 }}>{l}</div><div style={{ fontSize: "18px", fontWeight: 800, color: c, marginTop: "2px" }}>{v}</div><div style={{ fontSize: "10px", color: "#888" }}>{s}</div></div>))}</div></div>
           <div className="sig-section-title">📈 Forecast</div>
           {renderForecast()}
@@ -2952,9 +2975,31 @@ CRITICAL TONE RULES:
         {userIntent === "move" && (<div className="space-y-4">
           <div className="sig-section-title">🧭 Your Assessment</div>
           {renderAdvisor()}
-          <div className="sig-section-title">📊 Situation Data</div>
-          {renderStats([0,1,2,3])}
-          {renderDefense()}
+        {/* T212 Hero Card — dynamic per country */}
+        {(() => {
+          const cd = GCC_DATA[targetCountry] || GCC_DATA["UAE"];
+          const heroGrad = userIntent === "invest" ? "linear-gradient(135deg, #0D9488, #14B8A6)" : L <= 2 ? "linear-gradient(135deg, #059669, #10B981)" : L <= 3 ? "linear-gradient(135deg, #0891B2, #06B6D4)" : L <= 4 ? "linear-gradient(135deg, #0891B2, #22D3EE)" : "linear-gradient(135deg, #D97706, #F59E0B)";
+          return (
+            <div className="sig-fade" style={{ background: heroGrad, borderRadius: "20px", padding: "24px", color: "#fff", position: "relative", overflow: "hidden", marginBottom: "16px" }}>
+              <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", position: "relative" }}>
+                {userIntent === "invest" ? (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>OIL</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{oilPrice}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>per barrel</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{CONFLICT_DATA.dfm}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>market impact</div></div></>) : (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DEFENSE</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{interceptionRate}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>Intercepted</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>Day {conflictDay}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>{missileData.total.toLocaleString()} projectiles</div></div></>)}
+              </div>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {userIntent === "invest" ? (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>AED/USD: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.aedPeg} ✓</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Sovereign: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.sovereignWealth}</span></div></>) : (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Risk: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.riskScore}/5</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Tourist: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>0 casualties</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Emergency: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.emergency}</span></div></>)}
+              </div>
+            </div>
+          );
+        })()}
+        <div className="sig-fade sig-fade-1" style={{ background: "#EBEBEB", borderRadius: "16px", padding: "16px 20px", marginBottom: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}><div><span style={{ fontSize: "13px", fontWeight: 700, color: "#0891B2" }}>92%</span><span style={{ fontSize: "11px", color: "#8E8E93", marginLeft: "6px" }}>DEFENDED</span></div><div><span style={{ fontSize: "11px", color: "#8E8E93", marginRight: "6px" }}>THREAT</span><span style={{ fontSize: "13px", fontWeight: 700, color: "#EF4444" }}>8%</span></div></div>
+          <div className="t-bar"><div className="t-bar-fill" style={{ width: "92%", background: "linear-gradient(90deg, #0891B2, #06B6D4)", borderRadius: "4px 0 0 4px" }} /><div className="t-bar-fill" style={{ width: "8%", background: "#EF4444", borderRadius: "0 4px 4px 0" }} /></div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}><span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span><span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span></div>
+        </div>
+
+
+          <div className="sig-section-title">📊 More Data</div>
+          {renderStats([4,5,6,7])}
           <div className="sig-section-title">🗺️ Threat Proximity</div>
           <ThreatMap />
           <InterceptorGauge />
@@ -2971,10 +3016,31 @@ CRITICAL TONE RULES:
         {/* ═══ UNDERSTAND PAGE ═══ */}
         {userIntent === "understand" && (<div className="space-y-4">
           <WhatChangedToday />
+        {/* T212 Hero Card — dynamic per country */}
+        {(() => {
+          const cd = GCC_DATA[targetCountry] || GCC_DATA["UAE"];
+          const heroGrad = userIntent === "invest" ? "linear-gradient(135deg, #0D9488, #14B8A6)" : L <= 2 ? "linear-gradient(135deg, #059669, #10B981)" : L <= 3 ? "linear-gradient(135deg, #0891B2, #06B6D4)" : L <= 4 ? "linear-gradient(135deg, #0891B2, #22D3EE)" : "linear-gradient(135deg, #D97706, #F59E0B)";
+          return (
+            <div className="sig-fade" style={{ background: heroGrad, borderRadius: "20px", padding: "24px", color: "#fff", position: "relative", overflow: "hidden", marginBottom: "16px" }}>
+              <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.08)" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", position: "relative" }}>
+                {userIntent === "invest" ? (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>OIL</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{oilPrice}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>per barrel</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{CONFLICT_DATA.dfm}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>market impact</div></div></>) : (<><div><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>DEFENSE</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>{interceptionRate}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>Intercepted</div></div><div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.2)", margin: "0 16px", alignSelf: "center" }} /><div style={{ textAlign: "right" }}><div style={{ fontSize: "11px", fontWeight: 500, letterSpacing: "1px", opacity: 0.7 }}>{cd.flag} {cd.name}</div><div style={{ fontFamily: "'Google Sans Display'", fontSize: "42px", fontWeight: 700, lineHeight: 1.1 }}>Day {conflictDay}</div><div style={{ fontSize: "13px", opacity: 0.8 }}>{missileData.total.toLocaleString()} projectiles</div></div></>)}
+              </div>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {userIntent === "invest" ? (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>AED/USD: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.aedPeg} ✓</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Sovereign: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{CONFLICT_DATA.sovereignWealth}</span></div></>) : (<><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Risk: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.riskScore}/5</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Tourist: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>0 casualties</span></div><div style={{ background: "rgba(255,255,255,0.15)", borderRadius: "10px", padding: "8px 14px" }}><span style={{ fontSize: "12px", opacity: 0.8 }}>Emergency: </span><span style={{ fontSize: "14px", fontWeight: 700 }}>{cd.emergency}</span></div></>)}
+              </div>
+            </div>
+          );
+        })()}
+        <div className="sig-fade sig-fade-1" style={{ background: "#EBEBEB", borderRadius: "16px", padding: "16px 20px", marginBottom: "16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}><div><span style={{ fontSize: "13px", fontWeight: 700, color: "#0891B2" }}>92%</span><span style={{ fontSize: "11px", color: "#8E8E93", marginLeft: "6px" }}>DEFENDED</span></div><div><span style={{ fontSize: "11px", color: "#8E8E93", marginRight: "6px" }}>THREAT</span><span style={{ fontSize: "13px", fontWeight: 700, color: "#EF4444" }}>8%</span></div></div>
+          <div className="t-bar"><div className="t-bar-fill" style={{ width: "92%", background: "linear-gradient(90deg, #0891B2, #06B6D4)", borderRadius: "4px 0 0 4px" }} /><div className="t-bar-fill" style={{ width: "8%", background: "#EF4444", borderRadius: "0 4px 4px 0" }} /></div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "8px" }}><span style={{ fontSize: "11px", color: "#8E8E93" }}>THAAD + Patriot + Coalition</span><span style={{ fontSize: "11px", color: "#8E8E93" }}>Leak-through</span></div>
+        </div>
+
+
           <div className="sig-section-title">📊 Full Situation Data</div>
-          {renderStats()}
-          <div className="sig-section-title">🛡️ Defense</div>
-          {renderDefense()}
+          {renderStats([4,5,6,7])}
           <div className="sig-section-title">🗺️ Threat Map</div>
           <ThreatMap />
           <InterceptorGauge />
